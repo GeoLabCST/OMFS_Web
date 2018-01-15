@@ -383,7 +383,7 @@ body > .navbar-collapse:after {
 .sidebar[data-image]:after, .sidebar.has-image:after,
 body > .navbar-collapse[data-image]:after,
 body > .navbar-collapse.has-image:after {
-  opacity: .20;
+  opacity: .10;
 }
 .sidebar[data-color="blue"]:after,
 body > .navbar-collapse[data-color="blue"]:after {

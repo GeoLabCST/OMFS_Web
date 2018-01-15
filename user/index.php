@@ -52,33 +52,39 @@
 
             <ul class="nav">
                 <li class="active">
-                    <a href="dashboard.html">
-                        <i class="pe-7s-graph"></i>
+                    <a href="./">
+                        <i class="pe-7s-home"></i>
                         <p>หน้าหลัก</p>
                     </a>
                 </li>
                 <li>
-                    <a href="user.html">
-                        <i class="pe-7s-user"></i>
+                    <a href="p-gis.php">
+                        <i class="pe-7s-global"></i>
                         <p>ระบบภูมิสารสนเทศ</p>
                     </a>
                 </li>
                 <li>
-                    <a href="table.html">
-                        <i class="pe-7s-note2"></i>
+                    <a href="p-fire.php">
+                        <i class="pe-7s-speaker"></i>
                         <p>ระบบรายงานจุดความร้อน</p>
                     </a>
                 </li>
                 <li>
-                    <a href="typography.html">
-                        <i class="pe-7s-news-paper"></i>
+                    <a href="p-survey.php">
+                        <i class="pe-7s-map-marker"></i>
                         <p>OMFS Mobile Survey</p>
                     </a>
                 </li>
                 <li>
-                    <a href="icons.html">
-                        <i class="pe-7s-science"></i>
+                    <a href="p-download.php">
+                        <i class="pe-7s-cloud-download"></i>
                         <p>ดาวน์โหลดข้อมูล </p>
+                    </a>
+                </li>
+                <li>
+                    <a href="p-user.php">
+                        <i class="pe-7s-user"></i>
+                        <p>ข้อมูลผู้ใช้งาน </p>
                     </a>
                 </li>
             </ul>
