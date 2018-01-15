@@ -10,23 +10,18 @@ and pass_user = '".pg_escape_string ($_GET['pass_user'])."' ;"   ;
 
 
 
-
-
 	$objQuery = pg_query($strpg);
 
 	$objResult = pg_fetch_array($objQuery);
 
 
-$name =  $objResult["name_user"];
-$lname =  $objResult["lname_user"];
-$level =  $objResult["status_user"];
-date_default_timezone_set('Asia/Bangkok');
-$date =  date("Y/m/d  H:i:s") ;
-
-
-$sql3 = "INSERT INTO count_stat (name_stat,lname_stat,level_stat,date_acces) values ('$name','$lname','$level','$date')";
-$result3 = pg_query( $sql3);
-
+// $name =  $objResult["name_user"];
+// $lname =  $objResult["lname_user"];
+// $level =  $objResult["status_user"];
+// date_default_timezone_set('Asia/Bangkok');
+// $date =  date("Y/m/d  H:i:s") ;
+// $sql3 = "INSERT INTO count_stat (name_stat,lname_stat,level_stat,date_acces) values ('$name','$lname','$level','$date')";
+// $result3 = pg_query( $sql3);
 
 
 	if(!$objResult)
@@ -43,17 +38,22 @@ $result3 = pg_query( $sql3);
 			
 			if($objResult["status_user"] == "register_web")
 			{
-				header("location: pages/");
+				header("location: user/");
 			}
 			
 			else if($objResult["status_user"] == "register_app")
 			{
-				header("location: pages/");
+				header("location: user/");
 			}
 			
 			else if($objResult["status_user"] == "operational")
 			{
-				header("location: pages/");
+				header("location: user/");
+			}
+			
+			else if($objResult["status_user"] == "uesr")
+			{
+				header("location: uesr/");
 			}
 			
 			else if($objResult["status_user"] == "analytical")
@@ -70,14 +70,10 @@ $result3 = pg_query( $sql3);
 			{
 				header("location: admin/");
 			}
-			else if($objResult["status_user"] == "uesr")
-			{
-				header("location: uesr/");
-			}
 			
-			else if($objResult["status_user"] == "Staff")
+			else if($objResult["status_user"] == "staff")
 			{
-				header("location: Staff/");
+				header("location: staff/");
 			}
 			
 	}
