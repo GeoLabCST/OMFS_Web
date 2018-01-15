@@ -1,5 +1,5 @@
 <?php 
-include('config.php');
+include('../libs/config_omfs.php');
 
 
 $email = $_POST["email_user"];

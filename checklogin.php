@@ -1,5 +1,5 @@
 <?php
-include('config.php');
+include('../libs/config_omfs.php');
 
 
 session_start();
