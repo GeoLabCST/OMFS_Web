@@ -123,8 +123,7 @@
 
       var terrain = L.gridLayer.googleMutant({
         type: 'terrain' // valid values are 'roadmap', 'satellite', 'terrain' and 'hybrid'
-      });
-    
+      }); 
     
 
       if(prov_code=='all'){
@@ -187,8 +186,7 @@
             transparent: true,
             CQL_FILTER: cql
         });
-      }
-      
+      }      
     
       var map = L.map('map', {
         center: [Number(lat), Number(lon)],

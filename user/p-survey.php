@@ -168,17 +168,54 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card">
+<<<<<<< HEAD
                             <div class="content">
                                 <iframe src="map.php" frameborder="0" width="100%" height="700px"></iframe>
+=======
+                            <div class="header">
+                                <h4 class="title">เลือกข้อมูล</h4>
+                                <p class="category">เลือกขอบเขตการปกครองที่สนใจ</p>
+                            </div>
+                            <div class="content">
+                                
+                                <div class="form-group">
+                                    <label>เลือก</label>
+                                    <select class="form-control" id="province">
+                                        <option value='all'>ทุกจังหวัด</option>
+                                    </select>
+                                  </div>
+
+                                <div class="footer">
+                                    <hr>
+                                    <div class="stats" id="pp">
+                                        <i class="fa fa-clock-o"></i> Campaign sent 2 days ago
+                                    </div>
+                                </div>
+>>>>>>> origin/master
                             </div>
                         </div>
                     </div>
 
+<<<<<<< HEAD
                 </div>
 
 
             </div>
         </div>
+=======
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="header">
+                                <h4 class="title">ตำแหน่งการแจ้ง</h4>
+                                <p class="category">ตำแหน่งการรับแจ้งพื้นที่เกิดไฟป่า</p>
+                            </div>
+                            <div class="content">
+                                <iframe src="map.php" style="width: 100%; height: 650px" frameborder="0" scrolling="no" id="frame" ></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>  
+>>>>>>> origin/master
 
 
         <footer class="footer">
