@@ -183,13 +183,29 @@
                                     <select class="form-control" id="province">
                                         <option value='all'>ทุกจังหวัด</option>
                                     </select>
-                                  </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>เลือก</label>
+                                    <select class="form-control" id="amphoe">
+                                        <option value='all'>ทุกอำเภอ</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>เลือก</label>
+                                    <select class="form-control" id="tambon">
+                                        <option value='all'>ทุกตำบล</option>
+                                    </select>
+                                </div>
 
                                 <div class="footer">
                                     <hr>
-                                    <div class="stats" id="pp">
-                                        <i class="fa fa-clock-o"></i> Campaign sent 2 days ago
-                                    </div>
+                                    <row>
+                                        <div class="stats" id="p"></div>
+                                        <div class="stats" id="a"></div>
+                                        <div class="stats" id="t"></div>
+                                    </row>
                                 </div>
 >>>>>>> origin/master
                             </div>
@@ -210,7 +226,7 @@
                                 <p class="category">ตำแหน่งการรับแจ้งพื้นที่เกิดไฟป่า</p>
                             </div>
                             <div class="content">
-                                <iframe src="map.php" style="width: 100%; height: 650px" frameborder="0" scrolling="no" id="frame" ></iframe>
+                                <iframe src="map.php?procode=all&lon=99.85&lat=16.8" style="width: 100%; height: 650px" frameborder="0" scrolling="no" id="mframe" ></iframe>
                             </div>
                         </div>
                     </div>
@@ -278,21 +294,90 @@
 	<!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
 	<script src="assets/js/demo.js"></script>
 
-	<!-- <script type="text/javascript">
-    	$(document).ready(function(){
+    <script>
+    function getProv(){
+        $.getJSON("http://cgi.uru.ac.th/service/hms_prov.php", function (data) {
+        //console.log(data);
+          $.each(data, function (index, value) {
+              $('#province').append('<option value="' + value.prov_code + '">' + value.prov_nam_t + '</option>');
+          });
+      });
+    }
 
-        	demo.initChartist();
+    function getAmp(proCode){
+        $.getJSON("http://cgi.uru.ac.th/service/hms_amp.php?procode="+proCode, function (data) {
+          $.each(data, function (index, value) {
+              $('#amphoe').append('<option value="' + value.amp_code + '">' + value.amp_nam_t + '</option>');
+          });
+      });
+    }
 
-        	$.notify({
-            	icon: 'pe-7s-gift',
-            	message: "ยินดีต้อนรับ <b>เข้าสู่ระบบ OMFS </b> <br> ท่านเข้าใช้งานในส่วนของผู้ใช้งานทั่วไป"
+    function getTam(ampCode){
+        $.getJSON("http://cgi.uru.ac.th/service/hms_tam.php?tamcode="+ampCode, function (data) {
+          $.each(data, function (index, value) {
+              $('#tambon').append('<option value="' + value.tam_code + '">' + value.tam_nam_t + '</option>');
+          });
+      });
+    }
 
-            },{
-                type: 'danger',
-                timer: 4000
+    //select
+    $(document).ready(function () {
+      // load province data
+      getProv();  
+      // load prov iframe
+      $('#province').change(function () {          
+        $('#amphoe').empty();
+        $('#amphoe').append('<option value="all">ทุกจังหวัด</option>');
+        var provCode = this.options[this.selectedIndex].value;
+        var provName = this.options[this.selectedIndex].text;
+        if(provCode=='all'){
+            $.getJSON("http://cgi.uru.ac.th/service/hms_prov.php?procode="+provCode, function (data) {                 
+                $("#mframe").attr("src", "map.php?procode="+provCode+"&lon=99.85&lat=16.8");
             });
+        }else{
+            $.getJSON("http://cgi.uru.ac.th/service/hms_prov.php?procode="+provCode, function (data) {                 
+                $("#mframe").attr("src", "map.php?procode="+provCode+"&lon="+data[0].lon+"&lat="+data[0].lat);
+            });
+            getAmp(provCode);
+        } 
+        $('#p').text('จังหวัด: '+ provName);        
+      });
 
-    	});
-	</script> -->
+      //get amp iframe
+      $('#amphoe').change(function () {
+        var ampCode = this.options[this.selectedIndex].value;
+        var ampName = this.options[this.selectedIndex].text;
+        if(ampCode=='all'){
+            $.getJSON("http://cgi.uru.ac.th/service/hms_amp.php?ampcode="+ampCode, function (data) {                 
+                $("#mframe").attr("src", "map.php?procode="+provCode+"&lon="+data[0].lon+"&lat="+data[0].lat);
+            });
+        }else{
+            $.getJSON("http://cgi.uru.ac.th/service/hms_amp.php?ampcode="+ampCode, function (data) {                 
+                $("#mframe").attr("src", "map.php?ampcode="+ampCode+"&lon="+data[0].lon+"&lat="+data[0].lat);
+            });
+            getTam(ampCode);
+        } 
+        $('#a').text('อำเภอ: '+ ampName);       
+      });
+
+      //get tam iframe
+      $('#tambon').change(function () {
+        var tamCode = this.options[this.selectedIndex].value;
+        var tamName = this.options[this.selectedIndex].text;
+        if(tamCode=='all'){
+            $.getJSON("http://cgi.uru.ac.th/service/hms_tam.php?ampcode="+tamCode, function (data) {                 
+                $("#mframe").attr("src", "map.php?procode="+provCode+"&lon="+data[0].lon+"&lat="+data[0].lat);
+            });
+        }else{
+            $.getJSON("http://cgi.uru.ac.th/service/hms_tam.php?ampcode="+tamCode, function (data) {                 
+                $("#mframe").attr("src", "map.php?ampcode="+tamCode+"&lon="+data[0].lon+"&lat="+data[0].lat);
+            });
+            //getTam(ampCode);
+        } 
+        $('#a').text('ตำบล: '+ ampName);       
+      });
+
+    });
+    </script>
 
 </html>

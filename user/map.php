@@ -13,16 +13,11 @@
     <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js" integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log==" crossorigin=""></script>
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.2.0/dist/MarkerCluster.css" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.2.0/dist/MarkerCluster.Default.css" />
-      
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.2.0/dist/MarkerCluster.Default.css" />      
     <script type="text/javascript" src="http://calvinmetcalf.github.io/leaflet-ajax/dist/leaflet.ajax.js"></script>
     <script type="text/javascript" src="https://unpkg.com/leaflet.markercluster@1.2.0/dist/leaflet.markercluster.js"></script>
-
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD1AO13H8MYTwPKioaW5qgGwdPXYpXbw4w"></script>
-    <script src='https://unpkg.com/leaflet.gridlayer.googlemutant@latest/Leaflet.GoogleMutant.js'></script>
-
-
-    
+    <script src='https://unpkg.com/leaflet.gridlayer.googlemutant@latest/Leaflet.GoogleMutant.js'></script>    
     <script src="http://matchingnotes.com/javascripts/leaflet-google.js"></script>
 
   <body>
@@ -45,28 +40,39 @@
 
 <?php
     if(isset($_GET['procode'])) {
-        $pcode = $_GET['procode'];
-        if($pcode == 'all'){
+        $code = $_GET['procode'];
+        $lon = $_GET['lon'];        
+        $lat = $_GET['lat'];        
+        if($code == 'all'){
             echo "<script>var jsonUrl = 'http://cgi.uru.ac.th/service/hgis_accident_service.php'</script>";
-            echo "<script>var prov_code = 'all'; var lon = 99.85; var lat = 16.8; var zoom = 8;</script>";
-        }elseif($pcode == '53'){
-            echo "<script>var jsonUrl = 'http://cgi.uru.ac.th/service/hgis_accident_service.php?procode=".$pcode."'</script>";
-            echo "<script>var prov_code = '53'; var lon = 100.517239665021; var lat = 17.7493583302138; var zoom = 9; var cql='prov_code=53';</script>";
-        }elseif($pcode == '63'){
-            echo "<script>var jsonUrl = 'http://cgi.uru.ac.th/service/hgis_accident_service.php?procode=".$pcode."'</script>";
-            echo "<script>var prov_code = '63'; var lon = 98.7919946027538; var lat = 16.7176938427341; var zoom = 8; var cql='prov_code=63';</script>";
-        }elseif($pcode == '64'){
-            echo "<script>var jsonUrl = 'http://cgi.uru.ac.th/service/hgis_accident_service.php?procode=".$pcode."'</script>";
-            echo "<script>var prov_code = '64'; var lon = 99.7114649659166; var lat = 17.2638506553781; var zoom = 9; var cql='prov_code=64';</script>";
-        }elseif($pcode == '65'){
-            echo "<script>var jsonUrl = 'http://cgi.uru.ac.th/service/hgis_accident_service.php?procode=".$pcode."'</script>";
-            echo "<script>var prov_code = '65'; var lon = 100.541323326712; var lat = 16.9822037028209; var zoom = 9; var cql='prov_code=65';</script>";
-        }elseif($pcode == '67'){
-            echo "<script>var jsonUrl = 'http://cgi.uru.ac.th/service/hgis_accident_service.php?procode=".$pcode."'</script>";
-            echo "<script>var prov_code = '67'; var lon = 101.149854533239; var lat = 16.2744868153974; var zoom = 9; var cql='prov_code=67';</script>";
-        }elseif($pcode == null){
-            echo "<script>var jsonUrl = 'http://cgi.uru.ac.th/service/hgis_accident_service.php'</script>";
-            echo "<script>var prov_code = 'all'; var lon = 99.85; var lat = 16.8;</script>";
+            echo "<script>var chkLoc = 'all'; var lon = ".$lon."; var lat = ".$lat."; var zoom = 8;</script>";
+        }else{
+            echo "<script>var jsonUrl = 'http://cgi.uru.ac.th/service/hgis_accident_service.php?procode=".$code."'</script>";
+            echo "<script>var chkLoc = '".$code."'; var lon = ".$lon."; var lat = ".$lat."; var zoom = 9; var cql='prov_code=".$code."';</script>";
+        }
+    }else if(isset($_GET['ampcode'])){
+        $code = $_GET['ampcode'];
+        $lon = $_GET['lon'];        
+        $lat = $_GET['lat'];   
+        echo "<script>alert(.$lon."-".$lat.)</script>";     
+        if($code == 'all'){
+            echo "<script>var jsonUrl = 'http://cgi.uru.ac.th/service/hgis_accident_service.php?procode=".$code."'</script>";
+            echo "<script>var chkLoc = '".$code."'; var lon = ".$lon."; var lat = ".$lat."; var zoom = 8; var cql='prov_code=".$code."';</script>";
+        }else{
+            echo "<script>var jsonUrl = 'http://cgi.uru.ac.th/service/hgis_accident_service.php?ampcode=".$code."'</script>";
+            echo "<script>var chkLoc = '".$code."'; var lon = ".$lon."; var lat = ".$lat."; var zoom = 9; var cql='amp_code=".$code."';</script>";
+        }
+    }else if(isset($_GET['tamcode'])){
+        $code = $_GET['tamcode'];
+        $lon = $_GET['lon'];        
+        $lat = $_GET['lat'];             
+        echo "<script>alert(.$lon."-".$lat.)</script>";        
+        if($code == 'all'){
+            echo "<script>var jsonUrl = 'http://cgi.uru.ac.th/service/hgis_accident_service.php?ampcode=".$code."'</script>";
+            echo "<script>var chkLoc = '".$code."'; var lon = ".$lon."; var lat = ".$lat."; var zoom = 8; var cql='amp_code=".$code."';</script>";
+        }else{
+            echo "<script>var jsonUrl = 'http://cgi.uru.ac.th/service/hgis_accident_service.php?tamcode=".$code."'</script>";
+            echo "<script>var chkLoc = '".$code."'; var lon = ".$lon."; var lat = ".$lat."; var zoom = 9; var cql='tam_code=".$code."';</script>";
         }
     }else{
         echo "<script>var jsonUrl = 'http://cgi.uru.ac.th/service/hgis_accident_service.php'</script>";
@@ -126,7 +132,7 @@
       }); 
     
 
-      if(prov_code=='all'){
+      if(chkLoc=='all'){
         var pro = L.tileLayer.wms("http://map.nu.ac.th/geoserver-hgis/ows?", {
             layers: 'hgis:dpc9_province_4326',
             format: 'image/png',
