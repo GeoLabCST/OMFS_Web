@@ -166,12 +166,11 @@
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-4">
                         <div class="card">
-<<<<<<< HEAD
+
                             <div class="content">
-                                <iframe src="map.php" frameborder="0" width="100%" height="700px"></iframe>
-=======
+
                             <div class="header">
                                 <h4 class="title">เลือกข้อมูล</h4>
                                 <p class="category">เลือกขอบเขตการปกครองที่สนใจ</p>
@@ -207,18 +206,10 @@
                                         <div class="stats" id="t"></div>
                                     </row>
                                 </div>
->>>>>>> origin/master
                             </div>
                         </div>
                     </div>
-
-<<<<<<< HEAD
                 </div>
-
-
-            </div>
-        </div>
-=======
                     <div class="col-md-8">
                         <div class="card">
                             <div class="header">
@@ -230,8 +221,9 @@
                             </div>
                         </div>
                     </div>
-                </div>  
->>>>>>> origin/master
+                </div> 
+            </div>
+        </div>
 
 
         <footer class="footer">
