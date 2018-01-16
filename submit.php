@@ -78,7 +78,7 @@ if( isset( $_POST['task']) && 'upload' == $_POST['task'] )
             imagedestroy( $dst1 );
 
   $is_uploaded = pg_query( "INSERT INTO user_profile 
-		( name_user,lname_user,tel_user,prov_user,amp_user,tam_user,pic_user,email_user,pass_user,level_user,status_user)
+		( name_user,lname_user,tel_user,prov_user,amp_user,tam_user,pic_user,email_user,pass_user,level_user,status_user,iden_number)
 		VALUES (
 		'".$_POST["name_user"]."',
 		'".$_POST["lname_user"]."',
@@ -90,7 +90,8 @@ if( isset( $_POST['task']) && 'upload' == $_POST['task'] )
 		'".$_POST["email_user"]."',
 		'".$_POST["pass_user"]."',
 		'".$_POST["level_user"]."',
-		'register_web'
+		'register_web',
+        '".$_POST["iden_number"]."'
 
 		)" );
 

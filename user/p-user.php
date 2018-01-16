@@ -54,8 +54,138 @@ $strpg = "SELECT * FROM user_profile  WHERE email_user = '".$_SESSION['email_use
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet">
     <link href="assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
+ <script language=Javascript>
+        function Inint_AJAX() {
+           try { return new ActiveXObject("Msxml2.XMLHTTP");  } catch(e) {} 
+           try { return new ActiveXObject("Microsoft.XMLHTTP"); } catch(e) {} 
+           try { return new XMLHttpRequest();          } catch(e) {}
+           alert("XMLHttpRequest not supported");
+           return null;
+        };
+
+        function dochange(src, val) {
+             var req = Inint_AJAX();
+             req.onreadystatechange = function () { 
+                  if (req.readyState==4) {
+                       if (req.status==200) {
+                            document.getElementById(src).innerHTML=req.responseText; 
+                       } 
+                  }
+             };
+             req.open("GET", "assets/location_user.php?data="+src+"&val="+val); 
+             req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=utf-8"); 
+             req.send(null); 
+        }
+
+        window.onLoad=dochange('prov_name', -1);  
+    </script>
 
 </head>
+
+<?php
+
+
+$error = '';
+$success = '';
+ 
+if( isset( $_POST['task']) && 'upload' == $_POST['task'] ) 
+{
+    // get uploaded file name
+    $image = $_FILES["file"]["name"];
+ 
+    if( empty( $image ) ) {
+        $error = 'File is empty, please select image to upload.';
+    } else if($_FILES["file"]["type"] == "application/msword") {
+        $error = 'Invalid image type, use (e.g. png, jpg, gif).';
+    } else if( $_FILES["file"]["error"] > 0 ) {
+        $error = 'Oops sorry, seems there is an error uploading your image, please try again later.';
+    } else {
+    
+        // strip file slashes in uploaded file, although it will not happen but just in case ;)
+        $filename = stripslashes( $_FILES['file']['name'] );
+        $ext = get_file_extension( $filename );
+        $ext = strtolower( $ext );
+        
+        if(( $ext != "jpg" ) && ( $ext != "jpeg" ) && ( $ext != "png" ) && ( $ext != "gif" ) ) {
+            $error = 'Unknown Image extension.';
+            return false;
+        } else {
+            // get uploaded file size
+            $size = filesize( $_FILES['file']['tmp_name'] );
+            
+            // get php ini settings for max uploaded file size
+            $max_upload = ini_get( 'upload_max_filesize' );
+ 
+            // check if we're able to upload lessthan the max size
+            if( $size > $max_upload )
+                $error = 'You have exceeded the upload file size.';
+ 
+            // check uploaded file extension if it is jpg or jpeg, otherwise png and if not then it goes to gif image conversion
+            $uploaded_file = $_FILES['file']['tmp_name'];
+            if( $ext == "jpg" || $ext == "jpeg" )
+                $source = imagecreatefromjpeg( $uploaded_file );
+            else if( $ext == "png" )
+                $source = imagecreatefrompng( $uploaded_file );
+            else
+                $source = imagecreatefromgif( $uploaded_file );
+ 
+            // getimagesize() function simply get the size of an image
+            list( $width, $height) = getimagesize ( $uploaded_file );
+            $ratio = $height / $width;
+ 
+ 
+            // new width 100 in pixel format too
+            $nw1 = 450;
+            $nh1 = ceil( $ratio * $nw1 );
+            $dst1 = imagecreatetruecolor( $nw1, $nh1 );
+ 
+            imagecopyresampled( $dst1, $source, 0, 0, 0, 0, $nw1, $nh1, $width, $height );
+ 
+            // rename our upload image file name, this to avoid conflict in previous upload images
+            // to easily get our uploaded images name we added image size to the suffix
+            $rnd_name1 = 'photos_'.uniqid(mt_rand(10, 15)).'_'.time().'_450x450.'.$ext;
+            
+            // move it to uploads dir with full quality
+            imagejpeg( $dst1, '../img/pic_user/'.$rnd_name1, 100 );
+ 
+            // I think that's it we're good to clear our created images
+            imagedestroy( $source );
+            imagedestroy( $dst1 ); 
+
+            $showpic = "../img/pic_user/".$rnd_name1;
+
+
+        $id_user = $_POST[id_user];
+             // so all clear, lets save our image to database
+           $is_uploaded = pg_query( "UPDATE user_profile SET pic_user ='$rnd_name1' WHERE id_user = '$id_user' ; " );
+            
+            
+            if( $is_uploaded ) {
+               header("Location: p-user.php");
+            }
+          
+ 
+        }
+ 
+    }
+}
+
+
+function get_file_extension( $file )  {
+    if( empty( $file ) )
+        return;
+ 
+    // if goes here then good so all clear and good to go
+    $ext = end(explode( ".", $file ));
+ 
+    // return file extension
+    return $ext;
+}
+?>
+
+
+
+
 <body>
 
 <div class="wrapper">
@@ -147,22 +277,33 @@ $strpg = "SELECT * FROM user_profile  WHERE email_user = '".$_SESSION['email_use
                 <div class="row">
                     <div class="col-md-8">
                         <div class="card">
-                            <div class="header">
-                                <h4 class="title">ข้อมูลผู้ใช้งาน</h4>
-                            </div>
+                            
+
+<ul class="nav nav-tabs">
+  <li class="active"><a data-toggle="tab" href="#home">
+    <div class="header">
+         ข้อมูลผู้ใช้งาน
+    </div></a></li>
+  <li><a data-toggle="tab" href="#menu1"><div class="header">
+         ข้อมูล E-Mail และ Password
+    </div></a></li>
+</ul>
+
+<div class="tab-content">
+  <div id="home" class="tab-pane fade in active">
                             <div class="content">
-                                <form>
+                                <form action="assets/update_profile.php" method="get">
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>ชื่อ</label>
-                                                <input type="text" class="form-control"  placeholder="Company" value="<?php echo $objResult[name_user]; ?>">
+                                                <input type="text" class="form-control" name="name_user"  placeholder="" value="<?php echo $objResult[name_user]; ?>">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>นามสกุล</label>
-                                                <input type="text" class="form-control" placeholder="Username" value="<?php echo $objResult[lname_user]; ?>">
+                                                <input type="text" class="form-control" name="lname_user" value="<?php echo $objResult[lname_user]; ?>">
                                             </div>
                                         </div>
                                     </div>
@@ -170,7 +311,13 @@ $strpg = "SELECT * FROM user_profile  WHERE email_user = '".$_SESSION['email_use
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>เบอร์โทร</label>
-                                                <input type="text" class="form-control"  placeholder="Company" value="<?php echo $objResult[tel_user]; ?>">
+                                                <input type="number" class="form-control"  name="tel_user" value="<?php echo $objResult[tel_user]; ?>">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>เลขบัตรประจำตัวประชาชน</label>
+                                                <input type="number" class="form-control"  name="iden_number" value="<?php echo $objResult[tel_user]; ?>">
                                             </div>
                                         </div>
                                     </div>
@@ -178,33 +325,74 @@ $strpg = "SELECT * FROM user_profile  WHERE email_user = '".$_SESSION['email_use
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>จังหวัด</label>
-                                                <input type="text" class="form-control" placeholder="" >
+                                                <label class="col-md-12">จังหวัด</label>
+                                            <span id="prov_name">
+                                                <select class="form-control" id="select" name="prov_name" >
+                                                   <option value='<?php echo $objResult[prov_user] ?>'><?php echo $objResult[prov_user] ?></option>
+                                                </select>
+                                            </span>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>อำเภอ</label>
-                                                <input type="text" class="form-control" placeholder=" ">
+                                                <label class="col-md-12">อำเภอ</label>
+                                            <span id="amphoe_name">
+                                                <select class="form-control" id="select" name="amphoe_name" >
+                                                   <option value='<?php echo $objResult[amp_user] ?>'><?php echo $objResult[amp_user] ?></option>
+                                                </select>
+                                            </span>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>ตำบล</label>
-                                                <input type="text" class="form-control"  placeholder="" >
+                                                <label for="exampleInputPassword1">ตำบล</label>
+                                            <span id="tambon_name">
+                                                <select class="form-control" id="select" name="tambon_name" data-cip-id="cIPJQ342845642">
+                                                  <option value='<?php echo $objResult[tam_user] ?>'><?php echo $objResult[tam_user] ?></option>
+                                                </select>
+                                            </span>
                                             </div>
                                         </div>
                                     </div>
 
                                   
-
+                                    <input type="hidden" name="id_user" value="<?php echo $objResult[id_user] ?>">
 
                                     <button type="submit" class="btn btn-default btn-fill pull-right">อัพเดตโปรไฟล์</button>
                                     <div class="clearfix"></div>
                                 </form>
                             </div>
+  </div>
+  <div id="menu1" class="tab-pane fade">
+
+                            <div class="content">
+                               <form class="form-horizontal form-material" action="assets/update_email.php">
+                                        <div class="form-group">
+                                            <label class="col-md-12">email</label>
+                                            <div class="col-md-12">
+                                                <input type="text" class="form-control form-control-line" value="<?php echo $objResult[email_user] ?>" name="email_user"> </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-12">รหัสผ่าน</label>
+                                            <div class="col-md-12">
+                                                <input type="password" class="form-control form-control-line" value="<?php echo $objResult[pass_user] ?>" name="pass_user_new"> </div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <input type="hidden" name="id_user" value="<?php echo $objResult[id_user] ?>">
+                                    <button type="submit" class="btn btn-default btn-fill pull-right">แก้ไขรหัสผ่าน</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                            </div>
+
+  </div>
+</div>
+
+
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -214,19 +402,35 @@ $strpg = "SELECT * FROM user_profile  WHERE email_user = '".$_SESSION['email_use
                             </div>
                             <div class="content">
                                 <div class="author">
-                                     <a href="#">
+                                     
                                     <img class="avatar border-gray" src="../img/pic_user/<?php echo $objResult[pic_user]; ?>" alt="..."/>
 
                                       <h4 class="title"><?php echo $objResult[name_user],' ',$objResult[lname_user] ; ?><br />
                                          <small><?php echo $objResult[name_user]; ?></small>
                                       </h4>
-                                    </a>
+                                    
                                 </div>
-                                <p class="description text-center">สถานะ : <?php echo $objResult[status_user]; ?>
-                                </p>
+                                <p class="description text-center">สถานะ : <?php echo $objResult[status_user]; ?></p>
+                                <small ><p class="description text-center"><a class="btn btn-link"  data-toggle="collapse" data-target="#demo">แก้ไขรูปประจำตัว</a></p></small>
+<div id="demo" class="collapse">
+<form enctype="multipart/form-data" method="post">
+    <fieldset>
+        <p><label for="file">เลือกไฟล์รูป : </label><br/>
+            <input type="file" name="file" class="form-control" />
+        </p>
+        <p>
+            <input type="hidden" name="id_user" value="<?php echo $objResult[id_user] ?>" />
+            <input type="hidden" name="task" value="upload" />
+            <input type="submit" class="btn btn-default btn-fill pull-right"  onClick="window.location.reload()" value="upload" />
+        </p>
+    </fieldset>
+</form>
+</div>
+
                             </div>
                         </div>
                     </div>
+
 
                 </div>
             </div>

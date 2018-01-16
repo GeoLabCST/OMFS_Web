@@ -1,5 +1,30 @@
 <!doctype html>
 <html lang="en">
+<?php
+include('../../libs/config_omfs.php');
+
+session_start();
+$strpg = "SELECT * FROM user_profile  WHERE email_user = '".$_SESSION['email_user']."'   ";
+    $objQuery = pg_query($db,$strpg);
+    $objResult = pg_fetch_array($objQuery);
+
+    $status = $objResult[status_user];
+
+
+    if($_SESSION['email_user'] == "")
+    {
+        header('Location: ../');
+        exit();
+    }
+
+    else if( $status != "register_web"  && $status != "register_app" && $status != "operational"   )
+    {
+        header('Location: ../');
+        exit();
+    }
+
+
+?>
 <head>
 	<meta charset="utf-8" />
 	<link rel="icon" type="image/png" href="../img/icon_top.png">
