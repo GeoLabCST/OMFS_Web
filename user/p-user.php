@@ -132,7 +132,7 @@ $strpg = "SELECT * FROM user_profile  WHERE email_user = '".$_SESSION['email_use
 
                     <ul class="nav navbar-nav navbar-right">
                         <li>
-                            <a href="#">
+                            <a href="../">
                                 <small> ออกจากระบบ</small>    
                             </a>
                         </li>
@@ -145,26 +145,6 @@ $strpg = "SELECT * FROM user_profile  WHERE email_user = '".$_SESSION['email_use
          <div class="content">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-4">
-                        <div class="card card-user">
-                            <div class="image">
-                                <img src="http://119.59.125.191/shares/06.jpg" alt="..."/>
-                            </div>
-                            <div class="content">
-                                <div class="author">
-                                     <a href="#">
-                                    <img class="avatar border-gray" src="../img/pic_user/<?php echo $objResult[pic_user]; ?>" alt="..."/>
-
-                                      <h4 class="title"><?php echo $objResult[name_user],' ',$objResult[lname_user] ; ?><br />
-                                         <small><?php echo $objResult[name_user]; ?></small>
-                                      </h4>
-                                    </a>
-                                </div>
-                                <p class="description text-center">สถานะ : <?php echo $objResult[status_user]; ?>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
                     <div class="col-md-8">
                         <div class="card">
                             <div class="header">
@@ -204,7 +184,7 @@ $strpg = "SELECT * FROM user_profile  WHERE email_user = '".$_SESSION['email_use
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>Lอำเภอ</label>
+                                                <label>อำเภอ</label>
                                                 <input type="text" class="form-control" placeholder=" ">
                                             </div>
                                         </div>
@@ -224,6 +204,26 @@ $strpg = "SELECT * FROM user_profile  WHERE email_user = '".$_SESSION['email_use
                                     <button type="submit" class="btn btn-default btn-fill pull-right">อัพเดตโปรไฟล์</button>
                                     <div class="clearfix"></div>
                                 </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card card-user">
+                            <div class="image">
+                                <img src="http://119.59.125.191/shares/06.jpg" alt="..."/>
+                            </div>
+                            <div class="content">
+                                <div class="author">
+                                     <a href="#">
+                                    <img class="avatar border-gray" src="../img/pic_user/<?php echo $objResult[pic_user]; ?>" alt="..."/>
+
+                                      <h4 class="title"><?php echo $objResult[name_user],' ',$objResult[lname_user] ; ?><br />
+                                         <small><?php echo $objResult[name_user]; ?></small>
+                                      </h4>
+                                    </a>
+                                </div>
+                                <p class="description text-center">สถานะ : <?php echo $objResult[status_user]; ?>
+                                </p>
                             </div>
                         </div>
                     </div>
