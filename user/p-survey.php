@@ -168,11 +168,8 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="card">
-
-                            <div class="content">
-
                             <div class="header">
-                                <h4 class="title">เลือกข้อมูล</h4>
+                                <h4 class="title">เลือกพื้นที่</h4>
                                 <p class="category">เลือกขอบเขตการปกครองที่สนใจ</p>
                             </div>
                             <div class="content">
@@ -180,21 +177,21 @@
                                 <div class="form-group">
                                     <label>เลือก</label>
                                     <select class="form-control" id="province">
-                                        <option value='all'>ทุกจังหวัด</option>
+                                        <option value='all'>จังหวัด</option>
                                     </select>
                                 </div>
 
                                 <div class="form-group">
                                     <label>เลือก</label>
                                     <select class="form-control" id="amphoe">
-                                        <option value='all'>ทุกอำเภอ</option>
+                                        <option value='all'>อำเภอ</option>
                                     </select>
                                 </div>
 
                                 <div class="form-group">
                                     <label>เลือก</label>
                                     <select class="form-control" id="tambon">
-                                        <option value='all'>ทุกตำบล</option>
+                                        <option value='all'>ตำบล</option>
                                     </select>
                                 </div>
 
@@ -209,7 +206,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+
                     <div class="col-md-8">
                         <div class="card">
                             <div class="header">
@@ -221,9 +218,7 @@
                             </div>
                         </div>
                     </div>
-                </div> 
-            </div>
-        </div>
+                </div>  
 
 
         <footer class="footer">
@@ -305,7 +300,7 @@
     }
 
     function getTam(ampCode){
-        $.getJSON("http://cgi.uru.ac.th/service/hms_tam.php?tamcode="+ampCode, function (data) {
+        $.getJSON("http://cgi.uru.ac.th/service/hms_tam.php?ampcode="+ampCode, function (data) {
           $.each(data, function (index, value) {
               $('#tambon').append('<option value="' + value.tam_code + '">' + value.tam_nam_t + '</option>');
           });
@@ -319,12 +314,12 @@
       // load prov iframe
       $('#province').change(function () {          
         $('#amphoe').empty();
-        $('#amphoe').append('<option value="all">ทุกจังหวัด</option>');
+        $('#amphoe').append('<option value="all">อำเภอ</option>');
         var provCode = this.options[this.selectedIndex].value;
         var provName = this.options[this.selectedIndex].text;
         if(provCode=='all'){
-            $.getJSON("http://cgi.uru.ac.th/service/hms_prov.php?procode="+provCode, function (data) {                 
-                $("#mframe").attr("src", "map.php?procode="+provCode+"&lon=99.85&lat=16.8");
+            $.getJSON("http://cgi.uru.ac.th/service/hms_prov.php?procode=all", function (data) {                 
+                $("#mframe").attr("src", "map.php?procode=all&lon=99.85&lat=16.8");
             });
         }else{
             $.getJSON("http://cgi.uru.ac.th/service/hms_prov.php?procode="+provCode, function (data) {                 
@@ -336,19 +331,17 @@
       });
 
       //get amp iframe
-      $('#amphoe').change(function () {
+      $('#amphoe').change(function () {          
+        $('#tambon').empty();
+        $('#tambon').append('<option value="all">ตำบล</option>');
         var ampCode = this.options[this.selectedIndex].value;
         var ampName = this.options[this.selectedIndex].text;
-        if(ampCode=='all'){
-            $.getJSON("http://cgi.uru.ac.th/service/hms_amp.php?ampcode="+ampCode, function (data) {                 
-                $("#mframe").attr("src", "map.php?procode="+provCode+"&lon="+data[0].lon+"&lat="+data[0].lat);
-            });
-        }else{
+        
             $.getJSON("http://cgi.uru.ac.th/service/hms_amp.php?ampcode="+ampCode, function (data) {                 
                 $("#mframe").attr("src", "map.php?ampcode="+ampCode+"&lon="+data[0].lon+"&lat="+data[0].lat);
             });
             getTam(ampCode);
-        } 
+        
         $('#a').text('อำเภอ: '+ ampName);       
       });
 
@@ -356,17 +349,12 @@
       $('#tambon').change(function () {
         var tamCode = this.options[this.selectedIndex].value;
         var tamName = this.options[this.selectedIndex].text;
-        if(tamCode=='all'){
-            $.getJSON("http://cgi.uru.ac.th/service/hms_tam.php?ampcode="+tamCode, function (data) {                 
-                $("#mframe").attr("src", "map.php?procode="+provCode+"&lon="+data[0].lon+"&lat="+data[0].lat);
+        
+            $.getJSON("http://cgi.uru.ac.th/service/hms_tam.php?tamcode="+tamCode, function (data) {                 
+                $("#mframe").attr("src", "map.php?tamcode="+tamCode+"&lon="+data[0].lon+"&lat="+data[0].lat);
             });
-        }else{
-            $.getJSON("http://cgi.uru.ac.th/service/hms_tam.php?ampcode="+tamCode, function (data) {                 
-                $("#mframe").attr("src", "map.php?ampcode="+tamCode+"&lon="+data[0].lon+"&lat="+data[0].lat);
-            });
-            //getTam(ampCode);
-        } 
-        $('#a').text('ตำบล: '+ ampName);       
+        
+        $('#t').text('ตำบล: '+ tamName);       
       });
 
     });

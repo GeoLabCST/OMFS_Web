@@ -53,30 +53,22 @@
     }else if(isset($_GET['ampcode'])){
         $code = $_GET['ampcode'];
         $lon = $_GET['lon'];        
-        $lat = $_GET['lat'];   
-        echo "<script>alert(.$lon."-".$lat.)</script>";     
-        if($code == 'all'){
-            echo "<script>var jsonUrl = 'http://cgi.uru.ac.th/service/hgis_accident_service.php?procode=".$code."'</script>";
-            echo "<script>var chkLoc = '".$code."'; var lon = ".$lon."; var lat = ".$lat."; var zoom = 8; var cql='prov_code=".$code."';</script>";
-        }else{
-            echo "<script>var jsonUrl = 'http://cgi.uru.ac.th/service/hgis_accident_service.php?ampcode=".$code."'</script>";
-            echo "<script>var chkLoc = '".$code."'; var lon = ".$lon."; var lat = ".$lat."; var zoom = 9; var cql='amp_code=".$code."';</script>";
-        }
+        $lat = $_GET['lat'];      
+        
+        echo "<script>var jsonUrl = 'http://cgi.uru.ac.th/service/hgis_accident_service.php?ampcode=".$code."'</script>";
+        echo "<script>var chkLoc = '".$code."'; var lon = ".$lon."; var lat = ".$lat."; var zoom = 11; var cql='amp_code=".$code."';</script>";
+        
     }else if(isset($_GET['tamcode'])){
         $code = $_GET['tamcode'];
         $lon = $_GET['lon'];        
-        $lat = $_GET['lat'];             
-        echo "<script>alert(.$lon."-".$lat.)</script>";        
-        if($code == 'all'){
-            echo "<script>var jsonUrl = 'http://cgi.uru.ac.th/service/hgis_accident_service.php?ampcode=".$code."'</script>";
-            echo "<script>var chkLoc = '".$code."'; var lon = ".$lon."; var lat = ".$lat."; var zoom = 8; var cql='amp_code=".$code."';</script>";
-        }else{
-            echo "<script>var jsonUrl = 'http://cgi.uru.ac.th/service/hgis_accident_service.php?tamcode=".$code."'</script>";
-            echo "<script>var chkLoc = '".$code."'; var lon = ".$lon."; var lat = ".$lat."; var zoom = 9; var cql='tam_code=".$code."';</script>";
-        }
+        $lat = $_GET['lat'];   
+        
+        echo "<script>var jsonUrl = 'http://cgi.uru.ac.th/service/hgis_accident_service.php?tamcode=".$code."'</script>";
+        echo "<script>var chkLoc = '".$code."'; var lon = ".$lon."; var lat = ".$lat."; var zoom = 12; var cql='tam_code=".$code."';</script>";
+        
     }else{
         echo "<script>var jsonUrl = 'http://cgi.uru.ac.th/service/hgis_accident_service.php'</script>";
-        echo "<script>var prov_code = 'all'; var lon = 99.85; var lat = 16.8; var zoom = 8</script>";
+        echo "<script>var chkLoc = 'all'; var lon = 99.85; var lat = 16.8; var zoom = 8</script>";
     }
 
    
