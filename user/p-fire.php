@@ -205,18 +205,18 @@ $strpg = "SELECT * FROM user_profile  WHERE email_user = '".$_SESSION['email_use
                                       <label for="exampleSelect2">ช่วงเวลา</label>
                                       <select  class="form-control" id="exampleSelect2" name="date_end" onChange="this.form.submit();">
                                         <option value="2016/03/31">ณ วันนี้</option>
-                                        <option value="2016/02/28">7 วันล่าสุด</option>
-                                        <option value="2016/01/31">14 วันล่าสุด</option>
-                                        <option value="2015/12/31">30 วันล่าสุด</option>
-                                        <option value="2015/11/31">60 วันล่าสุด</option>
-                                        <option value="2015/10/31">90 วันล่าสุด</option>
+                                        <option value="2016/03/20">7 วันล่าสุด</option>
+                                        <option value="2016/03/10">14 วันล่าสุด</option>
+                                        <option value="2016/03/01">30 วันล่าสุด</option>
+                                        <option value="2016/02/25">60 วันล่าสุด</option>
+                                        <option value="2016/02/15">90 วันล่าสุด</option>
                                       </select>
                                     </div>
                                  <div class="form-group">
                                       <label for="exampleSelect2">ดาวเทียม</label>
                                       <select  class="form-control" id="exampleSelect2" name="satte" onChange="this.form.submit();">
-                                        <option>Aqua</option>
                                         <option>Terra</option>
+                                        <option>Aqua</option>
                                       </select>
                                     </div> <hr> 
                                  <label class="checkbox">
@@ -230,7 +230,7 @@ $strpg = "SELECT * FROM user_profile  WHERE email_user = '".$_SESSION['email_use
 
                     <div class="col-md-8">
                         <div class="card">
-                               <iframe src="map_hotspot.php" name="map_fire" frameborder="0" width="100%" height="750px"></iframe>
+                               <iframe src="map_hotspot.php?show_point=1" name="map_fire" frameborder="0" width="100%" height="750px"></iframe>
                             
                         </div>
                     </div>

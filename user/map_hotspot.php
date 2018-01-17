@@ -31,7 +31,7 @@ $tambon_name = $_GET[tambon_name];
 $date  = $_GET[date];
 $satte = $_GET[satte];
 $show_point = $_GET[show_point];
-//$date_start = date("Y/m/d");
+//$date_start = date("Y/m/d");$_GET[date_end]
 $date_end = $_GET[date_end];
 $satte = $_GET[satte];
 $show_point = $_GET[show_point];
@@ -39,10 +39,6 @@ $show_point = $_GET[show_point];
 
 $date_start =  "2016/03/31" ;
 
-
-if ($date_end == '') {
-   $date_end == '2016/03/0' ;
-}
 
 ?>
 <head>
@@ -161,8 +157,8 @@ if ($date_end == '') {
 
     // Retrieve start point
     // Connect to database
-
-    $sql = "select count(*),a.pv_tn, a.pv_code,ST_AsGeoJSON(b.geom) AS geojson 
+    if ($date_end !=  '') {
+         $sql = "select count(*),a.pv_tn, a.pv_code,ST_AsGeoJSON(b.geom) AS geojson 
             from fire_archive  a
             inner join  province_sim b on a.pv_code = b.pv_code
             where a.pv_tn like '%$prov_name' 
@@ -173,6 +169,21 @@ if ($date_end == '') {
 
             group by a.pv_code,b.geom ,a.pv_tn
             ; ";
+        }else{
+            $sql = "select count(*),a.pv_tn, a.pv_code,ST_AsGeoJSON(b.geom) AS geojson 
+            from fire_archive  a
+            inner join  province_sim b on a.pv_code = b.pv_code
+            where a.pv_tn like '%$prov_name' 
+            and a.ap_tn  like '%$amphoe_name'
+            and  a.tb_tn like '%$tambon_name'
+            and acq_date = '$date_start'
+            and  satellite like  '%$satte'
+
+            group by a.pv_code,b.geom ,a.pv_tn
+            ; ";
+        }
+
+   
 
    // Perform database query
    $query = pg_query($db,$sql);   
@@ -233,22 +244,32 @@ if ($date_end == '') {
 
 
 
-        <?php if( $show_point == 1) {} else{echo "/*";}?>
+        <?php if( $show_point == 1) {} else{echo "/*";} ?>
 
         var redIcon = L.icon({
             iconUrl: '../img/fire_icon2.gif',
             iconSize: [15, 15],
         });
         var planes = [<?php
-            $result5 = pg_query($db,"
+
+    if ($date_end !=  '') {
+              $result5 = pg_query($db,"
                 SELECT  * from fire_archive a
                 where a.pv_tn like '%$prov_name' 
                 and a.ap_tn  like '%$amphoe_name'
                 and  a.tb_tn like '%$tambon_name'
                 and acq_date between '$date_end' and '$date_start'
-                and  satellite like  '%$satte'
+                and  satellite like  '%$satte';");
+        }else{
+                $result5 = pg_query($db,"
+                SELECT  * from fire_archive a
+                where a.pv_tn like '%$prov_name' 
+                and a.ap_tn  like '%$amphoe_name'
+                and  a.tb_tn like '%$tambon_name'
+                and acq_date = '$date_start'
+                and  satellite like  '%$satte';");
+        }
 
-                ;");
             while ($row5 = pg_fetch_array($result5)) { ?> [<?php echo "$row5[latitude]",",","$row5[longitude]"; ?>], <?php } ?>];
 
         for (var i = 0; i < planes.length; i++) {
