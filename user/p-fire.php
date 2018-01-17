@@ -81,7 +81,7 @@ $strpg = "SELECT * FROM user_profile  WHERE email_user = '".$_SESSION['email_use
     </script>
 
 </head>
-<body>
+<body  onload="document.form1.submit()">
 
 <div class="wrapper">
     <div class="sidebar" data-color="blue" data-image="assets/img/sidebar-1.jpg">
@@ -176,6 +176,7 @@ $strpg = "SELECT * FROM user_profile  WHERE email_user = '".$_SESSION['email_use
                                 <h4 class="title">เลือกข้อมูล</h4>
                             </div>
                             <div class="content">
+                                <form action="map_hotspot.php" target="map_fire" name="form1">
                                  <div class="form-group">
                                                 <label class="col-md-12">จังหวัด</label>
                                             <span id="prov_name">
@@ -202,34 +203,52 @@ $strpg = "SELECT * FROM user_profile  WHERE email_user = '".$_SESSION['email_use
                                             </div>
                                  <div class="form-group">
                                       <label for="exampleSelect2">ช่วงเวลา</label>
-                                      <select  class="form-control" id="exampleSelect2">
-                                        <option>ณ วันนี้</option>
-                                        <option>7 วันล่าสุด</option>
-                                        <option>14 วันล่าสุด</option>
-                                        <option>30 วันล่าสุด</option>
-                                        <option>60 วันล่าสุด</option>
-                                        <option>90 วันล่าสุด</option>
+                                      <select  class="form-control" id="exampleSelect2" name="date_end" onChange="this.form.submit();">
+                                        <option value="<?php $current_date = new DateTime();
+                                                $current_date -> modify ("-730 day");
+                                                echo  $current_date->format('m/d/Y');
+                                            ?>">ณ วันนี้</option>
+                                        <option value="<?php $current_date = new DateTime();
+                                                $current_date -> modify ("-737 day");
+                                                echo  $current_date->format('m/d/Y');
+                                            ?>">7 วันล่าสุด</option>
+                                        <option value="<?php $current_date = new DateTime();
+                                                $current_date -> modify ("-744 day");
+                                                echo  $current_date->format('m/d/Y');
+                                            ?>">14 วันล่าสุด</option>
+                                        <option value="<?php $current_date = new DateTime();
+                                                $current_date -> modify ("-760 day");
+                                                echo  $current_date->format('m/d/Y');
+                                            ?>">30 วันล่าสุด</option>
+                                        <option value="<?php $current_date = new DateTime();
+                                                $current_date -> modify ("-790 day");
+                                                echo  $current_date->format('m/d/Y');
+                                            ?>">60 วันล่าสุด</option>
+                                        <option value="<?php $current_date = new DateTime();
+                                                $current_date -> modify ("-820 day");
+                                                echo  $current_date->format('m/d/Y');
+                                            ?>">90 วันล่าสุด</option>
                                       </select>
                                     </div>
                                  <div class="form-group">
                                       <label for="exampleSelect2">ดาวเทียม</label>
-                                      <select  class="form-control" id="exampleSelect2">
+                                      <select  class="form-control" id="exampleSelect2" name="satte" onChange="this.form.submit();">
                                         <option>Aqua</option>
                                         <option>Terra</option>
                                       </select>
                                     </div> <hr> 
                                  <label class="checkbox">
-                                   <input type="checkbox" data-toggle="checkbox" value="1" name="distyp_1"  checked="">
+                                   <input type="checkbox" data-toggle="checkbox" value="1" name="show_point"  onChange="this.form.submit();"  checked="">
                                         แสดงจุดตำแหน่งการเผา
                                  </label>
-
+                                </form>
                             </div>
                         </div>
                     </div>
 
                     <div class="col-md-8">
                         <div class="card">
-                               <iframe src="map_hotspot.php" frameborder="0" width="100%" height="750px"></iframe>
+                               <iframe src="map_hotspot.php" name="map_fire" frameborder="0" width="100%" height="750px"></iframe>
                             
                         </div>
                     </div>

@@ -24,6 +24,23 @@ $strpg = "SELECT * FROM user_profile  WHERE email_user = '".$_SESSION['email_use
     }
 
 
+
+$prov_name = $_GET[prov_name];
+$amphoe_name = $_GET[amphoe_name];
+$tambon_name = $_GET[tambon_name];
+$date  = $_GET[date];
+$satte = $_GET[satte];
+$show_point = $_GET[show_point];
+//$date_start = date("Y/m/d");
+$date_end = $_GET[date_end];
+$satte = $_GET[satte];
+$show_point = $_GET[show_point];
+
+
+$current_date = new DateTime();
+$current_date -> modify ("-730 day");
+$date_start =  $current_date->format('m/d/Y');
+
 ?>
 <head>
     <meta charset="utf-8" />
@@ -142,9 +159,17 @@ $strpg = "SELECT * FROM user_profile  WHERE email_user = '".$_SESSION['email_use
     // Retrieve start point
     // Connect to database
 
-    $sql = "select *,ST_AsGeoJSON(geom) AS geojson from obec_data a full join province_sim b on a.prov_code = b.pv_code where re_royin like '%$reg' ; ";
-   
+    $sql = "select count(*),a.pv_tn, a.pv_code,ST_AsGeoJSON(b.geom) AS geojson 
+            from fire_archive  a
+            inner join  province_sim b on a.pv_code = b.pv_code
+            where a.pv_tn like '%$prov_name' 
+            and a.ap_tn  like '%$amphoe_name'
+            and  a.tb_tn like '%$tambon_name'
+            and acq_date between '$date_end' and '$date_start'
+            and  satellite =  '$satte'
 
+            group by a.pv_code,b.geom ,a.pv_tn
+            ; ";
 
    // Perform database query
    $query = pg_query($db,$sql);   
@@ -168,8 +193,8 @@ $strpg = "SELECT * FROM user_profile  WHERE email_user = '".$_SESSION['email_use
             'gid' => $edge['gid'],
             'pv_code' => $edge['pv_code'],
             'prov_nam_t' => $edge['pv_tn'],
-            'value_sum' => $edge['std_ped'],
-            'value' => number_format($edge['std_ped'])
+            'value_sum' => $edge['count'],
+            'value' => number_format($edge['count'])
          )
       );
       
@@ -188,24 +213,59 @@ $strpg = "SELECT * FROM user_profile  WHERE email_user = '".$_SESSION['email_use
 
     <script type="text/javascript">
 
-    <?php 
-    $reg = $_GET['reg'];
-    $sql2 = "select *,ST_AsGeoJSON(geom) AS geojson from fire_archive  limit 10 ; ";
-    $query2 = pg_query($db,$sql2);
-    $arr = pg_fetch_array($query2); 
-    ?>
-
 
     var map = L.map('map');
-    var OpenStreetMap_BlackAndWhite = L.tileLayer('http://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
-	maxZoom: 17,
-	attribution: 'Map data: &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
+    var OpenStreetMap_BlackAndWhite =  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 });
         
+
+
     OpenStreetMap_BlackAndWhite.addTo(map);
-    map.setView([13.477466,101.587609],6);
+    map.setView([19.043806, 100.069754],8);
     
     
+
+
+
+
+        <?php if( $show_point == 1) {} else{echo "/*";}?>
+
+        var redIcon = L.icon({
+            iconUrl: '../img/fire_icon2.gif',
+            iconSize: [15, 15],
+        });
+        var planes = [<?php
+            $result5 = pg_query($db,"
+                SELECT  * from fire_archive a
+                where a.pv_tn like '%$prov_name' 
+                and a.ap_tn  like '%$amphoe_name'
+                and  a.tb_tn like '%$tambon_name'
+                and acq_date between '$date_end' and '$date_start'
+                and  satellite =  '$satte'
+
+                ;");
+            while ($row5 = pg_fetch_array($result5)) { ?> [<?php echo "$row5[latitude]",",","$row5[longitude]"; ?>], <?php } ?>];
+
+        for (var i = 0; i < planes.length; i++) {
+            marker = new L.marker([planes[i][0], planes[i][1]], {
+                    icon: redIcon
+                })
+                .addTo(map);
+        }
+
+        <?php if( $show_point == 1) {} else{echo "*/" ;}?>
+
+
+
+
+
+
+
+
+
+
 
         // control that shows state info on hover
         var info = L.control();
@@ -229,17 +289,16 @@ $strpg = "SELECT * FROM user_profile  WHERE email_user = '".$_SESSION['email_use
 
 
 
-        function getColor(d) {
-                    return  d > 1499 ? '#133926' :
-                            d > 1199 ? '#206040' :
-                            d > 999  ? '#2d8659' :
-                            d > 799  ? '#39ac73' :
-                            d > 599  ? '#53c68c' :
-                            d > 399  ? '#79d2a6' :
-                            d > 199  ? '#9fdfbf' :
-                            d > 0    ? '#c6ecd9' :
-                                        '#ecf9f2';
-        }
+       function getColor(d) {
+    return d > 1000 ? '#800026' :
+           d > 500  ? '#BD0026' :
+           d > 200  ? '#E31A1C' :
+           d > 100  ? '#FC4E2A' :
+           d > 50   ? '#FD8D3C' :
+           d > 20   ? '#FEB24C' :
+           d > 10   ? '#FED976' :
+                      '#FFEDA0';
+}
 
 
 
@@ -299,11 +358,11 @@ $strpg = "SELECT * FROM user_profile  WHERE email_user = '".$_SESSION['email_use
 
 
 
-        var legend = L.control({position: 'bottomleft'});
+        var legend = L.control({position: 'bottomright'});
 
         legend.onAdd = function (map) {
                 var div = L.DomUtil.create('div', 'info legend'),
-                      grades = [0, 200, 400, 600, 800, 1000, 1200, 1500],
+                      grades = [0, 10, 20, 50, 100, 200, 500, 1000],
                     labels = [],
                     from, to;
 
