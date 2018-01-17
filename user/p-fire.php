@@ -81,7 +81,7 @@ $strpg = "SELECT * FROM user_profile  WHERE email_user = '".$_SESSION['email_use
     </script>
 
 </head>
-<body  onload="document.form1.submit()">
+<body>
 
 <div class="wrapper">
     <div class="sidebar" data-color="blue" data-image="assets/img/sidebar-1.jpg">
@@ -204,30 +204,12 @@ $strpg = "SELECT * FROM user_profile  WHERE email_user = '".$_SESSION['email_use
                                  <div class="form-group">
                                       <label for="exampleSelect2">ช่วงเวลา</label>
                                       <select  class="form-control" id="exampleSelect2" name="date_end" onChange="this.form.submit();">
-                                        <option value="<?php $current_date = new DateTime();
-                                                $current_date -> modify ("-730 day");
-                                                echo  $current_date->format('m/d/Y');
-                                            ?>">ณ วันนี้</option>
-                                        <option value="<?php $current_date = new DateTime();
-                                                $current_date -> modify ("-737 day");
-                                                echo  $current_date->format('m/d/Y');
-                                            ?>">7 วันล่าสุด</option>
-                                        <option value="<?php $current_date = new DateTime();
-                                                $current_date -> modify ("-744 day");
-                                                echo  $current_date->format('m/d/Y');
-                                            ?>">14 วันล่าสุด</option>
-                                        <option value="<?php $current_date = new DateTime();
-                                                $current_date -> modify ("-760 day");
-                                                echo  $current_date->format('m/d/Y');
-                                            ?>">30 วันล่าสุด</option>
-                                        <option value="<?php $current_date = new DateTime();
-                                                $current_date -> modify ("-790 day");
-                                                echo  $current_date->format('m/d/Y');
-                                            ?>">60 วันล่าสุด</option>
-                                        <option value="<?php $current_date = new DateTime();
-                                                $current_date -> modify ("-820 day");
-                                                echo  $current_date->format('m/d/Y');
-                                            ?>">90 วันล่าสุด</option>
+                                        <option value="2016/03/31">ณ วันนี้</option>
+                                        <option value="2016/02/28">7 วันล่าสุด</option>
+                                        <option value="2016/01/31">14 วันล่าสุด</option>
+                                        <option value="2015/12/31">30 วันล่าสุด</option>
+                                        <option value="2015/11/31">60 วันล่าสุด</option>
+                                        <option value="2015/10/31">90 วันล่าสุด</option>
                                       </select>
                                     </div>
                                  <div class="form-group">

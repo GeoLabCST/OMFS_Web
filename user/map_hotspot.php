@@ -37,9 +37,12 @@ $satte = $_GET[satte];
 $show_point = $_GET[show_point];
 
 
-$current_date = new DateTime();
-$current_date -> modify ("-730 day");
-$date_start =  $current_date->format('m/d/Y');
+$date_start =  "2016/03/31" ;
+
+
+if ($date_end == '') {
+   $date_end == '2016/03/0' ;
+}
 
 ?>
 <head>
@@ -166,7 +169,7 @@ $date_start =  $current_date->format('m/d/Y');
             and a.ap_tn  like '%$amphoe_name'
             and  a.tb_tn like '%$tambon_name'
             and acq_date between '$date_end' and '$date_start'
-            and  satellite =  '$satte'
+            and  satellite like  '%$satte'
 
             group by a.pv_code,b.geom ,a.pv_tn
             ; ";
@@ -243,7 +246,7 @@ $date_start =  $current_date->format('m/d/Y');
                 and a.ap_tn  like '%$amphoe_name'
                 and  a.tb_tn like '%$tambon_name'
                 and acq_date between '$date_end' and '$date_start'
-                and  satellite =  '$satte'
+                and  satellite like  '%$satte'
 
                 ;");
             while ($row5 = pg_fetch_array($result5)) { ?> [<?php echo "$row5[latitude]",",","$row5[longitude]"; ?>], <?php } ?>];
