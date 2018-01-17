@@ -373,7 +373,7 @@ $date_start =  $current_date->format('m/d/Y');
 
                 labels.push(
                     '<i style="background:' + getColor(from + 1) + '"></i> ' +
-                    from + (to ? '&ndash;' + to : '+')+ ' คน');
+                    from + (to ? '&ndash;' + to : '+')+ ' จุด');
             }
 
             div.innerHTML = labels.join('<br>');
