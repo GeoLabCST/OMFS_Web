@@ -279,7 +279,7 @@ $date_start =  $current_date->format('m/d/Y');
         
         info.update = function (props) {
             this._div.innerHTML = '<h5>แผนที่แสดงข้อมูล</h5>' +  (props ?
-                '<b><center>' + props.prov_nam_t + '</b><br />' + props.value + ' คน'
+                '<b><center>' + props.prov_nam_t + '</b><br />' + props.value + ' จุด'
                 : '');
         };
         info.addTo(map);
@@ -342,7 +342,7 @@ $date_start =  $current_date->format('m/d/Y');
         }
 
         function onEachFeature(feature, layer) {
-             var popupContent = '<b>จังหวัด ' + feature.properties.prov_nam_t + '</b><br>' + feature.properties.value_sum + ' คน' ;
+             var popupContent = '<b>จังหวัด ' + feature.properties.prov_nam_t + '</b><br>' + feature.properties.value_sum + ' จุด' ;
             layer.bindPopup(popupContent);
              layer.on({
                 mouseover: highlightFeature,
