@@ -76,7 +76,7 @@
     header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
     header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With");
 
-$setDefault = '<script>var center = "11140015,1901789";
+$setDefault = '<script>var center = "11152624.218,2170744.048";
 		var zoom = 8;
 		var filter_pro = null;
 		var filter_amp = null;

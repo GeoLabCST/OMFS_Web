@@ -780,7 +780,7 @@ Heron.scratch.layermap = {
       c38_forestzoning: new OpenLayers.Layer.WMS(
                     "ผลการจำแนกเขตการใช้ประโยชน์พื้นที่ป่า",
                     Heron.scratch.urls.OWS,
-                    {layers: "omfs:c38_forestzoning", transparent: true, format: 'image/png'},
+                    { layers: "omfs:c38_forestzoning", cql_filter: filter_tam, transparent: true, format: 'image/png'},
                     {singleTile: true, opacity: 0.9, isBaseLayer: false, visibility: false, noLegend: false,
         			featureInfoFormat: 'application/vnd.ogc.gml', transitionEffect: 'null', metadata: {
 						wfs: {
