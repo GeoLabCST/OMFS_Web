@@ -344,7 +344,7 @@ $date_start =  "2016/03/31" ;
                 weight: 5,
                 color: 'white',
                 dashArray: '',
-                fillOpacity: 0.9
+                fillOpacity: 0.3
             });
 
             if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
