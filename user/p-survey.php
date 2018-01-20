@@ -182,7 +182,7 @@ $strpg = "SELECT * FROM user_profile  WHERE iden_number = '".$_SESSION['iden_num
                                 <h4 class="title">เลือกข้อมูล</h4>
                             </div>
                             <div class="content">
-                                <form action="map_hotspot.php" target="map_fire" name="form1">
+                                <form action="map_survey.php" target="map_fire" name="form1">
                                  <div class="form-group">
                                                 <label class="col-md-12">จังหวัด</label>
                                             <span id="prov_name">
@@ -209,20 +209,11 @@ $strpg = "SELECT * FROM user_profile  WHERE iden_number = '".$_SESSION['iden_num
                                             </div>
                                  <div class="form-group">
                                       <label for="exampleSelect2">ช่วงเวลาเริ่มต้น</label>
-                                            <input type="date" class="form-control" id="myDate1" value="2016-01-01" onChange="this.form.submit();" name="date_start">
+                                            <input type="date" class="form-control" id="myDate1" value="2018-01-01" onChange="this.form.submit();" name="date_start">
                                     </div>
                                  <div class="form-group">
                                       <label for="exampleSelect2">ช่วงเวลาสิ้นสุด</label>
-                                            <input type="date" class="form-control" id="myDate2" value="2016-02-01" onChange="this.form.submit();" name="date_end">
-                                    </div>
-
-
-                                 <div class="form-group">
-                                      <label for="exampleSelect2">ดาวเทียม</label>
-                                      <select  class="form-control" id="exampleSelect2" name="satte" onChange="this.form.submit();">
-                                        <option>Terra</option>
-                                        <option>Aqua</option>
-                                      </select>
+                                            <input type="date" class="form-control" id="myDate2" value="2018-01-20" onChange="this.form.submit();" name="date_end">
                                     </div> <hr> 
                                  <label class="checkbox">
                                    <input type="checkbox" data-toggle="checkbox" value="1" name="show_point"  onChange="this.form.submit();"  checked="">
@@ -297,8 +288,8 @@ $strpg = "SELECT * FROM user_profile  WHERE iden_number = '".$_SESSION['iden_num
 
 <script>
 function myFunction() {
-    document.getElementById("myDate1").defaultValue = "2016-01-01";
-    document.getElementById("myDate2").defaultValue = "2016-02-01";
+    document.getElementById("myDate1").defaultValue = "2018-01-01";
+    document.getElementById("myDate2").defaultValue = "2018-01-20";
 }
 </script>
 

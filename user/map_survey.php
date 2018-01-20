@@ -157,7 +157,7 @@ $show_point = $_GET[show_point];
     // Connect to database
     if ($date_end !=  '') {
 
-        if ($prov_name == '') {
+         if ($prov_name == '') {
               $sql = "select count(*),a.pv_tn, a.pv_code,ST_AsGeoJSON(b.geom) AS geojson 
             from v_fire_report  a
             inner join  province_sim b on a.pv_code = b.pv_code
@@ -165,8 +165,8 @@ $show_point = $_GET[show_point];
             and a.ap_tn  like '%$amphoe_name'
             and  a.tb_tn like '%$tambon_name'
             and acq_date between '$date_start' and '$date_end'
-            
-            group by a.pv_code,b.geom ,a.pv_tn; ";
+            group by a.pv_code,b.geom ,a.pv_tn
+            ; ";
         }elseif ($prov_name != '' and $amphoe_name == '') {
             $sql = "select count(*),a.pv_tn, a.pv_code,ST_AsGeoJSON(b.geom) AS geojson 
             from v_fire_report  a
@@ -175,8 +175,28 @@ $show_point = $_GET[show_point];
             and a.ap_tn  like '%$amphoe_name'
             and  a.tb_tn like '%$tambon_name'
             and acq_date between '$date_start' and '$date_end'
-            
-            group by a.pv_code,b.geom ,a.pv_tn; ";
+            group by a.pv_code,b.geom ,a.pv_tn
+            ; ";
+        }elseif ($prov_name != '' and $amphoe_name != '' and $tambon_name == '') {
+            $sql = "select count(*),a.pv_tn,a.ap_tn, a.pv_code,ST_AsGeoJSON(b.geom) AS geojson 
+            from v_fire_report  a
+            inner join  amphoe_sim b on a.ap_code = b.ap_code
+            where a.pv_tn like '%$prov_name' 
+            and a.ap_tn  like '%$amphoe_name'
+            and  a.tb_tn like '%$tambon_name'
+            and acq_date between '$date_start' and '$date_end'
+            group by a.ap_code,b.geom ,a.pv_tn,a.ap_tn, a.pv_code
+            ; ";
+        }elseif ($prov_name != '' and $amphoe_name != '' and $tambon_name != '') {
+            $sql = "select count(*),a.pv_tn,a.ap_tn,a.tb_tn, a.pv_code,ST_AsGeoJSON(b.geom) AS geojson 
+            from v_fire_report  a
+            inner join  tambon_sim b on a.tb_code = b.tb_code
+            where a.pv_tn like '%$prov_name' 
+            and a.ap_tn  like '%$amphoe_name'
+            and  a.tb_tn like '%$tambon_name'
+            and acq_date between '$date_start' and '$date_end'
+            group by a.ap_code,b.geom ,a.pv_tn,a.ap_tn, a.pv_code,a.tb_tn
+            ; ";
         }
        
         }else{
@@ -186,7 +206,7 @@ $show_point = $_GET[show_point];
             where a.pv_tn like '%$prov_name' 
             and a.ap_tn  like '%$amphoe_name'
             and  a.tb_tn like '%$tambon_name'
-            and acq_date = '2016/04/03'            
+            and acq_date = '2018/01/20'            
 
             group by a.pv_code,b.geom ,a.pv_tn; ";
         }
@@ -242,10 +262,50 @@ $show_point = $_GET[show_point];
 	    subdomains:['mt0','mt1','mt2','mt3']
 	}).addTo(map);
         
+<?php
+    if ($prov_name == '') {
+        $lat = 19.043806 ;
+        $lon = 100.069754;
+        $zoom = 8;
 
+    
+    }elseif ($prov_name != '' and $amphoe_name == '' ) {
+           $sql = "SELECT  ST_Y( st_centroid(geom)) as lat ,ST_x( st_centroid(geom)) as lon
+        FROM province 
+        where pv_tn like '%$prov_name' ;";
+         $result = pg_query($sql);
+        $arr = pg_fetch_array($result);
+        $lat = $arr['lat'] ;  
+        $lon = $arr['lon'] ;
+        $zoom = '9' ;
+     }elseif ($prov_name != '' and $amphoe_name != '' and $tambon_name == '' ) {
+         $sql = "SELECT  ST_Y( st_centroid(geom)) as lat ,ST_x( st_centroid(geom)) as lon
+        FROM amphoe 
+        where pv_tn like '%$prov_name' 
+        and ap_tn  like '%$amphoe_name';";
+         $result = pg_query($sql);
+        $arr = pg_fetch_array($result);
+        $lat = $arr['lat'] ;  
+        $lon = $arr['lon'] ;
+        $zoom = '10' ;
+     }elseif ($prov_name != '' and $amphoe_name != '' and $tambon_name != '' ) {
+         $sql = "SELECT  ST_Y( st_centroid(geom)) as lat ,ST_x( st_centroid(geom)) as lon
+        FROM tambon 
+        where pv_tn like '%$prov_name' 
+        and ap_tn  like '%$amphoe_name'
+        and  tb_tn like '%$tambon_name';";
+         $result = pg_query($sql);
+        $arr = pg_fetch_array($result);
+        $lat = $arr['lat'] ;  
+        $lon = $arr['lon'] ;
+        $zoom = '11' ;
+     }
+
+   
+?>
 
     OpenStreetMap_BlackAndWhite.addTo(map);
-    map.setView([19.043806, 100.069754],8); 
+    map.setView([<?php echo $lat ?>, <?php echo $lon ?>],<?php echo $zoom ?>); 
     
 
 
@@ -272,10 +332,10 @@ $show_point = $_GET[show_point];
                 where a.pv_tn like '%$prov_name' 
                 and a.ap_tn  like '%$amphoe_name'
                 and  a.tb_tn like '%$tambon_name'
-                and acq_date = '2016/04/03';");
+                and acq_date = '2018/01/20';");
         }
 
-            while ($row5 = pg_fetch_array($result5)) { ?> [<?php echo "$row5[latitude]",",","$row5[longitude]"; ?>], <?php } ?>];
+            while ($row5 = pg_fetch_array($result5)) { ?> [<?php echo "$row5[lat]",",","$row5[lon]"; ?>], <?php } ?>];
 
         for (var i = 0; i < planes.length; i++) {
             marker = new L.marker([planes[i][0], planes[i][1]], {
