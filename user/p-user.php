@@ -56,8 +56,8 @@ $strpg = "SELECT * FROM user_profile  WHERE iden_number = '".$_SESSION['iden_num
     <link href="assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
  <script language=Javascript>
         function Inint_AJAX() {
-           try { return new ActiveXObject("Msxml2.XMLHTTP");  } catch(e) {} 
-           try { return new ActiveXObject("Microsoft.XMLHTTP"); } catch(e) {} 
+           try { return new ActiveXObject("Msxml2.XMLHTTP");  } catch(e) {}
+           try { return new ActiveXObject("Microsoft.XMLHTTP"); } catch(e) {}
            try { return new XMLHttpRequest();          } catch(e) {}
            alert("XMLHttpRequest not supported");
            return null;
@@ -65,19 +65,19 @@ $strpg = "SELECT * FROM user_profile  WHERE iden_number = '".$_SESSION['iden_num
 
         function dochange(src, val) {
              var req = Inint_AJAX();
-             req.onreadystatechange = function () { 
+             req.onreadystatechange = function () {
                   if (req.readyState==4) {
                        if (req.status==200) {
-                            document.getElementById(src).innerHTML=req.responseText; 
-                       } 
+                            document.getElementById(src).innerHTML=req.responseText;
+                       }
                   }
              };
-             req.open("GET", "assets/location_user.php?data="+src+"&val="+val); 
-             req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=utf-8"); 
-             req.send(null); 
+             req.open("GET", "assets/location_user.php?data="+src+"&val="+val);
+             req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
+             req.send(null);
         }
 
-        window.onLoad=dochange('prov_name', -1);  
+        window.onLoad=dochange('prov_name', -1);
     </script>
 
 </head>
@@ -87,12 +87,12 @@ $strpg = "SELECT * FROM user_profile  WHERE iden_number = '".$_SESSION['iden_num
 
 $error = '';
 $success = '';
- 
-if( isset( $_POST['task']) && 'upload' == $_POST['task'] ) 
+
+if( isset( $_POST['task']) && 'upload' == $_POST['task'] )
 {
     // get uploaded file name
     $image = $_FILES["file"]["name"];
- 
+
     if( empty( $image ) ) {
         $error = 'File is empty, please select image to upload.';
     } else if($_FILES["file"]["type"] == "application/msword") {
@@ -100,26 +100,26 @@ if( isset( $_POST['task']) && 'upload' == $_POST['task'] )
     } else if( $_FILES["file"]["error"] > 0 ) {
         $error = 'Oops sorry, seems there is an error uploading your image, please try again later.';
     } else {
-    
+
         // strip file slashes in uploaded file, although it will not happen but just in case ;)
         $filename = stripslashes( $_FILES['file']['name'] );
         $ext = get_file_extension( $filename );
         $ext = strtolower( $ext );
-        
+
         if(( $ext != "jpg" ) && ( $ext != "jpeg" ) && ( $ext != "png" ) && ( $ext != "gif" ) ) {
             $error = 'Unknown Image extension.';
             return false;
         } else {
             // get uploaded file size
             $size = filesize( $_FILES['file']['tmp_name'] );
-            
+
             // get php ini settings for max uploaded file size
             $max_upload = ini_get( 'upload_max_filesize' );
- 
+
             // check if we're able to upload lessthan the max size
             if( $size > $max_upload )
                 $error = 'You have exceeded the upload file size.';
- 
+
             // check uploaded file extension if it is jpg or jpeg, otherwise png and if not then it goes to gif image conversion
             $uploaded_file = $_FILES['file']['tmp_name'];
             if( $ext == "jpg" || $ext == "jpeg" )
@@ -128,29 +128,29 @@ if( isset( $_POST['task']) && 'upload' == $_POST['task'] )
                 $source = imagecreatefrompng( $uploaded_file );
             else
                 $source = imagecreatefromgif( $uploaded_file );
- 
+
             // getimagesize() function simply get the size of an image
             list( $width, $height) = getimagesize ( $uploaded_file );
             $ratio = $height / $width;
- 
- 
+
+
             // new width 100 in pixel format too
             $nw1 = 450;
             $nh1 = ceil( $ratio * $nw1 );
             $dst1 = imagecreatetruecolor( $nw1, $nh1 );
- 
+
             imagecopyresampled( $dst1, $source, 0, 0, 0, 0, $nw1, $nh1, $width, $height );
- 
+
             // rename our upload image file name, this to avoid conflict in previous upload images
             // to easily get our uploaded images name we added image size to the suffix
             $rnd_name1 = 'photos_'.uniqid(mt_rand(10, 15)).'_'.time().'_450x450.'.$ext;
-            
+
             // move it to uploads dir with full quality
             imagejpeg( $dst1, '../img/pic_user/'.$rnd_name1, 100 );
- 
+
             // I think that's it we're good to clear our created images
             imagedestroy( $source );
-            imagedestroy( $dst1 ); 
+            imagedestroy( $dst1 );
 
             $showpic = "../img/pic_user/".$rnd_name1;
 
@@ -158,15 +158,15 @@ if( isset( $_POST['task']) && 'upload' == $_POST['task'] )
         $id_user = $_POST[id_user];
              // so all clear, lets save our image to database
            $is_uploaded = pg_query( "UPDATE user_profile SET pic_user ='$rnd_name1' WHERE id_user = '$id_user' ; " );
-            
-            
+
+
             if( $is_uploaded ) {
                header("Location: p-user.php");
             }
-          
- 
+
+
         }
- 
+
     }
 }
 
@@ -174,10 +174,10 @@ if( isset( $_POST['task']) && 'upload' == $_POST['task'] )
 function get_file_extension( $file )  {
     if( empty( $file ) )
         return;
- 
+
     // if goes here then good so all clear and good to go
     $ext = end(explode( ".", $file ));
- 
+
     // return file extension
     return $ext;
 }
@@ -258,12 +258,12 @@ function get_file_extension( $file )  {
                     </button>
                 </div>
                 <div class="collapse navbar-collapse">
-                   
+
 
                     <ul class="nav navbar-nav navbar-right">
                         <li>
                             <a href="../">
-                                <small> ออกจากระบบ</small>    
+                                <small> ออกจากระบบ</small>
                             </a>
                         </li>
                     </ul>
@@ -277,7 +277,7 @@ function get_file_extension( $file )  {
                 <div class="row">
                     <div class="col-md-8">
                         <div class="card">
-                            
+
 
 <ul class="nav nav-tabs">
   <li class="active"><a data-toggle="tab" href="#home">
@@ -285,7 +285,7 @@ function get_file_extension( $file )  {
          ข้อมูลผู้ใช้งาน
     </div></a></li>
   <li><a data-toggle="tab" href="#menu1"><div class="header">
-         ข้อมูล E-Mail และ Password
+         ข้อมูล Username และ Password
     </div></a></li>
 </ul>
 
@@ -316,9 +316,9 @@ function get_file_extension( $file )  {
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>email</label>  
-                                                <input type="text" class="form-control form-control-line" value="<?php echo $objResult[email_user] ?>" name="email_user"> 
-                                               
+                                                <label>email</label>
+                                                <input type="text" class="form-control form-control-line" value="<?php echo $objResult[email_user] ?>" name="email_user">
+
                                             </div>
                                         </div>
                                     </div>
@@ -358,7 +358,7 @@ function get_file_extension( $file )  {
                                         </div>
                                     </div>
 
-                                  
+
                                     <input type="hidden" name="id_user" value="<?php echo $objResult[id_user] ?>">
 
                                     <button type="submit" class="btn btn-default btn-fill pull-right">อัพเดตโปรไฟล์</button>
@@ -381,7 +381,7 @@ function get_file_extension( $file )  {
                                             <div class="col-md-12">
                                                 <input type="password" class="form-control form-control-line" value="<?php echo $objResult[pass_user] ?>" name="pass_user_new"> </div>
                                         </div>
-                                        
+
                                         <div class="form-group">
                                             <div class="col-sm-12">
                                                 <input type="hidden" name="id_user" value="<?php echo $objResult[id_user] ?>">
@@ -404,13 +404,13 @@ function get_file_extension( $file )  {
                             </div>
                             <div class="content">
                                 <div class="author">
-                                     
+
                                     <img class="avatar border-gray" src="../img/pic_user/<?php echo $objResult[pic_user]; ?>" alt="..."/>
 
                                       <h4 class="title"><?php echo $objResult[name_user],' ',$objResult[lname_user] ; ?><br />
                                          <small><?php echo $objResult[name_user]; ?></small>
                                       </h4>
-                                    
+
                                 </div>
                                 <p class="description text-center">สถานะ : <?php echo $objResult[status_user]; ?></p>
                                 <small ><p class="description text-center"><a class="btn btn-link"  data-toggle="collapse" data-target="#demo">แก้ไขรูปประจำตัว</a></p></small>
@@ -439,19 +439,19 @@ function get_file_extension( $file )  {
         </div>
 
 
-      
+
         <footer class="footer">
             <div class="container-fluid">
                 <nav class="pull-left">
                     <ul>
                         <li>
-                           
+
                         </li>
                         <li>
                             <a href=""><img src="../img/logo_footer.png" width="80px" alt=""></a>
-                            
+
                         </li>
-                       
+
                     </ul>
                 </nav>
                 <p class="copyright pull-right">
