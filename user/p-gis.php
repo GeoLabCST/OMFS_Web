@@ -173,7 +173,7 @@ $strpg = "SELECT * FROM user_profile  WHERE email_user = '".$_SESSION['email_use
                         <div class="card">
                             <div class="content">
                                 <div class="content">
-                                     <form>
+                                     <form action="../omfs_map/index_user.php" method="get" target="frame_map">
                                     <div class="row">
                                         <div class="col-md-3">
                                             <div class="form-group">
@@ -216,12 +216,8 @@ $strpg = "SELECT * FROM user_profile  WHERE email_user = '".$_SESSION['email_use
 
                     <div class="col-md-12">
                         <div class="card">
-                            <div class="header">
-                                <h4 class="title">Users Behavior</h4>
-                                <p class="category">24 Hours performance</p>
-                            </div>
                             <div class="content">
-                               sssssssssssssssssssssssssssss
+                               <iframe src="../omfs_map/index_user.php" name="frame_map" frameborder="0" width="100%" height="650px"></iframe>
                             </div>
                         </div>
                     </div>
