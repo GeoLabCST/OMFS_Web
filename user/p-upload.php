@@ -180,7 +180,6 @@ $strpg = "SELECT * FROM user_profile  WHERE iden_number = '".$_SESSION['iden_num
                                             <div class="form-group">
 <?php  
   
-pg_set_client_encoding($db, "UTF-8");
 
 if ($_FILES[csv][size] > 0) { 
 
@@ -242,7 +241,7 @@ pg_query( mb_convert_encoding($query, "UTF-8", "auto"));
                                  </div>
 
 <hr>
-                                   <table class="table"  id="example">
+                                   <table class="table"  id="example" width="100%">
                                     <caption>รายงานสถานการณ์จุดเกิดไฟป่าของท่าน</caption>
                                         <thead>
                                             <tr>
