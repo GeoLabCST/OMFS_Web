@@ -216,7 +216,7 @@ $strpg = "SELECT * FROM user_profile  WHERE iden_number = '".$_SESSION['iden_num
                                             <input type="date" class="form-control" id="myDate2" value="2018-01-20" onChange="this.form.submit();" name="date_end">
                                     </div> <hr> 
                                  <label class="checkbox">
-                                   <input type="checkbox" data-toggle="checkbox" value="1" name="show_point"  onChange="this.form.submit();"  checked="">
+                                   <input type="checkbox" data-toggle="checkbox" value="1" name="show_point"  onChange="this.form.submit();"  checked>
                                         แสดงจุดตำแหน่งการเผา
                                  </label>
                                 </form>

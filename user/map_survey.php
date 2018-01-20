@@ -23,24 +23,19 @@ $strpg = "SELECT * FROM user_profile  WHERE iden_number = '".$_SESSION['iden_num
         exit();
     }
 
-
-
-$prov_name = $_GET[prov_name];
-$amphoe_name = $_GET[amphoe_name];
-$tambon_name = $_GET[tambon_name];
-$date  = $_GET[date];
-$satte = $_GET[satte];
-$show_point = $_GET[show_point];
-//$date_start = date("Y/m/d");$_GET[date_end]
-$date_start = $_GET[date_start];
-$date_end = $_GET[date_end];
-$satte = $_GET[satte];
-$show_point = $_GET[show_point];
-
-
-
-
+	$prov_name = $_GET[prov_name];
+	$amphoe_name = $_GET[amphoe_name];
+	$tambon_name = $_GET[tambon_name];
+	$date  = $_GET[date];
+	$satte = $_GET[satte];
+	$show_point = $_GET[show_point];
+	//$date_start = date("Y/m/d");$_GET[date_end]
+	$date_start = $_GET[date_start];
+	$date_end = $_GET[date_end];
+	$satte = $_GET[satte];
+	$show_point = $_GET[show_point];
 ?>
+
 <head>
     <meta charset="utf-8" />
     <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
@@ -112,7 +107,6 @@ $show_point = $_GET[show_point];
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
 
@@ -141,7 +135,7 @@ $show_point = $_GET[show_point];
 
 
     
-    <script type="text/javascript">
+<script type="text/javascript">
     var OBECData =    <?php
 //-------------------------------------------------------------
 // * Name: PHP-PostGIS2GeoJSON  
@@ -305,17 +299,13 @@ $show_point = $_GET[show_point];
 ?>
 
     OpenStreetMap_BlackAndWhite.addTo(map);
-    map.setView([<?php echo $lat ?>, <?php echo $lon ?>],<?php echo $zoom ?>); 
-    
-
-
-
+    map.setView([<?php echo $lat ?>, <?php echo $lon ?>],<?php echo $zoom ?>);   
 
         <?php if( $show_point == 1) {} else{echo "/*";} ?>
 
         var redIcon = L.icon({
-            iconUrl: '../img/fire_icon2.gif',
-            iconSize: [15, 15],
+            iconUrl: '../img/fire5.gif',
+            iconSize: [20, 27],
         });
         var planes = [<?php
 
@@ -371,15 +361,15 @@ $show_point = $_GET[show_point];
 
 
        function getColor(d) {
-    return d > 1000 ? '#800026' :
-           d > 500  ? '#BD0026' :
-           d > 200  ? '#E31A1C' :
-           d > 100  ? '#FC4E2A' :
-           d > 50   ? '#FD8D3C' :
-           d > 20   ? '#FEB24C' :
-           d > 10   ? '#FED976' :
-                      '#FFEDA0';
-}
+		    return d > 1000 ? '#800026' :
+		           d > 500  ? '#BD0026' :
+		           d > 200  ? '#E31A1C' :
+		           d > 100  ? '#FC4E2A' :
+		           d > 50   ? '#FD8D3C' :
+		           d > 20   ? '#FEB24C' :
+		           d > 10   ? '#FED976' :
+		                      '#FFEDA0';
+		}
 
 
 
