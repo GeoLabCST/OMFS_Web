@@ -20,9 +20,7 @@
     <script src='https://unpkg.com/leaflet.gridlayer.googlemutant@latest/Leaflet.GoogleMutant.js'></script>    
     <script src="http://matchingnotes.com/javascripts/leaflet-google.js"></script>
 
-  <body>
-
-	<style>
+    <style>
 		html, body {
 			height: 100%;
 			margin: 0;
@@ -82,6 +80,10 @@
     // $.get("http://cgi.uru.ac.th/service/hgis_accident_service.php", function(data, status){
     //     console.log("Data: " + data + "\nStatus: " + status);
     // });
+    var fireIcon = L.icon({
+        iconUrl: '../img/fire_icon2.gif',
+        iconSize: [15, 15],
+    });
 
 	function onEachFeature(feature, layer) {
         //console.log(feature.properties.lon);
@@ -103,28 +105,29 @@
         var widthPop = {
             minWidth: '400'
         };
-        layer.bindPopup(popupContent, widthPop);
+        layer.bindPopup(popupContent, widthPop);        
+        layer.setIcon(fireIcon);
         //layer.bindPopup();
-      };  
+    };  
       
-      var mbUrl = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw';
+     var mbUrl = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw';
     
-      var grayscale = L.tileLayer(mbUrl, {id: 'mapbox.light'});
-      var streets = L.tileLayer(mbUrl, {id: 'mapbox.streets'});
-      var roads = L.gridLayer.googleMutant({
+    var grayscale = L.tileLayer(mbUrl, {id: 'mapbox.light'});
+    var streets = L.tileLayer(mbUrl, {id: 'mapbox.streets'});
+    var roads = L.gridLayer.googleMutant({
             type: 'roadmap' // valid values are 'roadmap', 'satellite', 'terrain' and 'hybrid'
-      });
+    });
 
-      var satellite = L.gridLayer.googleMutant({
+    var satellite = L.gridLayer.googleMutant({
         type: 'satellite' // valid values are 'roadmap', 'satellite', 'terrain' and 'hybrid'
-      });
+    });
 
-      var terrain = L.gridLayer.googleMutant({
+    var terrain = L.gridLayer.googleMutant({
         type: 'terrain' // valid values are 'roadmap', 'satellite', 'terrain' and 'hybrid'
-      }); 
+    }); 
     
 
-      if(chkLoc=='all'){
+    if(chkLoc=='all'){
         var pro = L.tileLayer.wms("http://119.59.125.191/geoserver/ows?", {
             layers: 'omfs:province',
             format: 'image/png',
@@ -152,7 +155,7 @@
             zIndex: 5,
             transparent: true
         });
-      }else{
+    }else{
         var pro = L.tileLayer.wms("http://119.59.125.191/geoserver/ows?", {
             layers: 'omfs:province',
             format: 'image/png',
@@ -184,42 +187,42 @@
             transparent: true,
             CQL_FILTER: cql
         });
-      }      
+    }      
     
-      var map = L.map('map', {
+    var map = L.map('map', {
         center: [Number(lat), Number(lon)],
         zoom: Number(zoom),
         layers: []
-      });
+    });
   
-      var markers = L.markerClusterGroup();
+    var markers = L.markerClusterGroup();
   
-      var accdent = new L.GeoJSON.AJAX(jsonUrl, {
+    var accdent = new L.GeoJSON.AJAX(jsonUrl, {
         onEachFeature: onEachFeature,
         //style: lineStyle
-      });
+    });
   
-      accdent.on('data:loaded', function () {
+    accdent.on('data:loaded', function () {
         markers.addLayer(accdent);
-      });            
+    });            
     
-      var baseLayers = {
+    var baseLayers = {
         "แผนที่ขาวดำ": grayscale,
         "แผนที่ถนน(OSM)": streets,   
         "แผนที่ถนน(GoogleMaps)": roads.addTo(map),
         "แผนที่ภาพดาวเทียม": satellite,
         "แผนที่ภูมิประเทศ": terrain,
-      };
+    };
     
-      var overlays = {
+    var overlays = {
         "ขอบเขตจังหวัด": pro.addTo(map),
         "ขอบเขตอำเภอ": amp.addTo(map),
         "ขอบเขตตำบล": tam.addTo(map),        
         "ตำแหน่งหมู่บ้าน": vill,
         "ตำแหน่งเกิดเหตุ": markers.addTo(map)
-      };
+    };
     
-      L.control.layers(baseLayers, overlays).addTo(map);
+    L.control.layers(baseLayers, overlays).addTo(map);
 
       
     
