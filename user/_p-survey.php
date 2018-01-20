@@ -54,31 +54,6 @@ $strpg = "SELECT * FROM user_profile  WHERE iden_number = '".$_SESSION['iden_num
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet">
     <link href="assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
- <script language=Javascript>
-        function Inint_AJAX() {
-           try { return new ActiveXObject("Msxml2.XMLHTTP");  } catch(e) {} 
-           try { return new ActiveXObject("Microsoft.XMLHTTP"); } catch(e) {} 
-           try { return new XMLHttpRequest();          } catch(e) {}
-           alert("XMLHttpRequest not supported");
-           return null;
-        };
-
-        function dochange(src, val) {
-             var req = Inint_AJAX();
-             req.onreadystatechange = function () { 
-                  if (req.readyState==4) {
-                       if (req.status==200) {
-                            document.getElementById(src).innerHTML=req.responseText; 
-                       } 
-                  }
-             };
-             req.open("GET", "assets/location.php?data="+src+"&val="+val); 
-             req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=utf-8"); 
-             req.send(null); 
-        }
-
-        window.onLoad=dochange('prov_name', -1);  
-    </script>
 
 </head>
 <body>
@@ -159,12 +134,11 @@ $strpg = "SELECT * FROM user_profile  WHERE iden_number = '".$_SESSION['iden_num
                     </button>
                 </div>
                 <div class="collapse navbar-collapse">
-                   
-
                     <ul class="nav navbar-nav navbar-right">
+                       
                         <li>
                             <a href="../">
-                                <small> ออกจากระบบ</small>    
+                               ออกจากระบบ
                             </a>
                         </li>
                     </ul>
@@ -179,72 +153,56 @@ $strpg = "SELECT * FROM user_profile  WHERE iden_number = '".$_SESSION['iden_num
                     <div class="col-md-4">
                         <div class="card">
                             <div class="header">
-                                <h4 class="title">เลือกข้อมูล</h4>
+                                <h4 class="title">เลือกพื้นที่</h4>
+                                <p class="category">เลือกขอบเขตการปกครองที่สนใจ</p>
                             </div>
                             <div class="content">
-                                <form action="map_hotspot.php" target="map_fire" name="form1">
-                                 <div class="form-group">
-                                                <label class="col-md-12">จังหวัด</label>
-                                            <span id="prov_name">
-                                                <select class="form-control" id="select" name="prov_name" >
-                                                   <option value=''>- - เลือกทั้งหมด - - </option>
-                                                </select>
-                                            </span>
-                                            </div>
-                                 <div class="form-group">
-                                                <label class="col-md-12">อำเภอ</label>
-                                            <span id="amphoe_name">
-                                                <select class="form-control" id="select" name="amphoe_name" >
-                                                   <option value=''>- - เลือกทั้งหมด - - </option>
-                                                </select>
-                                            </span>
-                                            </div>
-                                 <div class="form-group">
-                                                <label for="exampleInputPassword1">ตำบล</label>
-                                            <span id="tambon_name">
-                                                <select class="form-control" id="select" name="tambon_name" >
-                                                   <option value=''>- - เลือกทั้งหมด - - </option>
-                                                </select>
-                                            </span>
-                                            </div>
-                                 <div class="form-group">
-                                      <label for="exampleSelect2">ช่วงเวลาเริ่มต้น</label>
-                                            <input type="date" class="form-control" id="myDate1" value="2016-01-01" onChange="this.form.submit();" name="date_start">
-                                    </div>
-                                 <div class="form-group">
-                                      <label for="exampleSelect2">ช่วงเวลาสิ้นสุด</label>
-                                            <input type="date" class="form-control" id="myDate2" value="2016-02-01" onChange="this.form.submit();" name="date_end">
-                                    </div>
+                                
+                                <div class="form-group">
+                                    <label>เลือก</label>
+                                    <select class="form-control" id="province">
+                                        <option value='all'>จังหวัด</option>
+                                    </select>
+                                </div>
 
+                                <div class="form-group">
+                                    <label>เลือก</label>
+                                    <select class="form-control" id="amphoe">
+                                        <option value='all'>อำเภอ</option>
+                                    </select>
+                                </div>
 
-                                 <div class="form-group">
-                                      <label for="exampleSelect2">ดาวเทียม</label>
-                                      <select  class="form-control" id="exampleSelect2" name="satte" onChange="this.form.submit();">
-                                        <option>Terra</option>
-                                        <option>Aqua</option>
-                                      </select>
-                                    </div> <hr> 
-                                 <label class="checkbox">
-                                   <input type="checkbox" data-toggle="checkbox" value="1" name="show_point"  onChange="this.form.submit();"  checked="">
-                                        แสดงจุดตำแหน่งการเผา
-                                 </label>
-                                </form>
+                                <div class="form-group">
+                                    <label>เลือก</label>
+                                    <select class="form-control" id="tambon">
+                                        <option value='all'>ตำบล</option>
+                                    </select>
+                                </div>
+
+                                <div class="footer">
+                                    <hr>
+                                    <row>
+                                        <div class="stats" id="p"></div>
+                                        <div class="stats" id="a"></div>
+                                        <div class="stats" id="t"></div>
+                                    </row>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="col-md-8">
                         <div class="card">
-                               <iframe src="map_survey.php?show_point=1" name="map_fire" frameborder="0" width="100%" height="670px"></iframe>
-                            
+                            <div class="header">
+                                <h4 class="title">ตำแหน่งการแจ้ง</h4>
+                                <p class="category">ตำแหน่งการรับแจ้งพื้นที่เกิดไฟป่า</p>
+                            </div>
+                            <div class="content">
+                                <iframe src="map.php?procode=all&lon=100.18573&lat=19.13422" style="width: 100%; height: 650px" frameborder="0" scrolling="no" id="mframe" ></iframe>
+                            </div>
                         </div>
                     </div>
-                </div>
-
-
-            </div>
-        </div>
-
+                </div>  
 
         <footer class="footer">
             <div class="container-fluid">
@@ -294,12 +252,83 @@ $strpg = "SELECT * FROM user_profile  WHERE iden_number = '".$_SESSION['iden_num
 	<!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
 	<script src="assets/js/demo.js"></script>
 
+    <script>
+    function getProv(){
+        $.getJSON("http://119.59.125.191/service/omfs_web_prov.php", function (data) {
+        //console.log(data);
+          $.each(data, function (index, value) {
+              $('#province').append('<option value="' + value.pv_code + '">' + value.pv_tn + '</option>');
+          });
+      });
+    }
 
-<script>
-function myFunction() {
-    document.getElementById("myDate1").defaultValue = "2016-01-01";
-    document.getElementById("myDate2").defaultValue = "2016-02-01";
-}
-</script>
+    function getAmp(proCode){
+        $.getJSON("http://119.59.125.191/service/omfs_web_amp.php?procode="+proCode, function (data) {
+          $.each(data, function (index, value) {
+              $('#amphoe').append('<option value="' + value.ap_code + '">' + value.ap_tn + '</option>');
+          });
+      });
+    }
+
+    function getTam(ampCode){
+        $.getJSON("http://119.59.125.191/service/omfs_web_tam.php?ampcode="+ampCode, function (data) {
+          $.each(data, function (index, value) {
+              $('#tambon').append('<option value="' + value.tb_code + '">' + value.tb_tn + '</option>');
+          });
+      });
+    }
+
+    //select
+    $(document).ready(function () {
+      // load province data
+      getProv();  
+      // load prov iframe
+      $('#province').change(function () {          
+        $('#amphoe').empty();
+        $('#amphoe').append('<option value="all">อำเภอ</option>');
+        var provCode = this.options[this.selectedIndex].value;
+        var provName = this.options[this.selectedIndex].text;
+        if(provCode=='all'){
+            $.getJSON("http://119.59.125.191/service/omfs_web_prov.php?procode=all", function (data) {                 
+                $("#mframe").attr("src", "map.php?procode=all&lon=99.85&lat=16.8");
+            });
+        }else{
+            $.getJSON("http://119.59.125.191/service/omfs_web_prov.php?procode="+provCode, function (data) {                 
+                $("#mframe").attr("src", "map.php?procode="+provCode+"&lon="+data[0].lon+"&lat="+data[0].lat);
+            });
+            getAmp(provCode);
+        } 
+        $('#p').text('จังหวัด: '+ provName);        
+      });
+
+      //get amp iframe
+      $('#amphoe').change(function () {          
+        $('#tambon').empty();
+        $('#tambon').append('<option value="all">ตำบล</option>');
+        var ampCode = this.options[this.selectedIndex].value;
+        var ampName = this.options[this.selectedIndex].text;
+        
+            $.getJSON("http://119.59.125.191/service/omfs_web_amp.php?ampcode="+ampCode, function (data) {                 
+                $("#mframe").attr("src", "map.php?ampcode="+ampCode+"&lon="+data[0].lon+"&lat="+data[0].lat);
+            });
+            getTam(ampCode);
+        
+        $('#a').text('อำเภอ: '+ ampName);       
+      });
+
+      //get tam iframe
+      $('#tambon').change(function () {
+        var tamCode = this.options[this.selectedIndex].value;
+        var tamName = this.options[this.selectedIndex].text;
+        
+            $.getJSON("http://119.59.125.191/service/omfs_web_tam.php?tamcode="+tamCode, function (data) {                 
+                $("#mframe").attr("src", "map.php?tamcode="+tamCode+"&lon="+data[0].lon+"&lat="+data[0].lat);
+            });
+        
+        $('#t').text('ตำบล: '+ tamName);       
+      });
+
+    });
+    </script>
 
 </html>

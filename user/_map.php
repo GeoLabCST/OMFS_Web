@@ -202,9 +202,9 @@
         //style: lineStyle
     });
   
-    accdent.on('data:loaded', function () {
-        markers.addLayer(accdent);
-    });            
+    // accdent.on('data:loaded', function () {
+    //     markers.addLayer(accdent);
+    // });            
     
     var baseLayers = {
         "แผนที่ขาวดำ": grayscale,
@@ -219,7 +219,7 @@
         "ขอบเขตอำเภอ": amp.addTo(map),
         "ขอบเขตตำบล": tam.addTo(map),        
         "ตำแหน่งหมู่บ้าน": vill,
-        "ตำแหน่งเกิดเหตุ": markers.addTo(map)
+        "ตำแหน่งเกิดเหตุ": accdent.addTo(map)
     };
     
     L.control.layers(baseLayers, overlays).addTo(map);
