@@ -32,12 +32,12 @@ $date  = $_GET[date];
 $satte = $_GET[satte];
 $show_point = $_GET[show_point];
 //$date_start = date("Y/m/d");$_GET[date_end]
+$date_start = $_GET[date_start];
 $date_end = $_GET[date_end];
 $satte = $_GET[satte];
 $show_point = $_GET[show_point];
 
 
-$date_start =  "2016/03/31" ;
 
 
 ?>
@@ -158,17 +158,34 @@ $date_start =  "2016/03/31" ;
     // Retrieve start point
     // Connect to database
     if ($date_end !=  '') {
-         $sql = "select count(*),a.pv_tn, a.pv_code,ST_AsGeoJSON(b.geom) AS geojson 
+
+        if ($prov_name == '') {
+              $sql = "select count(*),a.pv_tn, a.pv_code,ST_AsGeoJSON(b.geom) AS geojson 
             from fire_archive  a
             inner join  province_sim b on a.pv_code = b.pv_code
             where a.pv_tn like '%$prov_name' 
             and a.ap_tn  like '%$amphoe_name'
             and  a.tb_tn like '%$tambon_name'
-            and acq_date between '$date_end' and '$date_start'
+            and acq_date between '$date_start' and '$date_end'
             and  satellite like  '%$satte'
-
             group by a.pv_code,b.geom ,a.pv_tn
             ; ";
+        }elseif ($prov_name != '' and $amphoe_name == '') {
+            $sql = "select count(*),a.pv_tn, a.pv_code,ST_AsGeoJSON(b.geom) AS geojson 
+            from fire_archive  a
+            inner join  province_sim b on a.pv_code = b.pv_code
+            where a.pv_tn like '%$prov_name' 
+            and a.ap_tn  like '%$amphoe_name'
+            and  a.tb_tn like '%$tambon_name'
+            and acq_date between '$date_start' and '$date_end'
+            and  satellite like  '%$satte'
+            group by a.pv_code,b.geom ,a.pv_tn
+            ; ";
+        }
+
+
+
+       
         }else{
             $sql = "select count(*),a.pv_tn, a.pv_code,ST_AsGeoJSON(b.geom) AS geojson 
             from fire_archive  a
@@ -176,7 +193,7 @@ $date_start =  "2016/03/31" ;
             where a.pv_tn like '%$prov_name' 
             and a.ap_tn  like '%$amphoe_name'
             and  a.tb_tn like '%$tambon_name'
-            and acq_date = '$date_start'
+            and acq_date = '2016/04/03'
             and  satellite like  '%$satte'
 
             group by a.pv_code,b.geom ,a.pv_tn
@@ -229,10 +246,11 @@ $date_start =  "2016/03/31" ;
 
 
     var map = L.map('map');
-    var OpenStreetMap_BlackAndWhite =  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-});
+    var OpenStreetMap_BlackAndWhite = L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
+    maxZoom: 20,
+    subdomains:['mt0','mt1','mt2','mt3']
+}).addTo(map);
+
         
 
 
@@ -258,7 +276,7 @@ $date_start =  "2016/03/31" ;
                 where a.pv_tn like '%$prov_name' 
                 and a.ap_tn  like '%$amphoe_name'
                 and  a.tb_tn like '%$tambon_name'
-                and acq_date between '$date_end' and '$date_start'
+                and acq_date between '$date_start' and '$date_end'
                 and  satellite like  '%$satte';");
         }else{
                 $result5 = pg_query($db,"
@@ -266,7 +284,7 @@ $date_start =  "2016/03/31" ;
                 where a.pv_tn like '%$prov_name' 
                 and a.ap_tn  like '%$amphoe_name'
                 and  a.tb_tn like '%$tambon_name'
-                and acq_date = '$date_start'
+                and acq_date = '2016/04/03'
                 and  satellite like  '%$satte';");
         }
 
@@ -344,7 +362,7 @@ $date_start =  "2016/03/31" ;
                 weight: 5,
                 color: 'white',
                 dashArray: '',
-                fillOpacity: 0.3
+                fillOpacity: 0.2
             });
 
             if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {

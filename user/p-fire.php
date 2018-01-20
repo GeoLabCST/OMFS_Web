@@ -208,16 +208,15 @@ $strpg = "SELECT * FROM user_profile  WHERE iden_number = '".$_SESSION['iden_num
                                             </span>
                                             </div>
                                  <div class="form-group">
-                                      <label for="exampleSelect2">ช่วงเวลา</label>
-                                      <select  class="form-control" id="exampleSelect2" name="date_end" onChange="this.form.submit();">
-                                        <option value="2016/03/31">ณ วันนี้</option>
-                                        <option value="2016/03/20">7 วันล่าสุด</option>
-                                        <option value="2016/03/10">14 วันล่าสุด</option>
-                                        <option value="2016/03/01">30 วันล่าสุด</option>
-                                        <option value="2016/02/25">60 วันล่าสุด</option>
-                                        <option value="2016/02/15">90 วันล่าสุด</option>
-                                      </select>
+                                      <label for="exampleSelect2">ช่วงเวลาเริ่มต้น</label>
+                                            <input type="date" class="form-control" id="myDate1" value="2016-01-01" onChange="this.form.submit();" name="date_start">
                                     </div>
+                                 <div class="form-group">
+                                      <label for="exampleSelect2">ช่วงเวลาสิ้นสุด</label>
+                                            <input type="date" class="form-control" id="myDate2" value="2016-02-01" onChange="this.form.submit();" name="date_end">
+                                    </div>
+
+
                                  <div class="form-group">
                                       <label for="exampleSelect2">ดาวเทียม</label>
                                       <select  class="form-control" id="exampleSelect2" name="satte" onChange="this.form.submit();">
@@ -236,7 +235,7 @@ $strpg = "SELECT * FROM user_profile  WHERE iden_number = '".$_SESSION['iden_num
 
                     <div class="col-md-8">
                         <div class="card">
-                               <iframe src="map_hotspot.php?show_point=1" name="map_fire" frameborder="0" width="100%" height="750px"></iframe>
+                               <iframe src="map_hotspot.php?show_point=1" name="map_fire" frameborder="0" width="100%" height="670px"></iframe>
                             
                         </div>
                     </div>
@@ -295,21 +294,12 @@ $strpg = "SELECT * FROM user_profile  WHERE iden_number = '".$_SESSION['iden_num
 	<!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
 	<script src="assets/js/demo.js"></script>
 
-	<!-- <script type="text/javascript">
-    	$(document).ready(function(){
 
-        	demo.initChartist();
-
-        	$.notify({
-            	icon: 'pe-7s-gift',
-            	message: "ยินดีต้อนรับ <b>เข้าสู่ระบบ OMFS </b> <br> ท่านเข้าใช้งานในส่วนของผู้ใช้งานทั่วไป"
-
-            },{
-                type: 'danger',
-                timer: 4000
-            });
-
-    	});
-	</script> -->
+<script>
+function myFunction() {
+    document.getElementById("myDate1").defaultValue = "2016-01-01";
+    document.getElementById("myDate2").defaultValue = "2016-02-01";
+}
+</script>
 
 </html>
