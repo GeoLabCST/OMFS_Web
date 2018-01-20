@@ -5,7 +5,7 @@ include('../libs/config_omfs.php');
 session_start();
 	
 
-	$strpg = "SELECT * FROM user_profile WHERE email_user = '".pg_escape_string ($_GET['email_user'])."' 
+	$strpg = "SELECT * FROM user_profile WHERE iden_number = '".pg_escape_string ($_GET['iden_number'])."' 
 and pass_user = '".pg_escape_string ($_GET['pass_user'])."' ;"   ;
 
 
@@ -30,7 +30,7 @@ and pass_user = '".pg_escape_string ($_GET['pass_user'])."' ;"   ;
 	}
 	else
 	{
-			$_SESSION["email_user"] = $objResult["email_user"];
+			$_SESSION["iden_number"] = $objResult["iden_number"];
 			$_SESSION["status_user"] = $objResult["status_user"];
 
 			session_write_close();

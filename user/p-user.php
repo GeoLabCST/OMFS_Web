@@ -4,14 +4,14 @@
 include('../../libs/config_omfs.php');
 
 session_start();
-$strpg = "SELECT * FROM user_profile  WHERE email_user = '".$_SESSION['email_user']."'   ";
+$strpg = "SELECT * FROM user_profile  WHERE iden_number = '".$_SESSION['iden_number']."'   ";
     $objQuery = pg_query($db,$strpg);
     $objResult = pg_fetch_array($objQuery);
 
     $status = $objResult[status_user];
 
 
-    if($_SESSION['email_user'] == "")
+    if($_SESSION['iden_number'] == "")
     {
         header('Location: ../');
         exit();
@@ -316,8 +316,9 @@ function get_file_extension( $file )  {
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label>เลขบัตรประจำตัวประชาชน</label>
-                                                <input type="number" class="form-control"  name="iden_number" value="<?php echo $objResult[tel_user]; ?>">
+                                                <label>email</label>  
+                                                <input type="text" class="form-control form-control-line" value="<?php echo $objResult[email_user] ?>" name="email_user"> 
+                                               
                                             </div>
                                         </div>
                                     </div>
@@ -370,9 +371,10 @@ function get_file_extension( $file )  {
                             <div class="content">
                                <form class="form-horizontal form-material" action="assets/update_email.php">
                                         <div class="form-group">
-                                            <label class="col-md-12">email</label>
+                                            <label class="col-md-12">เลขบัตรประจำตัวประชาชน</label>
                                             <div class="col-md-12">
-                                                <input type="text" class="form-control form-control-line" value="<?php echo $objResult[email_user] ?>" name="email_user"> </div>
+                                                <input type="number"  class="form-control"  name="iden_number" value="<?php echo $objResult[iden_number]; ?>">
+                                            </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-md-12">รหัสผ่าน</label>
@@ -437,34 +439,23 @@ function get_file_extension( $file )  {
         </div>
 
 
+      
         <footer class="footer">
             <div class="container-fluid">
                 <nav class="pull-left">
                     <ul>
                         <li>
-                            <a href="#">
-                                Home
-                            </a>
+                           
                         </li>
                         <li>
-                            <a href="#">
-                                Company
-                            </a>
+                            <a href=""><img src="../img/logo_footer.png" width="80px" alt=""></a>
+                            
                         </li>
-                        <li>
-                            <a href="#">
-                                Portfolio
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                               Blog
-                            </a>
-                        </li>
+                       
                     </ul>
                 </nav>
                 <p class="copyright pull-right">
-                    &copy; 2016 <a href="http://www.creative-tim.com">Creative Tim</a>, made with love for a better web
+                    &copy;  2018 | สำนักงานทรัพยากรธรรมชาติและสิ่งแวดล้อมจังหวัดเชียงราย
                 </p>
             </div>
         </footer>

@@ -9,7 +9,7 @@ session_start();
 				$prov_user = $_GET['prov_name'];
 				$amp_user = $_GET['amphoe_name'];
 				$tam_user = $_GET['tambon_name'];
-				$iden_number = $_GET['iden_number'];
+				$email_user = $_GET['email_user'];
 				$id_user = $_GET['id_user'];
 				
 
@@ -21,7 +21,7 @@ session_start();
 				prov_user = '$prov_user'  , 
 				amp_user = '$amp_user'  , 
 				tam_user = '$tam_user' ,
-				iden_number = '$iden_number'  
+				email_user = '$email_user'  
 
 				where id_user =  $id_user;"; 
 

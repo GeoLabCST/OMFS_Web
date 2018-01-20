@@ -4,7 +4,7 @@
 include('../../libs/config_omfs.php');
 
 session_start();
-$strpg = "SELECT * FROM user_profile  WHERE email_user = '".$_SESSION['email_user']."'   ";
+$strpg = "SELECT * FROM user_profile  WHERE iden_number = '".$_SESSION['iden_number']."'   ";
     $objQuery = pg_query($db,$strpg);
     $objResult = pg_fetch_array($objQuery);
     $id = $objResult[id_user];
@@ -12,7 +12,7 @@ $strpg = "SELECT * FROM user_profile  WHERE email_user = '".$_SESSION['email_use
     $status = $objResult[status_user];
 
 
-    if($_SESSION['email_user'] == "")
+    if($_SESSION['iden_number'] == "")
     {
         header('Location: ../');
         exit();
@@ -127,7 +127,6 @@ $strpg = "SELECT * FROM user_profile  WHERE email_user = '".$_SESSION['email_use
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">Dashboard</a>
                 </div>
                 <div class="collapse navbar-collapse">
 
@@ -259,29 +258,17 @@ $strpg = "SELECT * FROM user_profile  WHERE email_user = '".$_SESSION['email_use
                 <nav class="pull-left">
                     <ul>
                         <li>
-                            <a href="#">
-                                Home
-                            </a>
+                           
                         </li>
                         <li>
-                            <a href="#">
-                                Company
-                            </a>
+                            <a href=""><img src="../img/logo_footer.png" width="80px" alt=""></a>
+                            
                         </li>
-                        <li>
-                            <a href="#">
-                                Portfolio
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                               Blog
-                            </a>
-                        </li>
+                       
                     </ul>
                 </nav>
                 <p class="copyright pull-right">
-                    &copy; 2016 <a href="http://www.creative-tim.com">Creative Tim</a>, made with love for a better web
+                    &copy;  2018 | สำนักงานทรัพยากรธรรมชาติและสิ่งแวดล้อมจังหวัดเชียงราย
                 </p>
             </div>
         </footer>
