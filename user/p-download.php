@@ -319,6 +319,30 @@ $strpg = "SELECT * FROM user_profile  WHERE iden_number = '".$_SESSION['iden_num
                                   </tr>
                                   <tr>
                                       <td></td>
+                                      <td>ประทานบัตรเหมืองแร่</td>
+                                      <td>Point</td>
+                                      <td><center><a href="../datasets/c27_concession.zip" download=""><i class="fa fa-download"></i></a></center></td>
+                                  </tr>
+                                  <tr>
+                                      <td></td>
+                                      <td>รอยเลื่อนมีพลัง</td>
+                                      <td>Point</td>
+                                      <td><center><a href="../datasets/c28_fault.zip" download=""><i class="fa fa-download"></i></a></center></td>
+                                  </tr>
+                                  <tr>
+                                      <td></td>
+                                      <td>แหล่งอนุรักษ์ทางธรณีวิทยา</td>
+                                      <td>Point</td>
+                                      <td><center><a href="../datasets/c29_conregeology.zip" download=""><i class="fa fa-download"></i></a></center></td>
+                                  </tr>
+                                  <tr>
+                                      <td></td>
+                                      <td>น้ำพุร้อน</td>
+                                      <td>Point</td>
+                                      <td><center><a href="../datasets/c30_hotspring.zip" download=""><i class="fa fa-download"></i></a></center></td>
+                                  </tr>
+                                  <tr>
+                                      <td></td>
                                       <td>ธรณีวิทยา </td>
                                       <td>Polygon</td>
                                       <td><center><a href="#" download=""><i class="fa fa-download"></i></a></center></td>
@@ -333,37 +357,37 @@ $strpg = "SELECT * FROM user_profile  WHERE iden_number = '".$_SESSION['iden_num
                                       <td>กลุ่มชั้นข้อมูลทรัพยากรป่าไม้ </td>
                                       <td>ขอบเขตชนิดของป่าไม้ </td>
                                       <td>Polygon</td>
-                                      <td><center><a href="../datasets/.zip" download=""><i class="fa fa-download"></i></a></center></td>
+                                      <td><center><a href="../datasets/c32_foresttype.zip" download=""><i class="fa fa-download"></i></a></center></td>
                                   </tr>
                                   <tr>
                                       <td></td>
                                       <td>ป่าสงวนแห่งชาติ</td>
                                       <td>Polygon</td>
-                                      <td><center><a href="../datasets/.zip" download=""><i class="fa fa-download"></i></a></center></td>
+                                      <td><center><a href="../datasets/c35_fprk.zip" download=""><i class="fa fa-download"></i></a></center></td>
                                   </tr>
                                   <tr>
                                       <td></td>
                                       <td>อุทยานแห่งชาติ</td>
                                       <td>Polygon</td>
-                                      <td><center><a href="../datasets/.zip" download=""><i class="fa fa-download"></i></a></center></td>
+                                      <td><center><a href="../datasets/c33_nrf.zip" download=""><i class="fa fa-download"></i></a></center></td>
                                   </tr>
                                   <tr>
                                       <td></td>
                                       <td>วนอุทยาน</td>
                                       <td>Polygon</td>
-                                      <td><center><a href="../datasets/.zip" download=""><i class="fa fa-download"></i></a></center></td>
+                                      <td><center><a href="../datasets/c34_nprk.zip" download=""><i class="fa fa-download"></i></a></center></td>
                                   </tr>
                                   <tr>
                                       <td></td>
                                       <td>เขตรักษาพันธุ์สัตว์ป่า</td>
                                       <td>Polygon</td>
-                                      <td><center><a href="../datasets/.zip" download=""><i class="fa fa-download"></i></a></center></td>
+                                      <td><center><a href="../datasets/c36_wlds.zip" download=""><i class="fa fa-download"></i></a></center></td>
                                   </tr>
                                   <tr>
                                       <td></td>
                                       <td>เขตห้ามล่าสัตว์ป่า</td>
                                       <td>Polygon</td>
-                                      <td><center><a href="../datasets/.zip" download=""><i class="fa fa-download"></i></a></center></td>
+                                      <td><center><a href="../datasets/c37_nhw.zip" download=""><i class="fa fa-download"></i></a></center></td>
                                   </tr>
                                   <tr>
                                       <td></td>
