@@ -129,7 +129,7 @@ $strpg = "SELECT * FROM user_profile  WHERE iden_number = '".$_SESSION['iden_num
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
-                    
+
                         <li>
                             <a href="../">
                                ออกจากระบบ
@@ -147,7 +147,7 @@ $strpg = "SELECT * FROM user_profile  WHERE iden_number = '".$_SESSION['iden_num
                     <div class="col-md-12">
                         <div class="card">
                             <div class="header">
-                                <h4 class="title">ดาวน์โหลด</h4>
+                                <h4 class="title">ดาวน์โหลดข้อมูลภูมิสารสนเทศ</h4>
                             </div>
                             <div class="content">
 
@@ -569,13 +569,13 @@ $strpg = "SELECT * FROM user_profile  WHERE iden_number = '".$_SESSION['iden_num
                 <nav class="pull-left">
                     <ul>
                         <li>
-                           
+
                         </li>
                         <li>
                             <a href=""><img src="../img/logo_footer.png" width="80px" alt=""></a>
-                            
+
                         </li>
-                       
+
                     </ul>
                 </nav>
                 <p class="copyright pull-right">
