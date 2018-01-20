@@ -44,10 +44,10 @@
         $lon = $_GET['lon'];        
         $lat = $_GET['lat'];        
         if($code == 'all'){
-            echo "<script>var jsonUrl = 'http://cgi.uru.ac.th/service/hgis_accident_service.php'</script>";
+            echo "<script>var jsonUrl = 'http://119.59.125.191/service/omfs_web_service.php'</script>";
             echo "<script>var chkLoc = 'all'; var lon = ".$lon."; var lat = ".$lat."; var zoom = 8;</script>";
         }else{
-            echo "<script>var jsonUrl = 'http://cgi.uru.ac.th/service/hgis_accident_service.php?procode=".$code."'</script>";
+            echo "<script>var jsonUrl = 'http://cgi.uru.ac.th/service/omfs_web_service.php?procode=".$code."'</script>";
             echo "<script>var chkLoc = '".$code."'; var lon = ".$lon."; var lat = ".$lat."; var zoom = 9; var cql='prov_code=".$code."';</script>";
         }
     }else if(isset($_GET['ampcode'])){
@@ -55,7 +55,7 @@
         $lon = $_GET['lon'];        
         $lat = $_GET['lat'];      
         
-        echo "<script>var jsonUrl = 'http://cgi.uru.ac.th/service/hgis_accident_service.php?ampcode=".$code."'</script>";
+        echo "<script>var jsonUrl = 'http://119.59.125.191/service/omfs_web_service.php?ampcode=".$code."'</script>";
         echo "<script>var chkLoc = '".$code."'; var lon = ".$lon."; var lat = ".$lat."; var zoom = 11; var cql='amp_code=".$code."';</script>";
         
     }else if(isset($_GET['tamcode'])){
@@ -63,11 +63,11 @@
         $lon = $_GET['lon'];        
         $lat = $_GET['lat'];   
         
-        echo "<script>var jsonUrl = 'http://cgi.uru.ac.th/service/hgis_accident_service.php?tamcode=".$code."'</script>";
+        echo "<script>var jsonUrl = 'http://119.59.125.191/service/omfs_web_service.php?tamcode=".$code."'</script>";
         echo "<script>var chkLoc = '".$code."'; var lon = ".$lon."; var lat = ".$lat."; var zoom = 12; var cql='tam_code=".$code."';</script>";
         
     }else{
-        echo "<script>var jsonUrl = 'http://cgi.uru.ac.th/service/hgis_accident_service.php'</script>";
+        echo "<script>var jsonUrl = 'http://119.59.125.191/service/omfs_web_service.php'</script>";
         echo "<script>var chkLoc = 'all'; var lon = 99.85; var lat = 16.8; var zoom = 8</script>";
     }
 
@@ -125,60 +125,60 @@
     
 
       if(chkLoc=='all'){
-        var pro = L.tileLayer.wms("http://map.nu.ac.th/geoserver-hgis/ows?", {
-            layers: 'hgis:dpc9_province_4326',
+        var pro = L.tileLayer.wms("http://119.59.125.191/geoserver/ows?", {
+            layers: 'omfs:province',
             format: 'image/png',
             zIndex: 5,
             transparent: true
         });
 
-        var amp = L.tileLayer.wms("http://map.nu.ac.th/geoserver-hgis/ows?", {
-            layers: 'hgis:dpc9_amphoe_4326',
+        var amp = L.tileLayer.wms("http://119.59.125.191/geoserver/ows?", {
+            layers: 'omfs:amphoe',
             format: 'image/png',
             zIndex: 5,
             transparent: true
         });
 
-        var tam = L.tileLayer.wms("http://map.nu.ac.th/geoserver-hgis/ows?", {
-            layers: 'hgis:dpc9_tambon_4326',
+        var tam = L.tileLayer.wms("http://119.59.125.191/geoserver/ows?", {
+            layers: 'omfs:tambon',
             format: 'image/png',
             zIndex: 5,
             transparent: true
         });
 
-        var vill = L.tileLayer.wms("http://map.nu.ac.th/geoserver-hgis/ows?", {
-            layers: 'hgis:dpc9_village_4326',
+        var vill = L.tileLayer.wms("http://119.59.125.191/geoserver/ows?", {
+            layers: 'omfs:c06_village',
             format: 'image/png',
             zIndex: 5,
             transparent: true
         });
       }else{
-        var pro = L.tileLayer.wms("http://map.nu.ac.th/geoserver-hgis/ows?", {
-            layers: 'hgis:dpc9_province_4326',
+        var pro = L.tileLayer.wms("http://119.59.125.191/geoserver/ows?", {
+            layers: 'omfs:province',
             format: 'image/png',
             zIndex: 5,
             transparent: true,
             CQL_FILTER: cql
         });
 
-        var amp = L.tileLayer.wms("http://map.nu.ac.th/geoserver-hgis/ows?", {
-            layers: 'hgis:dpc9_amphoe_4326',
+        var amp = L.tileLayer.wms("http://119.59.125.191/geoserver/ows?", {
+            layers: 'omfs:amphoe',
             format: 'image/png',
             zIndex: 5,
             transparent: true,
             CQL_FILTER: cql
         });
 
-        var tam = L.tileLayer.wms("http://map.nu.ac.th/geoserver-hgis/ows?", {
-            layers: 'hgis:dpc9_tambon_4326',
+        var tam = L.tileLayer.wms("http://119.59.125.191/geoserver/ows?", {
+            layers: 'omfs:tambon',
             format: 'image/png',
             zIndex: 5,
             transparent: true,
             CQL_FILTER: cql
         });
 
-        var vill = L.tileLayer.wms("http://map.nu.ac.th/geoserver-hgis/ows?", {
-            layers: 'hgis:dpc9_village_4326',
+        var vill = L.tileLayer.wms("http://119.59.125.191/geoserver/ows?", {
+            layers: 'omfs:c06_village',
             format: 'image/png',
             zIndex: 5,
             transparent: true,

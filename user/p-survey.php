@@ -198,12 +198,11 @@ $strpg = "SELECT * FROM user_profile  WHERE iden_number = '".$_SESSION['iden_num
                                 <p class="category">ตำแหน่งการรับแจ้งพื้นที่เกิดไฟป่า</p>
                             </div>
                             <div class="content">
-                                <iframe src="map.php?procode=all&lon=99.85&lat=16.8" style="width: 100%; height: 650px" frameborder="0" scrolling="no" id="mframe" ></iframe>
+                                <iframe src="map.php?procode=all&lon=100.18573&lat=19.13422" style="width: 100%; height: 650px" frameborder="0" scrolling="no" id="mframe" ></iframe>
                             </div>
                         </div>
                     </div>
                 </div>  
-
 
         <footer class="footer">
             <div class="container-fluid">
@@ -255,26 +254,26 @@ $strpg = "SELECT * FROM user_profile  WHERE iden_number = '".$_SESSION['iden_num
 
     <script>
     function getProv(){
-        $.getJSON("http://cgi.uru.ac.th/service/hms_prov.php", function (data) {
+        $.getJSON("http://119.59.125.191/service/omfs_web_prov.php", function (data) {
         //console.log(data);
           $.each(data, function (index, value) {
-              $('#province').append('<option value="' + value.prov_code + '">' + value.prov_nam_t + '</option>');
+              $('#province').append('<option value="' + value.pv_code + '">' + value.pv_tn + '</option>');
           });
       });
     }
 
     function getAmp(proCode){
-        $.getJSON("http://cgi.uru.ac.th/service/hms_amp.php?procode="+proCode, function (data) {
+        $.getJSON("http://119.59.125.191/service/omfs_web_amp.php?procode="+proCode, function (data) {
           $.each(data, function (index, value) {
-              $('#amphoe').append('<option value="' + value.amp_code + '">' + value.amp_nam_t + '</option>');
+              $('#amphoe').append('<option value="' + value.ap_code + '">' + value.ap_tn + '</option>');
           });
       });
     }
 
     function getTam(ampCode){
-        $.getJSON("http://cgi.uru.ac.th/service/hms_tam.php?ampcode="+ampCode, function (data) {
+        $.getJSON("http://119.59.125.191/service/omfs_web_tam.php?ampcode="+ampCode, function (data) {
           $.each(data, function (index, value) {
-              $('#tambon').append('<option value="' + value.tam_code + '">' + value.tam_nam_t + '</option>');
+              $('#tambon').append('<option value="' + value.tb_code + '">' + value.tb_tn + '</option>');
           });
       });
     }
@@ -290,11 +289,11 @@ $strpg = "SELECT * FROM user_profile  WHERE iden_number = '".$_SESSION['iden_num
         var provCode = this.options[this.selectedIndex].value;
         var provName = this.options[this.selectedIndex].text;
         if(provCode=='all'){
-            $.getJSON("http://cgi.uru.ac.th/service/hms_prov.php?procode=all", function (data) {                 
+            $.getJSON("http://119.59.125.191/service/omfs_web_prov.php?procode=all", function (data) {                 
                 $("#mframe").attr("src", "map.php?procode=all&lon=99.85&lat=16.8");
             });
         }else{
-            $.getJSON("http://cgi.uru.ac.th/service/hms_prov.php?procode="+provCode, function (data) {                 
+            $.getJSON("http://119.59.125.191/service/omfs_web_prov.php?procode="+provCode, function (data) {                 
                 $("#mframe").attr("src", "map.php?procode="+provCode+"&lon="+data[0].lon+"&lat="+data[0].lat);
             });
             getAmp(provCode);
@@ -309,7 +308,7 @@ $strpg = "SELECT * FROM user_profile  WHERE iden_number = '".$_SESSION['iden_num
         var ampCode = this.options[this.selectedIndex].value;
         var ampName = this.options[this.selectedIndex].text;
         
-            $.getJSON("http://cgi.uru.ac.th/service/hms_amp.php?ampcode="+ampCode, function (data) {                 
+            $.getJSON("http://119.59.125.191/service/omfs_web_amp.php?ampcode="+ampCode, function (data) {                 
                 $("#mframe").attr("src", "map.php?ampcode="+ampCode+"&lon="+data[0].lon+"&lat="+data[0].lat);
             });
             getTam(ampCode);
@@ -322,7 +321,7 @@ $strpg = "SELECT * FROM user_profile  WHERE iden_number = '".$_SESSION['iden_num
         var tamCode = this.options[this.selectedIndex].value;
         var tamName = this.options[this.selectedIndex].text;
         
-            $.getJSON("http://cgi.uru.ac.th/service/hms_tam.php?tamcode="+tamCode, function (data) {                 
+            $.getJSON("http://119.59.125.191/service/omfs_web_tam.php?tamcode="+tamCode, function (data) {                 
                 $("#mframe").attr("src", "map.php?tamcode="+tamCode+"&lon="+data[0].lon+"&lat="+data[0].lat);
             });
         
