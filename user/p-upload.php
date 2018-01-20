@@ -7,6 +7,7 @@ session_start();
 $strpg = "SELECT * FROM user_profile  WHERE iden_number = '".$_SESSION['iden_number']."'   ";
     $objQuery = pg_query($db,$strpg);
     $objResult = pg_fetch_array($objQuery);
+    $id = $objResult[id_user];
 
     $status = $objResult[status_user];
 
@@ -50,36 +51,24 @@ $strpg = "SELECT * FROM user_profile  WHERE iden_number = '".$_SESSION['iden_num
     <link href="assets/css/demo.css" rel="stylesheet" />
 
 
+
+    <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/buttons/1.5.1/css/buttons.dataTables.min.css" rel="stylesheet" />
+
+
+
     <!--     Fonts and icons     -->
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet">
     <link href="assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
- <script language=Javascript>
-        function Inint_AJAX() {
-           try { return new ActiveXObject("Msxml2.XMLHTTP");  } catch(e) {} 
-           try { return new ActiveXObject("Microsoft.XMLHTTP"); } catch(e) {} 
-           try { return new XMLHttpRequest();          } catch(e) {}
-           alert("XMLHttpRequest not supported");
-           return null;
-        };
 
-        function dochange(src, val) {
-             var req = Inint_AJAX();
-             req.onreadystatechange = function () { 
-                  if (req.readyState==4) {
-                       if (req.status==200) {
-                            document.getElementById(src).innerHTML=req.responseText; 
-                       } 
-                  }
-             };
-             req.open("GET", "location.php?data="+src+"&val="+val); 
-             req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=utf-8"); 
-             req.send(null); 
-        }
-
-        window.onLoad=dochange('prov_name', -1);  
-    </script>
 </head>
+
+
+
+
+
+
 <body>
 
 <div class="wrapper">
@@ -106,7 +95,7 @@ $strpg = "SELECT * FROM user_profile  WHERE iden_number = '".$_SESSION['iden_num
                         <p>หน้าหลัก</p>
                     </a>
                 </li>
-                <li class="active">
+                <li>
                     <a href="p-gis.php">
                         <i class="pe-7s-global"></i>
                         <p>ระบบภูมิสารสนเทศ</p>
@@ -124,7 +113,7 @@ $strpg = "SELECT * FROM user_profile  WHERE iden_number = '".$_SESSION['iden_num
                         <p>OMFS Mobile Survey</p>
                     </a>
                 </li>
-                <li>
+                <li class="active">
                     <a href="p-upload.php">
                         <i class="pe-7s-cloud-upload"></i>
                         <p>อัพโหลดข้อมูล </p>
@@ -158,8 +147,8 @@ $strpg = "SELECT * FROM user_profile  WHERE iden_number = '".$_SESSION['iden_num
                     </button>
                 </div>
                 <div class="collapse navbar-collapse">
-
                     <ul class="nav navbar-nav navbar-right">
+                    
                         <li>
                             <a href="../">
                                ออกจากระบบ
@@ -176,59 +165,122 @@ $strpg = "SELECT * FROM user_profile  WHERE iden_number = '".$_SESSION['iden_num
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card">
-                            <div class="content">
-                                     <form action="../omfs_map/index_user.php" method="get" target="frame_map">
-                                    <div class="row">
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                               <span id="prov_name">
-                                                    <select class="form-control" id="select" data-cip-id="cIPJQ342845642">
-                                                       <option value='%'>- เลือกจังหวัด -</option>
-                                                    </select>
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                               <span id="amphoe_name">
-                                                    <select class="form-control" id="select" data-cip-id="cIPJQ342845642">
-                                                       <option value='%'>- เลือกอำเภอ -</option>
-                                                    </select>
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                               <span id="tambon_name">
-                                                    <select class="form-control" id="select" data-cip-id="cIPJQ342845642">
-                                                       <option value='%'>- เลือกตำบล -</option>
-                                                    </select>
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                    <button type="submit" class="btn btn-info ">ค้นหา</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
+                            <div class="header">
+                                <h4 class="title">อัพโหลดข้อมูลรายงานไฟป่า</h4>
                             </div>
-                        </div>
-                   
-
-                    <div class="col-md-12">
-                        <div class="card">
                             <div class="content">
-                               <iframe src="../omfs_map/index_user.php" name="frame_map" frameborder="0" width="100%" height="650px"></iframe>
+                                <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                              <button class="btn">ดาวน์โหลดแบบฟอร์ม</button>
+                                              <small>* ใช้แบบฟอร์มนี้ในการอัพโหลดเท่านั้น</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+<?php  
+  
+pg_set_client_encoding($db, "UTF-8");
+
+if ($_FILES[csv][size] > 0) { 
+
+    //get the csv file 
+    $file = $_FILES[csv][tmp_name]; 
+    $handle = fopen($file,"r"); 
+
+
+
+  fgets($handle); 
+    //loop through the csv file and insert into database 
+    do { 
+        if ($data[0]) { 
+          $query = "INSERT INTO fire_report (lat,lon,fplace,fdesc,fname,sname,tambon,amphoe,province,ftype,acq_date,geom,user_id) VALUES 
+                ( 
+                    '".addslashes($data[0])."', 
+                    '".addslashes($data[1])."', 
+                    '".addslashes($data[2])."', 
+                    '".addslashes($data[3])."', 
+                    '".addslashes($data[4])."', 
+                    '".addslashes($data[5])."', 
+                    '".addslashes($data[6])."', 
+                    '".addslashes($data[7])."', 
+                    '".addslashes($data[8])."', 
+                    '".addslashes($data[9])."',
+                    '".addslashes($data[12])."/".addslashes($data[11])."/".addslashes($data[10])."',
+                    ST_GeomFromText('POINT(".addslashes($data[1])." ".addslashes($data[0]).")', 4326),
+                    '$id'
+                ) 
+            ";
+
+pg_query( mb_convert_encoding($query, "UTF-8", "auto"));
+
+        } 
+
+
+
+
+
+    } while ($data = fgetcsv($handle,1000,",","'")); 
+    // 
+
+
+} 
+
+?>        
+
+                                              
+    <?php if (!empty($_GET[success])) { echo ""; } ?> 
+
+                <form action="" class="form-inline" method="post" enctype="multipart/form-data"  accept-charset="UTF-8" name="form1" id="form1"> 
+                  
+                  <input class="btn" name="csv" type="file" id="csv" /> 
+                  <input class="btn" type="submit" name="Submit" value="อัพโหลดข้อมูล" /> 
+                  <small><font color="red"> *อัพโหลดไฟล์ ตามแบบฟอร์มเท่านั้น</font> </small>
+                </form> 
+                                            </div>
+                                        </div>
+                                 </div>
+
+<hr>
+                                   <table class="table"  id="example">
+                                    <caption>รายงานสถานการณ์จุดเกิดไฟป่าของท่าน</caption>
+                                        <thead>
+                                            <tr>
+                                                <th>วันที่</th>
+                                                <th>ชื่อสถานที่</th>
+                                                <th>ประเภทจุดเกิดเหตุ</th>
+                                                <th>ตำบล</th>
+                                                <th>อำเภอ</th>
+                                                <th>จังหวัด</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php 
+    $sql3 = "SELECT * FROM v_fire_report where user_id = '$id' order by id desc ";
+    $query3 = pg_query($db,$sql3);
+   while ($arr3 = pg_fetch_array($query3)) {
+  ?>      
+                                            <tr>
+                                                <td><?php echo $arr3[acq_date]; ?></td>
+                                                <td><?php echo $arr3[fplace]; ?></td>
+                                                <td><?php echo $arr3[ftype]; ?></td>
+                                                <td><?php echo $arr3[tb_tn]; ?></td>
+                                                <td><?php echo $arr3[ap_tn]; ?></td>
+                                                <td><?php echo $arr3[pv_tn]; ?></td>
+                                            </tr>
+    <?php  } ?>                                            
+                                        </tbody>
+                                    </table>
+                           
                             </div>
                         </div>
                     </div>
+
                 </div>
 
             </div>
         </div>
-        </div>
+
 
 
         <footer class="footer">
@@ -279,6 +331,17 @@ $strpg = "SELECT * FROM user_profile  WHERE iden_number = '".$_SESSION['iden_num
 	<!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
 	<script src="assets/js/demo.js"></script>
 
+
+  <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<!--   <script src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script> -->
+  <script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.flash.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+  <script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.print.min.js"></script>
+
+
 	<!-- <script type="text/javascript">
     	$(document).ready(function(){
 
@@ -295,5 +358,11 @@ $strpg = "SELECT * FROM user_profile  WHERE iden_number = '".$_SESSION['iden_num
 
     	});
 	</script> -->
-
+<script>
+$(document).ready(function() {
+    $('#example').DataTable( {
+        "order": [[ 0, "desc" ]]
+    } );
+} );
+</script>
 </html>

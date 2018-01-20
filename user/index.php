@@ -102,6 +102,12 @@ $strpg = "SELECT * FROM user_profile  WHERE iden_number = '".$_SESSION['iden_num
                     </a>
                 </li>
                 <li>
+                    <a href="p-upload.php">
+                        <i class="pe-7s-cloud-upload"></i>
+                        <p>อัพโหลดข้อมูล </p>
+                    </a>
+                </li>
+                <li>
                     <a href="p-download.php">
                         <i class="pe-7s-cloud-download"></i>
                         <p>ดาวน์โหลดข้อมูล </p>
@@ -222,7 +228,7 @@ $strpg = "SELECT * FROM user_profile  WHERE iden_number = '".$_SESSION['iden_num
                                         </thead>
                                         <tbody>
                                             <?php 
-    $sql3 = "SELECT * FROM v_fire_report where id = '$id' order by acq_date desc limit 10  ";
+    $sql3 = "SELECT * FROM v_fire_report where user_id = '$id' order by acq_date desc limit 10  ";
     $query3 = pg_query($db,$sql3);
    while ($arr3 = pg_fetch_array($query3)) {
   ?>      

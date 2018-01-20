@@ -100,6 +100,12 @@ $strpg = "SELECT * FROM user_profile  WHERE iden_number = '".$_SESSION['iden_num
                         <p>OMFS Mobile Survey</p>
                     </a>
                 </li>
+                <li>
+                    <a href="p-upload.php">
+                        <i class="pe-7s-cloud-upload"></i>
+                        <p>อัพโหลดข้อมูล </p>
+                    </a>
+                </li>
                 <li class="active">
                     <a href="p-download.php">
                         <i class="pe-7s-cloud-download"></i>

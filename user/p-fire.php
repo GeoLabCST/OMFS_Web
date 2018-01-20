@@ -126,6 +126,12 @@ $strpg = "SELECT * FROM user_profile  WHERE iden_number = '".$_SESSION['iden_num
                     </a>
                 </li>
                 <li>
+                    <a href="p-upload.php">
+                        <i class="pe-7s-cloud-upload"></i>
+                        <p>อัพโหลดข้อมูล </p>
+                    </a>
+                </li>
+                <li>
                     <a href="p-download.php">
                         <i class="pe-7s-cloud-download"></i>
                         <p>ดาวน์โหลดข้อมูล </p>
