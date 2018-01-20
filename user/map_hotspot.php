@@ -4,14 +4,14 @@
 include('../../libs/config_omfs.php');
 
 session_start();
-$strpg = "SELECT * FROM user_profile  WHERE email_user = '".$_SESSION['email_user']."'   ";
+$strpg = "SELECT * FROM user_profile  WHERE iden_number = '".$_SESSION['iden_number']."'   ";
     $objQuery = pg_query($db,$strpg);
     $objResult = pg_fetch_array($objQuery);
 
     $status = $objResult[status_user];
 
 
-    if($_SESSION['email_user'] == "")
+    if($_SESSION['iden_number'] == "")
     {
         header('Location: ../');
         exit();
