@@ -54,7 +54,31 @@ $strpg = "SELECT * FROM user_profile  WHERE email_user = '".$_SESSION['email_use
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet">
     <link href="assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
+ <script language=Javascript>
+        function Inint_AJAX() {
+           try { return new ActiveXObject("Msxml2.XMLHTTP");  } catch(e) {} 
+           try { return new ActiveXObject("Microsoft.XMLHTTP"); } catch(e) {} 
+           try { return new XMLHttpRequest();          } catch(e) {}
+           alert("XMLHttpRequest not supported");
+           return null;
+        };
 
+        function dochange(src, val) {
+             var req = Inint_AJAX();
+             req.onreadystatechange = function () { 
+                  if (req.readyState==4) {
+                       if (req.status==200) {
+                            document.getElementById(src).innerHTML=req.responseText; 
+                       } 
+                  }
+             };
+             req.open("GET", "location.php?data="+src+"&val="+val); 
+             req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=utf-8"); 
+             req.send(null); 
+        }
+
+        window.onLoad=dochange('prov_name', -1);  
+    </script>
 </head>
 <body>
 
@@ -129,57 +153,11 @@ $strpg = "SELECT * FROM user_profile  WHERE email_user = '".$_SESSION['email_use
                     <a class="navbar-brand" href="#">Dashboard</a>
                 </div>
                 <div class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav navbar-left">
-                        <li>
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-dashboard"></i>
-                            </a>
-                        </li>
-                        <li class="dropdown">
-                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <i class="fa fa-globe"></i>
-                                    <b class="caret"></b>
-                                    <span class="notification">5</span>
-                              </a>
-                              <ul class="dropdown-menu">
-                                <li><a href="#">Notification 1</a></li>
-                                <li><a href="#">Notification 2</a></li>
-                                <li><a href="#">Notification 3</a></li>
-                                <li><a href="#">Notification 4</a></li>
-                                <li><a href="#">Another notification</a></li>
-                              </ul>
-                        </li>
-                        <li>
-                           <a href="">
-                                <i class="fa fa-search"></i>
-                            </a>
-                        </li>
-                    </ul>
 
                     <ul class="nav navbar-nav navbar-right">
                         <li>
-                           <a href="">
-                               Account
-                            </a>
-                        </li>
-                        <li class="dropdown">
-                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    Dropdown
-                                    <b class="caret"></b>
-                              </a>
-                              <ul class="dropdown-menu">
-                                <li><a href="#">Action</a></li>
-                                <li><a href="#">Another action</a></li>
-                                <li><a href="#">Something</a></li>
-                                <li><a href="#">Another action</a></li>
-                                <li><a href="#">Something</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#">Separated link</a></li>
-                              </ul>
-                        </li>
-                        <li>
                             <a href="#">
-                                Log out
+                               ออกจากระบบ
                             </a>
                         </li>
                     </ul>
@@ -191,19 +169,52 @@ $strpg = "SELECT * FROM user_profile  WHERE email_user = '".$_SESSION['email_use
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-12">
                         <div class="card">
-                            <div class="header">
-                                <h4 class="title">Email Statistics</h4>
-                                <p class="category">Last Campaign Performance</p>
-                            </div>
                             <div class="content">
-                                sssssssssssssssssssssssss
+                                <div class="content">
+                                     <form>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                               <span id="prov_name">
+                                                    <select class="form-control" id="select" data-cip-id="cIPJQ342845642">
+                                                       <option value='%'>- เลือกจังหวัด -</option>
+                                                    </select>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                               <span id="amphoe_name">
+                                                    <select class="form-control" id="select" data-cip-id="cIPJQ342845642">
+                                                       <option value='%'>- เลือกอำเภอ -</option>
+                                                    </select>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                               <span id="tambon_name">
+                                                    <select class="form-control" id="select" data-cip-id="cIPJQ342845642">
+                                                       <option value='%'>- เลือกตำบล -</option>
+                                                    </select>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                    <button type="submit" class="btn btn-info ">ค้นหา</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                   
 
-                    <div class="col-md-8">
+                    <div class="col-md-12">
                         <div class="card">
                             <div class="header">
                                 <h4 class="title">Users Behavior</h4>
