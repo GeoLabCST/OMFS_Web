@@ -7,6 +7,7 @@ session_start();
 $strpg = "SELECT * FROM user_profile  WHERE email_user = '".$_SESSION['email_user']."'   ";
     $objQuery = pg_query($db,$strpg);
     $objResult = pg_fetch_array($objQuery);
+    $id = $objResult[id_user];
 
     $status = $objResult[status_user];
 
@@ -129,57 +130,11 @@ $strpg = "SELECT * FROM user_profile  WHERE email_user = '".$_SESSION['email_use
                     <a class="navbar-brand" href="#">Dashboard</a>
                 </div>
                 <div class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav navbar-left">
-                        <li>
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-dashboard"></i>
-                            </a>
-                        </li>
-                        <li class="dropdown">
-                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <i class="fa fa-globe"></i>
-                                    <b class="caret"></b>
-                                    <span class="notification">5</span>
-                              </a>
-                              <ul class="dropdown-menu">
-                                <li><a href="#">Notification 1</a></li>
-                                <li><a href="#">Notification 2</a></li>
-                                <li><a href="#">Notification 3</a></li>
-                                <li><a href="#">Notification 4</a></li>
-                                <li><a href="#">Another notification</a></li>
-                              </ul>
-                        </li>
-                        <li>
-                           <a href="">
-                                <i class="fa fa-search"></i>
-                            </a>
-                        </li>
-                    </ul>
 
                     <ul class="nav navbar-nav navbar-right">
                         <li>
-                           <a href="">
-                               Account
-                            </a>
-                        </li>
-                        <li class="dropdown">
-                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    Dropdown
-                                    <b class="caret"></b>
-                              </a>
-                              <ul class="dropdown-menu">
-                                <li><a href="#">Action</a></li>
-                                <li><a href="#">Another action</a></li>
-                                <li><a href="#">Something</a></li>
-                                <li><a href="#">Another action</a></li>
-                                <li><a href="#">Something</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#">Separated link</a></li>
-                              </ul>
-                        </li>
-                        <li>
-                            <a href="#">
-                                Log out
+                            <a href="../">
+                               ออกจากระบบ
                             </a>
                         </li>
                     </ul>
@@ -194,21 +149,14 @@ $strpg = "SELECT * FROM user_profile  WHERE email_user = '".$_SESSION['email_use
                     <div class="col-md-4">
                         <div class="card">
                             <div class="header">
-                                <h4 class="title">Email Statistics</h4>
-                                <p class="category">Last Campaign Performance</p>
+                                <h4 class="title">รายงานสถานการณ์จุดเกิดไฟป่า</h4>
                             </div>
                             <div class="content">
-                                <div id="chartPreferences" class="ct-chart ct-perfect-fourth"></div>
-
+<div id="container1" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
                                 <div class="footer">
-                                    <div class="legend">
-                                        <i class="fa fa-circle text-info"></i> Open
-                                        <i class="fa fa-circle text-danger"></i> Bounce
-                                        <i class="fa fa-circle text-warning"></i> Unsubscribe
-                                    </div>
                                     <hr>
                                     <div class="stats">
-                                        <i class="fa fa-clock-o"></i> Campaign sent 2 days ago
+                                        <i class="fa fa-clock-o"></i> อัพเดตล่าสุด 1 วันที่แล้ว
                                     </div>
                                 </div>
                             </div>
@@ -218,20 +166,15 @@ $strpg = "SELECT * FROM user_profile  WHERE email_user = '".$_SESSION['email_use
                     <div class="col-md-8">
                         <div class="card">
                             <div class="header">
-                                <h4 class="title">Users Behavior</h4>
-                                <p class="category">24 Hours performance</p>
+                                <h4 class="title">
+                                <h4 class="title">รายงานสถานการณ์จุดความร้อน</h4>
                             </div>
                             <div class="content">
-                                <div id="chartHours" class="ct-chart"></div>
+<div id="container2" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
                                 <div class="footer">
-                                    <div class="legend">
-                                        <i class="fa fa-circle text-info"></i> Open
-                                        <i class="fa fa-circle text-danger"></i> Click
-                                        <i class="fa fa-circle text-warning"></i> Click Second Time
-                                    </div>
                                     <hr>
                                     <div class="stats">
-                                        <i class="fa fa-history"></i> Updated 3 minutes ago
+                                        <i class="fa fa-history"></i> ข้อมูลล่าสุดปี 2016
                                     </div>
                                 </div>
                             </div>
@@ -242,136 +185,57 @@ $strpg = "SELECT * FROM user_profile  WHERE email_user = '".$_SESSION['email_use
 
 
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-5">
                         <div class="card ">
                             <div class="header">
-                                <h4 class="title">2014 Sales</h4>
-                                <p class="category">All products including Taxes</p>
+                                <h4 class="title">รายงานสถานการณ์จุดความร้อน</h4>
                             </div>
                             <div class="content">
-                                <div id="chartActivity" class="ct-chart"></div>
+<div id="container3" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 
                                 <div class="footer">
-                                    <div class="legend">
-                                        <i class="fa fa-circle text-info"></i> Tesla Model S
-                                        <i class="fa fa-circle text-danger"></i> BMW 5 Series
-                                    </div>
                                     <hr>
                                     <div class="stats">
-                                        <i class="fa fa-check"></i> Data information certified
+                                        <i class="fa fa-history"></i> ข้อมูลล่าสุดปี 2016
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="col-md-7">
                         <div class="card ">
                             <div class="header">
-                                <h4 class="title">Tasks</h4>
-                                <p class="category">Backend development</p>
+                                <h4 class="title">รายงานสถานการณ์จุดเกิดไฟป่าของท่าน</h4>
                             </div>
                             <div class="content">
                                 <div class="table-full-width">
                                     <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>วันที่</th>
+                                                <th>ชื่อสถานที่</th>
+                                                <th>ประเภทจุดเกิดเหตุ</th>
+                                                <th>ตำบล</th>
+                                                <th>อำเภอ</th>
+                                                <th>จังหวัด</th>
+                                            </tr>
+                                        </thead>
                                         <tbody>
+                                            <?php 
+    $sql3 = "SELECT * FROM v_fire_report where id = '$id' order by acq_date desc limit 10  ";
+    $query3 = pg_query($db,$sql3);
+   while ($arr3 = pg_fetch_array($query3)) {
+  ?>      
                                             <tr>
-                                                <td>
-                                                    <label class="checkbox">
-                                                        <input type="checkbox" value="" data-toggle="checkbox">
-                                                    </label>
-                                                </td>
-                                                <td>Sign contract for "What are conference organizers afraid of?"</td>
-                                                <td class="td-actions text-right">
-                                                    <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-xs">
-                                                        <i class="fa fa-edit"></i>
-                                                    </button>
-                                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
-                                                        <i class="fa fa-times"></i>
-                                                    </button>
-                                                </td>
+                                                <td><?php echo $arr3[acq_date]; ?></td>
+                                                <td><?php echo $arr3[fplace]; ?></td>
+                                                <td><?php echo $arr3[ftype]; ?></td>
+                                                <td><?php echo $arr3[tb_tn]; ?></td>
+                                                <td><?php echo $arr3[ap_tn]; ?></td>
+                                                <td><?php echo $arr3[pv_tn]; ?></td>
                                             </tr>
-                                            <tr>
-                                                <td>
-                                                    <label class="checkbox">
-                                                        <input type="checkbox" value="" data-toggle="checkbox" checked="">
-                                                    </label>
-                                                </td>
-                                                <td>Lines From Great Russian Literature? Or E-mails From My Boss?</td>
-                                                <td class="td-actions text-right">
-                                                    <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-xs">
-                                                        <i class="fa fa-edit"></i>
-                                                    </button>
-                                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
-                                                        <i class="fa fa-times"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <label class="checkbox">
-                                                        <input type="checkbox" value="" data-toggle="checkbox" checked="">
-                                                    </label>
-                                                </td>
-                                                <td>Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit
-</td>
-                                                <td class="td-actions text-right">
-                                                    <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-xs">
-                                                        <i class="fa fa-edit"></i>
-                                                    </button>
-                                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
-                                                        <i class="fa fa-times"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <label class="checkbox">
-                                                        <input type="checkbox" value="" data-toggle="checkbox">
-                                                    </label>
-                                                </td>
-                                                <td>Create 4 Invisible User Experiences you Never Knew About</td>
-                                                <td class="td-actions text-right">
-                                                    <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-xs">
-                                                        <i class="fa fa-edit"></i>
-                                                    </button>
-                                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
-                                                        <i class="fa fa-times"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <label class="checkbox">
-                                                        <input type="checkbox" value="" data-toggle="checkbox">
-                                                    </label>
-                                                </td>
-                                                <td>Read "Following makes Medium better"</td>
-                                                <td class="td-actions text-right">
-                                                    <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-xs">
-                                                        <i class="fa fa-edit"></i>
-                                                    </button>
-                                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
-                                                        <i class="fa fa-times"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <label class="checkbox">
-                                                        <input type="checkbox" value="" data-toggle="checkbox">
-                                                    </label>
-                                                </td>
-                                                <td>Unfollow 5 enemies from twitter</td>
-                                                <td class="td-actions text-right">
-                                                    <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-xs">
-                                                        <i class="fa fa-edit"></i>
-                                                    </button>
-                                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
-                                                        <i class="fa fa-times"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
+    <?php  } ?>                                            
                                         </tbody>
                                     </table>
                                 </div>
@@ -379,7 +243,7 @@ $strpg = "SELECT * FROM user_profile  WHERE email_user = '".$_SESSION['email_use
                                 <div class="footer">
                                     <hr>
                                     <div class="stats">
-                                        <i class="fa fa-history"></i> Updated 3 minutes ago
+                                        <i class="fa fa-clock-o"></i> อัพเดตล่าสุด 1 วันที่แล้ว
                                     </div>
                                 </div>
                             </div>
@@ -450,21 +314,244 @@ $strpg = "SELECT * FROM user_profile  WHERE email_user = '".$_SESSION['email_use
 	<!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
 	<script src="assets/js/demo.js"></script>
 
-	<!-- <script type="text/javascript">
-    	$(document).ready(function(){
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
 
-        	demo.initChartist();
+    <script>
+        
+Highcharts.chart('container1', {
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: ''
+    },
+    subtitle: {
+        text: ''
+    },
+    xAxis: {
+        categories: [
+   <?php 
+    $sql1 = "SELECT pv_tn,count(*) FROM v_fire_report   group by pv_tn  ";
+    $query1 = pg_query($db,$sql1);
+   while ($arr1 = pg_fetch_array($query1)) {
+  ?>      
+            '<?php echo $arr1[pv_tn]; ?>',
+    <?php  } ?>   
+        ],
+        crosshair: true
+    },
+    legend: {
+         enabled: false
+    },
+    yAxis: {
+        min: 0,
+        title: {
+            text: 'จำนวนรายงาน'
+        }
+    },
+        credits: {
+          enabled: false
+        },
 
-        	$.notify({
-            	icon: 'pe-7s-gift',
-            	message: "ยินดีต้อนรับ <b>เข้าสู่ระบบ OMFS </b> <br> ท่านเข้าใช้งานในส่วนของผู้ใช้งานทั่วไป"
+       tooltip: {
+        headerFormat: '<span style="font-size:10px"> {point.key} </span><table>',
+        pointFormat: '<tr><td style="color:{series.color};padding:0"> {series.name} : </td>' +
+            '<td style="padding:0"><b> {point.y} จุด</b></td></tr>',
+        footerFormat: '</table>',
+        shared: true,
+        useHTML: true
+    },
+    plotOptions: {
+        column: {
+            pointPadding: 0.2,
+            borderWidth: 0
+        }
+    },
+    series: [{
+        name: 'จำนวนรายงาน',
+        color: '#804000',
+        data: [   <?php 
+    $sql1 = "SELECT pv_tn,count(*) FROM v_fire_report   group by pv_tn  ";
+    $query1 = pg_query($db,$sql1);
+   while ($arr1 = pg_fetch_array($query1)) {
+  ?>      
+            <?php echo $arr1[count]; ?>,
+    <?php  } ?>]
 
-            },{
-                type: 'danger',
-                timer: 4000
-            });
+    }]
+});
+    </script>
 
-    	});
-	</script> -->
+
+
+
+    <script>
+        
+Highcharts.chart('container2', {
+    chart: {
+        type: 'areaspline'
+    },
+    title: {
+        text: ''
+    },
+    subtitle: {
+        text: ''
+    },
+    legend: {
+         enabled: false
+    },
+    xAxis: {
+        categories: [
+  <?php 
+    $sql2 = "SELECT pv_tn,count(*) FROM fire_archive  WHERE acq_date between '2016-01-01'  and '2016-12-31' group by pv_tn  ";
+    $query2 = pg_query($db,$sql2);
+   while ($arr2 = pg_fetch_array($query2)) {
+  ?>      
+            '<?php echo $arr2[pv_tn]; ?>',
+    <?php  } ?>           
+        ],
+        crosshair: true
+    },
+    yAxis: {
+        min: 0,
+        title: {
+            text: 'จำนวนจุดความร้อน'
+        }
+    },
+        credits: {
+          enabled: false
+        },
+    tooltip: {
+        headerFormat: '<span style="font-size:10px"> {point.key} </span><table>',
+        pointFormat: '<tr><td style="color:{series.color};padding:0"> {series.name} : </td>' +
+            '<td style="padding:0"><b>{point.y} จุด</b></td></tr>',
+        footerFormat: '</table>',
+        shared: true,
+        useHTML: true
+    },
+    plotOptions: {
+        column: {
+            pointPadding: 0.2,
+            borderWidth: 0
+        }
+    },
+    series: [{
+        name: 'จำนวนจุดความร้อน',
+        color: '#b35900',
+        data: [  <?php 
+    $sql2 = "SELECT pv_tn,count(*) FROM fire_archive  WHERE acq_date between '2016-01-01'  and '2016-12-31' group by pv_tn  ";
+    $query2 = pg_query($db,$sql2);
+   while ($arr2 = pg_fetch_array($query2)) {
+  ?>      
+            <?php echo $arr2[count]; ?>,
+    <?php  } ?> ]
+
+    }]
+});
+    </script>
+
+
+    <script>
+        
+Highcharts.chart('container3', {
+    chart: {
+        type: 'line'
+    },
+    title: {
+        text: ''
+    },
+    subtitle: {
+        text: ''
+    },
+    legend: {
+         enabled: false
+    },
+    xAxis: {
+        categories: [
+  <?php 
+    $sql2 = "with ss as (
+select extract(year from acq_date) as yr, extract(month from acq_date) as mon , count(*)
+from fire_archive
+group by extract(year from acq_date), extract(month from acq_date)
+)select * ,
+CASE
+    WHEN mon = 1 THEN 'มกราคม'
+    WHEN mon = 2 THEN 'กุมภาพันธ์'
+    WHEN mon = 3 THEN 'มีนาคม'
+    WHEN mon = 4 THEN 'เมษายน'
+    WHEN mon = 5 THEN 'พฤษภาคม'
+    WHEN mon = 6 THEN 'มิถุนายน'
+    WHEN mon = 7 THEN 'กรกฎาคม'
+    WHEN mon = 8 THEN 'สิงหาคม'
+    WHEN mon = 9 THEN 'กันยายน'
+    WHEN mon = 10 THEN 'ตุลาคม'
+    WHEN mon = 11 THEN 'พฤศจิกายน'
+    WHEN mon = 12 THEN 'ธันวาคม'
+END  as month from ss where yr = 2016 order by mon asc";
+    $query2 = pg_query($db,$sql2);
+   while ($arr2 = pg_fetch_array($query2)) {
+  ?> 
+            '<?php echo $arr2[month]; ?>',
+    <?php  } ?>           
+        ],
+        crosshair: true
+    },
+    yAxis: {
+        min: 0,
+        title: {
+            text: 'จำนวนจุดความร้อน'
+        }
+    },
+        credits: {
+          enabled: false
+        },
+    tooltip: {
+        headerFormat: '<span style="font-size:10px"> {point.key} </span><table>',
+        pointFormat: '<tr><td style="color:{series.color};padding:0"> {series.name} : </td>' +
+            '<td style="padding:0"><b>{point.y} จุด</b></td></tr>',
+        footerFormat: '</table>',
+        shared: true,
+        useHTML: true
+    },
+    plotOptions: {
+        column: {
+            pointPadding: 0.2,
+            borderWidth: 0
+        }
+    },
+    series: [{
+        name: 'จำนวนจุดความร้อน',
+        color: '#b35900',
+        data: [  <?php 
+    $sql2 = "with ss as (
+select extract(year from acq_date) as yr, extract(month from acq_date) as mon , count(*)
+from fire_archive
+group by extract(year from acq_date), extract(month from acq_date)
+)select * ,
+CASE
+    WHEN mon = 1 THEN 'มกราคม'
+    WHEN mon = 2 THEN 'กุมภาพันธ์'
+    WHEN mon = 3 THEN 'มีนาคม'
+    WHEN mon = 4 THEN 'เมษายน'
+    WHEN mon = 5 THEN 'พฤษภาคม'
+    WHEN mon = 6 THEN 'มิถุนายน'
+    WHEN mon = 7 THEN 'กรกฎาคม'
+    WHEN mon = 8 THEN 'สิงหาคม'
+    WHEN mon = 9 THEN 'กันยายน'
+    WHEN mon = 10 THEN 'ตุลาคม'
+    WHEN mon = 11 THEN 'พฤศจิกายน'
+    WHEN mon = 12 THEN 'ธันวาคม'
+END from ss where yr = 2016 order by mon asc";
+    $query2 = pg_query($db,$sql2);
+   while ($arr2 = pg_fetch_array($query2)) {
+  ?>      
+            <?php echo $arr2[count]; ?>,
+    <?php  } ?> ]
+
+    }]
+});
+    </script>
+
 
 </html>
