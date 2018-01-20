@@ -181,6 +181,28 @@ $show_point = $_GET[show_point];
             and  satellite like  '%$satte'
             group by a.pv_code,b.geom ,a.pv_tn
             ; ";
+        }elseif ($prov_name != '' and $amphoe_name != '' and $tambon_name == '') {
+            $sql = "select count(*),a.pv_tn,a.ap_tn, a.pv_code,ST_AsGeoJSON(b.geom) AS geojson 
+            from fire_archive  a
+            inner join  amphoe_sim b on a.ap_code = b.ap_code
+            where a.pv_tn like '%$prov_name' 
+            and a.ap_tn  like '%$amphoe_name'
+            and  a.tb_tn like '%$tambon_name'
+            and acq_date between '$date_start' and '$date_end'
+            and  satellite like  '%$satte'
+            group by a.ap_code,b.geom ,a.pv_tn,a.ap_tn, a.pv_code
+            ; ";
+        }elseif ($prov_name != '' and $amphoe_name != '' and $tambon_name != '') {
+            $sql = "select count(*),a.pv_tn,a.ap_tn,a.tb_tn, a.pv_code,ST_AsGeoJSON(b.geom) AS geojson 
+            from fire_archive  a
+            inner join  tambon_sim b on a.tb_code = b.tb_code
+            where a.pv_tn like '%$prov_name' 
+            and a.ap_tn  like '%$amphoe_name'
+            and  a.tb_tn like '%$tambon_name'
+            and acq_date between '$date_start' and '$date_end'
+            and  satellite like  '%$satte'
+            group by a.ap_code,b.geom ,a.pv_tn,a.ap_tn, a.pv_code,a.tb_tn
+            ; ";
         }
 
 
@@ -253,9 +275,53 @@ $show_point = $_GET[show_point];
 
         
 
+<?php
+    if ($prov_name == '') {
+        $lat = 19.043806 ;
+        $lon = 100.069754;
+        $zoom = 8;
+
+    
+    }elseif ($prov_name != '' and $amphoe_name == '' ) {
+           $sql = "SELECT  ST_Y( st_centroid(geom)) as lat ,ST_x( st_centroid(geom)) as lon
+        FROM province 
+        where pv_tn like '%$prov_name' ;";
+         $result = pg_query($sql);
+        $arr = pg_fetch_array($result);
+        $lat = $arr['lat'] ;  
+        $lon = $arr['lon'] ;
+        $zoom = '9' ;
+     }elseif ($prov_name != '' and $amphoe_name != '' and $tambon_name == '' ) {
+         $sql = "SELECT  ST_Y( st_centroid(geom)) as lat ,ST_x( st_centroid(geom)) as lon
+        FROM amphoe 
+        where pv_tn like '%$prov_name' 
+        and ap_tn  like '%$amphoe_name';";
+         $result = pg_query($sql);
+        $arr = pg_fetch_array($result);
+        $lat = $arr['lat'] ;  
+        $lon = $arr['lon'] ;
+        $zoom = '10' ;
+     }elseif ($prov_name != '' and $amphoe_name != '' and $tambon_name != '' ) {
+         $sql = "SELECT  ST_Y( st_centroid(geom)) as lat ,ST_x( st_centroid(geom)) as lon
+        FROM tambon 
+        where pv_tn like '%$prov_name' 
+        and ap_tn  like '%$amphoe_name'
+        and  tb_tn like '%$tambon_name';";
+         $result = pg_query($sql);
+        $arr = pg_fetch_array($result);
+        $lat = $arr['lat'] ;  
+        $lon = $arr['lon'] ;
+        $zoom = '11' ;
+     }
+
+   
+?>
+
+
+
 
     OpenStreetMap_BlackAndWhite.addTo(map);
-    map.setView([19.043806, 100.069754],8);
+    map.setView([<?php echo $lat ?>, <?php echo $lon ?>],<?php echo $zoom ?>);
     
     
 
