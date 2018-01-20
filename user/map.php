@@ -47,8 +47,8 @@
             echo "<script>var jsonUrl = 'http://119.59.125.191/service/omfs_web_service.php'</script>";
             echo "<script>var chkLoc = 'all'; var lon = ".$lon."; var lat = ".$lat."; var zoom = 8;</script>";
         }else{
-            echo "<script>var jsonUrl = 'http://cgi.uru.ac.th/service/omfs_web_service.php?procode=".$code."'</script>";
-            echo "<script>var chkLoc = '".$code."'; var lon = ".$lon."; var lat = ".$lat."; var zoom = 9; var cql='prov_code=".$code."';</script>";
+            echo "<script>var jsonUrl = 'http://119.59.125.191/service/omfs_web_service.php?procode=".$code."'</script>";
+            echo "<script>var chkLoc = '".$code."'; var lon = ".$lon."; var lat = ".$lat."; var zoom = 9; var cql='pv_code=".$code."';</script>";
         }
     }else if(isset($_GET['ampcode'])){
         $code = $_GET['ampcode'];
@@ -56,7 +56,7 @@
         $lat = $_GET['lat'];      
         
         echo "<script>var jsonUrl = 'http://119.59.125.191/service/omfs_web_service.php?ampcode=".$code."'</script>";
-        echo "<script>var chkLoc = '".$code."'; var lon = ".$lon."; var lat = ".$lat."; var zoom = 11; var cql='amp_code=".$code."';</script>";
+        echo "<script>var chkLoc = '".$code."'; var lon = ".$lon."; var lat = ".$lat."; var zoom = 11; var cql='ap_code=".$code."';</script>";
         
     }else if(isset($_GET['tamcode'])){
         $code = $_GET['tamcode'];
@@ -64,7 +64,7 @@
         $lat = $_GET['lat'];   
         
         echo "<script>var jsonUrl = 'http://119.59.125.191/service/omfs_web_service.php?tamcode=".$code."'</script>";
-        echo "<script>var chkLoc = '".$code."'; var lon = ".$lon."; var lat = ".$lat."; var zoom = 12; var cql='tam_code=".$code."';</script>";
+        echo "<script>var chkLoc = '".$code."'; var lon = ".$lon."; var lat = ".$lat."; var zoom = 12; var cql='tb_code=".$code."';</script>";
         
     }else{
         echo "<script>var jsonUrl = 'http://119.59.125.191/service/omfs_web_service.php'</script>";
