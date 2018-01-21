@@ -51,13 +51,31 @@ $strpg = "SELECT * FROM user_profile  WHERE iden_number = '".$_SESSION['iden_num
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.1.0/dist/leaflet.css" integrity="sha512-wcw6ts8Anuw10Mzh9Ytw4pylW8+NAD4ch3lqm9lzAsTxg0GFeJgoAtxuCLREZSC5lUXdVyo/7yfsqFjQ4S+aKw==" crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.1.0/dist/leaflet.js" integrity="sha512-mNqn2Wg7tSToJhvHcqfzLMU6J4mkOImSPTxVZAdo+lcPlk+GhZmYgACEe0x35K7YzW1zJ7XyJV/TT1MrdXvMcA==" crossorigin=""></script>
 
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD1AO13H8MYTwPKioaW5qgGwdPXYpXbw4w"></script>
+    <script src='https://unpkg.com/leaflet.gridlayer.googlemutant@latest/Leaflet.GoogleMutant.js'></script>  
+
+    <!--   Core JS Files   -->
+	<script src="assets/js/jquery-1.10.2.js" type="text/javascript"></script>
+	<!-- <script src="assets/js/bootstrap.min.js" type="text/javascript"></script> -->
+
+	<!--  Checkbox, Radio & Switch Plugins -->
+	<!-- <script src="assets/js/bootstrap-checkbox-radio.js"></script> -->
+
+	<!--  Charts Plugin -->
+	<script src="assets/js/chartist.min.js"></script>
+
+	<!--  Notifications Plugin    -->
+	<script src="assets/js/bootstrap-notify.js"></script>
+
+
+	<!-- Paper Dashboard Core javascript and methods for Demo purpose -->
+	<!-- <script src="assets/js/paper-dashboard.js"></script> -->
+
+	<!-- Paper Dashboard DEMO methods, don't include it in your project! -->
+	<!-- <script src="assets/js/demo.js"></script> -->
+
 
     <style>
-    #map {
-        width: 800px;
-        height: 500px;
-    }
-
     .info {
         padding: 6px 8px;
         font: 14px/16px Arial, Helvetica, sans-serif;
@@ -82,7 +100,7 @@ $strpg = "SELECT * FROM user_profile  WHERE iden_number = '".$_SESSION['iden_num
         width: 18px;
         height: 18px;
         float: left;
-        margin-right: 8px;
+        margin-right: 2px;
         opacity: 0.9;
     }
 </style>
@@ -112,28 +130,6 @@ $strpg = "SELECT * FROM user_profile  WHERE iden_number = '".$_SESSION['iden_num
 
 
 </body>
-
-<!--   Core JS Files   -->
-<script src="assets/js/jquery-1.10.2.js" type="text/javascript"></script>
-<script src="assets/js/bootstrap.min.js" type="text/javascript"></script>
-
-<!--  Checkbox, Radio & Switch Plugins -->
-<script src="assets/js/bootstrap-checkbox-radio.js"></script>
-
-<!--  Charts Plugin -->
-<script src="assets/js/chartist.min.js"></script>
-
-<!--  Notifications Plugin    -->
-<script src="assets/js/bootstrap-notify.js"></script>
-
-
-<!-- Paper Dashboard Core javascript and methods for Demo purpose -->
-<script src="assets/js/paper-dashboard.js"></script>
-
-<!-- Paper Dashboard DEMO methods, don't include it in your project! -->
-<script src="assets/js/demo.js"></script>
-
-
     
 <script type="text/javascript">
     var OBECData =    <?php
@@ -200,7 +196,7 @@ $strpg = "SELECT * FROM user_profile  WHERE iden_number = '".$_SESSION['iden_num
             where a.pv_tn like '%$prov_name' 
             and a.ap_tn  like '%$amphoe_name'
             and  a.tb_tn like '%$tambon_name'
-            and acq_date = '2018/01/20'            
+            and acq_date >= '2017/12/30'       
 
             group by a.pv_code,b.geom ,a.pv_tn; ";
         }
@@ -243,26 +239,10 @@ $strpg = "SELECT * FROM user_profile  WHERE iden_number = '".$_SESSION['iden_num
    // header('Content-type: application/json',true);
   echo json_encode($geojson);
 
-?>
-    </script>
-    
-
-    <script type="text/javascript">
-
-
-    var map = L.map('map');
-    var OpenStreetMap_BlackAndWhite = L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
-	    maxZoom: 20,
-	    subdomains:['mt0','mt1','mt2','mt3']
-	}).addTo(map);
-        
-<?php
-    if ($prov_name == '') {
+  	if ($prov_name == '') {
         $lat = 19.043806 ;
         $lon = 100.069754;
-        $zoom = 8;
-
-    
+        $zoom = 8;    
     }elseif ($prov_name != '' and $amphoe_name == '' ) {
            $sql = "SELECT  ST_Y( st_centroid(geom)) as lat ,ST_x( st_centroid(geom)) as lon
         FROM province 
@@ -272,7 +252,7 @@ $strpg = "SELECT * FROM user_profile  WHERE iden_number = '".$_SESSION['iden_num
         $lat = $arr['lat'] ;  
         $lon = $arr['lon'] ;
         $zoom = '9' ;
-     }elseif ($prov_name != '' and $amphoe_name != '' and $tambon_name == '' ) {
+    }elseif ($prov_name != '' and $amphoe_name != '' and $tambon_name == '' ) {
          $sql = "SELECT  ST_Y( st_centroid(geom)) as lat ,ST_x( st_centroid(geom)) as lon
         FROM amphoe 
         where pv_tn like '%$prov_name' 
@@ -282,7 +262,7 @@ $strpg = "SELECT * FROM user_profile  WHERE iden_number = '".$_SESSION['iden_num
         $lat = $arr['lat'] ;  
         $lon = $arr['lon'] ;
         $zoom = '10' ;
-     }elseif ($prov_name != '' and $amphoe_name != '' and $tambon_name != '' ) {
+    }elseif ($prov_name != '' and $amphoe_name != '' and $tambon_name != '' ) {
          $sql = "SELECT  ST_Y( st_centroid(geom)) as lat ,ST_x( st_centroid(geom)) as lon
         FROM tambon 
         where pv_tn like '%$prov_name' 
@@ -293,23 +273,46 @@ $strpg = "SELECT * FROM user_profile  WHERE iden_number = '".$_SESSION['iden_num
         $lat = $arr['lat'] ;  
         $lon = $arr['lon'] ;
         $zoom = '11' ;
-     }
-
-   
+    }   
 ?>
+	
+	//init map
+	var map = L.map('map');
+	map.setView([<?php echo $lat ?>, <?php echo $lon ?>],<?php echo $zoom ?>); 
 
-    OpenStreetMap_BlackAndWhite.addTo(map);
-    map.setView([<?php echo $lat ?>, <?php echo $lon ?>],<?php echo $zoom ?>);   
+ //    var gmap = L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
+	//     maxZoom: 20,
+	//     subdomains:['mt0','mt1','mt2','mt3']
+	// }).addTo(map);
+    
+     var mbUrl = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw';
 
-        <?php if( $show_point == 1) {} else{echo "/*";} ?>
+    var grayscale = L.tileLayer(mbUrl, {id: 'mapbox.light'});
+    var streets = L.tileLayer(mbUrl, {id: 'mapbox.streets'});
+    var roads = L.gridLayer.googleMutant({
+            type: 'roadmap' // valid values are 'roadmap', 'satellite', 'terrain' and 'hybrid'
+    });
 
-        var redIcon = L.icon({
-            iconUrl: '../img/fire5.gif',
-            iconSize: [20, 27],
-        });
-        var planes = [<?php
+    var satellite = L.gridLayer.googleMutant({
+        type: 'satellite' // valid values are 'roadmap', 'satellite', 'terrain' and 'hybrid'
+    });
 
-    if ($date_end !=  '') {
+    var terrain = L.gridLayer.googleMutant({
+        type: 'terrain' // valid values are 'roadmap', 'satellite', 'terrain' and 'hybrid'
+    }); 
+    
+      
+
+    <?php if( $show_point == 1) {} else{echo "/*";} ?>
+
+    var redIcon = L.icon({
+    		iconUrl: '../img/fire5.gif',
+    		iconSize: [20, 27],
+    });
+
+    var planes = [<?php
+
+    	if ($date_end !=  '') {
               $result5 = pg_query($db,"
                 SELECT  * from v_fire_report a
                 where a.pv_tn like '%$prov_name' 
@@ -322,67 +325,60 @@ $strpg = "SELECT * FROM user_profile  WHERE iden_number = '".$_SESSION['iden_num
                 where a.pv_tn like '%$prov_name' 
                 and a.ap_tn  like '%$amphoe_name'
                 and  a.tb_tn like '%$tambon_name'
-                and acq_date = '2018/01/20';");
+                and acq_date >= '2017/12/30';");
         }
+        while ($row5 = pg_fetch_array($result5)) { ?> [<?php echo "$row5[lat]",",","$row5[lon]"; ?>], <?php } 
+    ?>];
 
-            while ($row5 = pg_fetch_array($result5)) { ?> [<?php echo "$row5[lat]",",","$row5[lon]"; ?>], <?php } ?>];
+    var fireReport = L.layerGroup();;
 
-        for (var i = 0; i < planes.length; i++) {
-            marker = new L.marker([planes[i][0], planes[i][1]], {
-                    icon: redIcon
-                })
-                .addTo(map);
-        }
+    for (var i = 0; i < planes.length; i++) {
+    	marker = new L.marker([planes[i][0], planes[i][1]], {
+    		icon: redIcon
+    	}).addTo(fireReport);
+    }
 
-        <?php if( $show_point == 1) {} else{echo "*/" ;}?>
+    <?php if( $show_point == 1) {} else{echo "*/" ;}?>
 
+    // control that shows state info on hover
+    var info = L.control({position: 'bottomright'});
 
-
-        // control that shows state info on hover
-        var info = L.control();
-
-        info.onAdd = function (map) {
-            this._div = L.DomUtil.create('div', 'info');
-            this.update();
+    info.onAdd = function (map) {
+    	this._div = L.DomUtil.create('div', 'info');
+    	this.update();
             return this._div;
-        };
+    };
 
         
-        info.update = function (props) {
-            this._div.innerHTML = '<h5>แผนที่แสดงข้อมูล</h5>' +  (props ?
-                '<b><center>' + props.prov_nam_t + '</b><br />' + props.value + ' จุด'
-                : '');
-        };
-        info.addTo(map);
-
+    info.update = function (props) {
+        this._div.innerHTML = '<h5>จำนวนการแจ้ง</h5>' +  (props ?
+            '<b><center>' + props.prov_nam_t + '</b><br />' + props.value + ' แห่ง'
+             : '');
+    };
+    info.addTo(map);
 
         // get color depending on population PROV_CODE value
-
-
-
-       function getColor(d) {
-		    return d > 1000 ? '#800026' :
-		           d > 500  ? '#BD0026' :
-		           d > 200  ? '#E31A1C' :
-		           d > 100  ? '#FC4E2A' :
-		           d > 50   ? '#FD8D3C' :
-		           d > 20   ? '#FEB24C' :
-		           d > 10   ? '#FED976' :
-		                      '#FFEDA0';
+    function getColor(d) {
+		return d > 1000 ? '#800026' :
+				d > 500  ? '#BD0026' :
+		        d > 200  ? '#E31A1C' :
+		        d > 100  ? '#FC4E2A' :
+		        d > 50   ? '#FD8D3C' :
+		        d > 20   ? '#FEB24C' :
+		        d > 10   ? '#FED976' :
+		                   '#FFEDA0';
 		}
 
-
-
-        function style(feature) {
-            return {
-                weight: 2,
-                opacity: 1,
-                color: 'black',
-                dashArray: '2',
-                fillOpacity: 0.9,
-                fillColor: getColor(feature.properties.value_sum)
+    function style(feature) {
+        return {
+            weight: 2,
+            opacity: 1,
+            color: 'black',
+            dashArray: '2',
+            fillOpacity: 0.5,
+            fillColor: getColor(feature.properties.value_sum)
             };
-        }
+    }
 
         function highlightFeature(e) {
             var layer = e.target;
@@ -425,15 +421,29 @@ $strpg = "SELECT * FROM user_profile  WHERE iden_number = '".$_SESSION['iden_num
         geojson = L.geoJson(OBECData, {
             style: style,
             onEachFeature: onEachFeature
-        }).addTo(map);
+        });
 
+        // add control layers
+        var baseLayers = {
+	        "แผนที่ขาวดำ": grayscale,
+	        "แผนที่ถนน(OSM)": streets,   
+	        "แผนที่ถนน(GoogleMaps)": roads,
+	        "แผนที่ภาพดาวเทียม": satellite,
+	        "แผนที่ภูมิประเทศ": terrain.addTo(map),
+	    };
+	    
+	    var overlays = {
+	    	"ตำแหน่งเกิดเหตุ": fireReport.addTo(map),
+	        "ขอบเขตการปกครอง": geojson.addTo(map)
+	    };
+	    
+	    L.control.layers(baseLayers, overlays).addTo(map);
 
-
-        var legend = L.control({position: 'bottomright'});
-
+	    // add legend
+        var legend = L.control({position: 'bottomleft'});
         legend.onAdd = function (map) {
                 var div = L.DomUtil.create('div', 'info legend'),
-                      grades = [0, 10, 20, 50, 100, 200, 500, 1000],
+                    grades = [0, 10, 20, 50, 100, 200, 500, 1000],
                     labels = [],
                     from, to;
 
@@ -444,18 +454,14 @@ $strpg = "SELECT * FROM user_profile  WHERE iden_number = '".$_SESSION['iden_num
 
                 labels.push(
                     '<i style="background:' + getColor(from + 1) + '"></i> ' +
-                    from + (to ? '&ndash;' + to : '+')+ ' จุด');
+                    from + (to ? '&ndash;' + to : '+')+ ' แห่ง'
+                );
             }
 
             div.innerHTML = labels.join('<br>');
             return div;
         };
-
-        legend.addTo(map);
-
-
-        
-    </script>
-    
+        legend.addTo(map);        
+    </script>  
 
 </html>
