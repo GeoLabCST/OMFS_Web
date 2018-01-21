@@ -52,7 +52,7 @@ $strpg = "SELECT * FROM user_profile  WHERE iden_number = '".$_SESSION['iden_num
     <script src="https://unpkg.com/leaflet@1.1.0/dist/leaflet.js" integrity="sha512-mNqn2Wg7tSToJhvHcqfzLMU6J4mkOImSPTxVZAdo+lcPlk+GhZmYgACEe0x35K7YzW1zJ7XyJV/TT1MrdXvMcA==" crossorigin=""></script>
 
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD1AO13H8MYTwPKioaW5qgGwdPXYpXbw4w"></script>
-    <script src='https://unpkg.com/leaflet.gridlayer.googlemutant@latest/Leaflet.GoogleMutant.js'></script>  
+    <script src='https://unpkg.com/leaflet.gridlayer.googlemutant@latest/Leaflet.GoogleMutant.js'></script>
 
     <!--   Core JS Files   -->
 	<script src="assets/js/jquery-1.10.2.js" type="text/javascript"></script>
@@ -91,17 +91,22 @@ $strpg = "SELECT * FROM user_profile  WHERE iden_number = '".$_SESSION['iden_num
     }
 
     .legend {
-        text-align: left;
-        line-height: 18px;
-        color: #555;
+    text-align: left;
+    line-height: 18px;
+    color: #555;
     }
-
     .legend i {
-        width: 18px;
-        height: 18px;
-        float: left;
-        margin-right: 2px;
-        opacity: 0.9;
+    width: 12px;
+    height: 12px;
+    float: left;
+    margin-right: 5px;
+    opacity: 0.7;
+    }
+    .legend .circle {
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    margin-top: 8px;
     }
 </style>
 </head>
@@ -130,15 +135,15 @@ $strpg = "SELECT * FROM user_profile  WHERE iden_number = '".$_SESSION['iden_num
 
 
 </body>
-    
+
 <script type="text/javascript">
     var OBECData =    <?php
 //-------------------------------------------------------------
-// * Name: PHP-PostGIS2GeoJSON  
+// * Name: PHP-PostGIS2GeoJSON
 // * Purpose: GIST@NU (www.cgistln.nu.ac.th)
 // * Date: 2016/10/13
 // * Author: Chingchai Humhong (chingchaih@nu.ac.th)
-// * Acknowledgement: 
+// * Acknowledgement:
 //-------------------------------------------------------------
 // Database connection settings
 
@@ -148,72 +153,72 @@ $strpg = "SELECT * FROM user_profile  WHERE iden_number = '".$_SESSION['iden_num
     if ($date_end !=  '') {
 
          if ($prov_name == '') {
-              $sql = "select count(*),a.pv_tn, a.pv_code,ST_AsGeoJSON(b.geom) AS geojson 
+              $sql = "select count(*),a.pv_tn, a.pv_code,ST_AsGeoJSON(b.geom) AS geojson
             from v_fire_report  a
             inner join  province_sim b on a.pv_code = b.pv_code
-            where a.pv_tn like '%$prov_name' 
+            where a.pv_tn like '%$prov_name'
             and a.ap_tn  like '%$amphoe_name'
             and  a.tb_tn like '%$tambon_name'
             and acq_date between '$date_start' and '$date_end'
             group by a.pv_code,b.geom ,a.pv_tn
             ; ";
         }elseif ($prov_name != '' and $amphoe_name == '') {
-            $sql = "select count(*),a.pv_tn, a.pv_code,ST_AsGeoJSON(b.geom) AS geojson 
+            $sql = "select count(*),a.pv_tn, a.pv_code,ST_AsGeoJSON(b.geom) AS geojson
             from v_fire_report  a
             inner join  province_sim b on a.pv_code = b.pv_code
-            where a.pv_tn like '%$prov_name' 
+            where a.pv_tn like '%$prov_name'
             and a.ap_tn  like '%$amphoe_name'
             and  a.tb_tn like '%$tambon_name'
             and acq_date between '$date_start' and '$date_end'
             group by a.pv_code,b.geom ,a.pv_tn
             ; ";
         }elseif ($prov_name != '' and $amphoe_name != '' and $tambon_name == '') {
-            $sql = "select count(*),a.pv_tn,a.ap_tn, a.pv_code,ST_AsGeoJSON(b.geom) AS geojson 
+            $sql = "select count(*),a.pv_tn,a.ap_tn, a.pv_code,ST_AsGeoJSON(b.geom) AS geojson
             from v_fire_report  a
             inner join  amphoe_sim b on a.ap_code = b.ap_code
-            where a.pv_tn like '%$prov_name' 
+            where a.pv_tn like '%$prov_name'
             and a.ap_tn  like '%$amphoe_name'
             and  a.tb_tn like '%$tambon_name'
             and acq_date between '$date_start' and '$date_end'
             group by a.ap_code,b.geom ,a.pv_tn,a.ap_tn, a.pv_code
             ; ";
         }elseif ($prov_name != '' and $amphoe_name != '' and $tambon_name != '') {
-            $sql = "select count(*),a.pv_tn,a.ap_tn,a.tb_tn, a.pv_code,ST_AsGeoJSON(b.geom) AS geojson 
+            $sql = "select count(*),a.pv_tn,a.ap_tn,a.tb_tn, a.pv_code,ST_AsGeoJSON(b.geom) AS geojson
             from v_fire_report  a
             inner join  tambon_sim b on a.tb_code = b.tb_code
-            where a.pv_tn like '%$prov_name' 
+            where a.pv_tn like '%$prov_name'
             and a.ap_tn  like '%$amphoe_name'
             and  a.tb_tn like '%$tambon_name'
             and acq_date between '$date_start' and '$date_end'
             group by a.ap_code,b.geom ,a.pv_tn,a.ap_tn, a.pv_code,a.tb_tn
             ; ";
         }
-       
+
         }else{
-            $sql = "select count(*),a.pv_tn, a.pv_code,ST_AsGeoJSON(b.geom) AS geojson 
+            $sql = "select count(*),a.pv_tn, a.pv_code,ST_AsGeoJSON(b.geom) AS geojson
             from v_fire_report  a
             inner join  province_sim b on a.pv_code = b.pv_code
-            where a.pv_tn like '%$prov_name' 
+            where a.pv_tn like '%$prov_name'
             and a.ap_tn  like '%$amphoe_name'
             and  a.tb_tn like '%$tambon_name'
-            and acq_date >= '2017/12/30'       
+            and acq_date >= '2017/12/30'
 
             group by a.pv_code,b.geom ,a.pv_tn; ";
         }
 
-   
+
 
    // Perform database query
-   $query = pg_query($db,$sql);   
+   $query = pg_query($db,$sql);
    //echo $sql;
     // Return route as GeoJSON
    $geojson = array(
       'type'      => 'FeatureCollection',
       'features'  => array()
-   ); 
-  
+   );
+
    // Add geom to GeoJSON array
-   while($edge=pg_fetch_assoc($query)) {  
+   while($edge=pg_fetch_assoc($query)) {
       $feature = array(
          'type' => 'Feature',
          'geometry' => json_decode($edge['geojson'], true),
@@ -229,12 +234,12 @@ $strpg = "SELECT * FROM user_profile  WHERE iden_number = '".$_SESSION['iden_num
             'value' => number_format($edge['count'])
          )
       );
-      
+
       // Add feature array to feature collection array
       array_push($geojson['features'], $feature);
    }
    // Close database connection
-   
+
    // Return routing result
    // header('Content-type: application/json',true);
   echo json_encode($geojson);
@@ -242,49 +247,49 @@ $strpg = "SELECT * FROM user_profile  WHERE iden_number = '".$_SESSION['iden_num
   	if ($prov_name == '') {
         $lat = 19.043806 ;
         $lon = 100.069754;
-        $zoom = 8;    
+        $zoom = 8;
     }elseif ($prov_name != '' and $amphoe_name == '' ) {
            $sql = "SELECT  ST_Y( st_centroid(geom)) as lat ,ST_x( st_centroid(geom)) as lon
-        FROM province 
+        FROM province
         where pv_tn like '%$prov_name' ;";
          $result = pg_query($sql);
         $arr = pg_fetch_array($result);
-        $lat = $arr['lat'] ;  
+        $lat = $arr['lat'] ;
         $lon = $arr['lon'] ;
         $zoom = '9' ;
     }elseif ($prov_name != '' and $amphoe_name != '' and $tambon_name == '' ) {
          $sql = "SELECT  ST_Y( st_centroid(geom)) as lat ,ST_x( st_centroid(geom)) as lon
-        FROM amphoe 
-        where pv_tn like '%$prov_name' 
+        FROM amphoe
+        where pv_tn like '%$prov_name'
         and ap_tn  like '%$amphoe_name';";
          $result = pg_query($sql);
         $arr = pg_fetch_array($result);
-        $lat = $arr['lat'] ;  
+        $lat = $arr['lat'] ;
         $lon = $arr['lon'] ;
         $zoom = '10' ;
     }elseif ($prov_name != '' and $amphoe_name != '' and $tambon_name != '' ) {
          $sql = "SELECT  ST_Y( st_centroid(geom)) as lat ,ST_x( st_centroid(geom)) as lon
-        FROM tambon 
-        where pv_tn like '%$prov_name' 
+        FROM tambon
+        where pv_tn like '%$prov_name'
         and ap_tn  like '%$amphoe_name'
         and  tb_tn like '%$tambon_name';";
          $result = pg_query($sql);
         $arr = pg_fetch_array($result);
-        $lat = $arr['lat'] ;  
+        $lat = $arr['lat'] ;
         $lon = $arr['lon'] ;
         $zoom = '11' ;
-    }   
+    }
 ?>
-	
+
 	//init map
 	var map = L.map('map');
-	map.setView([<?php echo $lat ?>, <?php echo $lon ?>],<?php echo $zoom ?>); 
+	map.setView([<?php echo $lat ?>, <?php echo $lon ?>],<?php echo $zoom ?>);
 
  //    var gmap = L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
 	//     maxZoom: 20,
 	//     subdomains:['mt0','mt1','mt2','mt3']
 	// }).addTo(map);
-    
+
      var mbUrl = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw';
 
     var grayscale = L.tileLayer(mbUrl, {id: 'mapbox.light'});
@@ -299,9 +304,9 @@ $strpg = "SELECT * FROM user_profile  WHERE iden_number = '".$_SESSION['iden_num
 
     var terrain = L.gridLayer.googleMutant({
         type: 'terrain' // valid values are 'roadmap', 'satellite', 'terrain' and 'hybrid'
-    }); 
-    
-      
+    });
+
+
 
     <?php if( $show_point == 1) {} else{echo "/*";} ?>
 
@@ -315,19 +320,19 @@ $strpg = "SELECT * FROM user_profile  WHERE iden_number = '".$_SESSION['iden_num
     	if ($date_end !=  '') {
               $result5 = pg_query($db,"
                 SELECT  * from v_fire_report a
-                where a.pv_tn like '%$prov_name' 
+                where a.pv_tn like '%$prov_name'
                 and a.ap_tn  like '%$amphoe_name'
                 and  a.tb_tn like '%$tambon_name'
                 and acq_date between '$date_start' and '$date_end';");
         }else{
                 $result5 = pg_query($db,"
                 SELECT  * from v_fire_report a
-                where a.pv_tn like '%$prov_name' 
+                where a.pv_tn like '%$prov_name'
                 and a.ap_tn  like '%$amphoe_name'
                 and  a.tb_tn like '%$tambon_name'
                 and acq_date >= '2017/12/30';");
         }
-        while ($row5 = pg_fetch_array($result5)) { ?> [<?php echo "$row5[lat]",",","$row5[lon]"; ?>], <?php } 
+        while ($row5 = pg_fetch_array($result5)) { ?> [<?php echo "$row5[lat]",",","$row5[lon]"; ?>], <?php }
     ?>];
 
     var fireReport = L.layerGroup();;
@@ -349,7 +354,7 @@ $strpg = "SELECT * FROM user_profile  WHERE iden_number = '".$_SESSION['iden_num
             return this._div;
     };
 
-        
+
     info.update = function (props) {
         this._div.innerHTML = '<h5>จำนวนการแจ้ง</h5>' +  (props ?
             '<b><center>' + props.prov_nam_t + '</b><br />' + props.value + ' แห่ง'
@@ -409,8 +414,9 @@ $strpg = "SELECT * FROM user_profile  WHERE iden_number = '".$_SESSION['iden_num
         }
 
         function onEachFeature(feature, layer) {
-             var popupContent = '<b>จังหวัด ' + feature.properties.pv_tn + '</b><br>' + feature.properties.value_sum + ' จุด' ;
-            layer.bindPopup(popupContent);
+             var popupContent = '<b>จังหวัด ' + feature.properties.prov_nam_t + '</b><br>' + feature.properties.value_sum + ' จุด' ;
+             //console.log(feature);
+             layer.bindPopup(popupContent);
              layer.on({
                 mouseover: highlightFeature,
                 mouseout: resetHighlight,
@@ -426,17 +432,17 @@ $strpg = "SELECT * FROM user_profile  WHERE iden_number = '".$_SESSION['iden_num
         // add control layers
         var baseLayers = {
 	        "แผนที่ขาวดำ": grayscale,
-	        "แผนที่ถนน(OSM)": streets,   
+	        "แผนที่ถนน(OSM)": streets,
 	        "แผนที่ถนน(GoogleMaps)": roads,
 	        "แผนที่ภาพดาวเทียม": satellite,
 	        "แผนที่ภูมิประเทศ": terrain.addTo(map),
 	    };
-	    
+
 	    var overlays = {
 	    	"ตำแหน่งเกิดเหตุ": fireReport.addTo(map),
 	        "ขอบเขตการปกครอง": geojson.addTo(map)
 	    };
-	    
+
 	    L.control.layers(baseLayers, overlays).addTo(map);
 
 	    // add legend
@@ -461,7 +467,7 @@ $strpg = "SELECT * FROM user_profile  WHERE iden_number = '".$_SESSION['iden_num
             div.innerHTML = labels.join('<br>');
             return div;
         };
-        legend.addTo(map);        
-    </script>  
+        legend.addTo(map);
+    </script>
 
 </html>

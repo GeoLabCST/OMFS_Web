@@ -86,11 +86,11 @@ $show_point = $_GET[show_point];
     }
 
     .legend i {
-        width: 18px;
-        height: 18px;
+        width: 12px;
+        height: 12px;
         float: left;
-        margin-right: 8px;
-        opacity: 0.9;
+        margin-right: 5px;
+        opacity: 0.7;
     }
 </style>
 </head>
@@ -142,15 +142,15 @@ $show_point = $_GET[show_point];
 <script src="assets/js/demo.js"></script>
 
 
-    
+
     <script type="text/javascript">
     var OBECData =    <?php
 //-------------------------------------------------------------
-// * Name: PHP-PostGIS2GeoJSON  
+// * Name: PHP-PostGIS2GeoJSON
 // * Purpose: GIST@NU (www.cgistln.nu.ac.th)
 // * Date: 2016/10/13
 // * Author: Chingchai Humhong (chingchaih@nu.ac.th)
-// * Acknowledgement: 
+// * Acknowledgement:
 //-------------------------------------------------------------
 // Database connection settings
 
@@ -160,10 +160,10 @@ $show_point = $_GET[show_point];
     if ($date_end !=  '') {
 
         if ($prov_name == '') {
-              $sql = "select count(*),a.pv_tn, a.pv_code,ST_AsGeoJSON(b.geom) AS geojson 
+              $sql = "select count(*),a.pv_tn, a.pv_code,ST_AsGeoJSON(b.geom) AS geojson
             from fire_archive  a
             inner join  province_sim b on a.pv_code = b.pv_code
-            where a.pv_tn like '%$prov_name' 
+            where a.pv_tn like '%$prov_name'
             and a.ap_tn  like '%$amphoe_name'
             and  a.tb_tn like '%$tambon_name'
             and acq_date between '$date_start' and '$date_end'
@@ -171,10 +171,10 @@ $show_point = $_GET[show_point];
             group by a.pv_code,b.geom ,a.pv_tn
             ; ";
         }elseif ($prov_name != '' and $amphoe_name == '') {
-            $sql = "select count(*),a.pv_tn, a.pv_code,ST_AsGeoJSON(b.geom) AS geojson 
+            $sql = "select count(*),a.pv_tn, a.pv_code,ST_AsGeoJSON(b.geom) AS geojson
             from fire_archive  a
             inner join  province_sim b on a.pv_code = b.pv_code
-            where a.pv_tn like '%$prov_name' 
+            where a.pv_tn like '%$prov_name'
             and a.ap_tn  like '%$amphoe_name'
             and  a.tb_tn like '%$tambon_name'
             and acq_date between '$date_start' and '$date_end'
@@ -182,10 +182,10 @@ $show_point = $_GET[show_point];
             group by a.pv_code,b.geom ,a.pv_tn
             ; ";
         }elseif ($prov_name != '' and $amphoe_name != '' and $tambon_name == '') {
-            $sql = "select count(*),a.pv_tn,a.ap_tn, a.pv_code,ST_AsGeoJSON(b.geom) AS geojson 
+            $sql = "select count(*),a.pv_tn,a.ap_tn, a.pv_code,ST_AsGeoJSON(b.geom) AS geojson
             from fire_archive  a
             inner join  amphoe_sim b on a.ap_code = b.ap_code
-            where a.pv_tn like '%$prov_name' 
+            where a.pv_tn like '%$prov_name'
             and a.ap_tn  like '%$amphoe_name'
             and  a.tb_tn like '%$tambon_name'
             and acq_date between '$date_start' and '$date_end'
@@ -193,10 +193,10 @@ $show_point = $_GET[show_point];
             group by a.ap_code,b.geom ,a.pv_tn,a.ap_tn, a.pv_code
             ; ";
         }elseif ($prov_name != '' and $amphoe_name != '' and $tambon_name != '') {
-            $sql = "select count(*),a.pv_tn,a.ap_tn,a.tb_tn, a.pv_code,ST_AsGeoJSON(b.geom) AS geojson 
+            $sql = "select count(*),a.pv_tn,a.ap_tn,a.tb_tn, a.pv_code,ST_AsGeoJSON(b.geom) AS geojson
             from fire_archive  a
             inner join  tambon_sim b on a.tb_code = b.tb_code
-            where a.pv_tn like '%$prov_name' 
+            where a.pv_tn like '%$prov_name'
             and a.ap_tn  like '%$amphoe_name'
             and  a.tb_tn like '%$tambon_name'
             and acq_date between '$date_start' and '$date_end'
@@ -207,12 +207,12 @@ $show_point = $_GET[show_point];
 
 
 
-       
+
         }else{
-            $sql = "select count(*),a.pv_tn, a.pv_code,ST_AsGeoJSON(b.geom) AS geojson 
+            $sql = "select count(*),a.pv_tn, a.pv_code,ST_AsGeoJSON(b.geom) AS geojson
             from fire_archive  a
             inner join  province_sim b on a.pv_code = b.pv_code
-            where a.pv_tn like '%$prov_name' 
+            where a.pv_tn like '%$prov_name'
             and a.ap_tn  like '%$amphoe_name'
             and  a.tb_tn like '%$tambon_name'
             and acq_date = '2016/04/03'
@@ -222,19 +222,19 @@ $show_point = $_GET[show_point];
             ; ";
         }
 
-   
+
 
    // Perform database query
-   $query = pg_query($db,$sql);   
+   $query = pg_query($db,$sql);
    //echo $sql;
     // Return route as GeoJSON
    $geojson = array(
       'type'      => 'FeatureCollection',
       'features'  => array()
-   ); 
-  
+   );
+
    // Add geom to GeoJSON array
-   while($edge=pg_fetch_assoc($query)) {  
+   while($edge=pg_fetch_assoc($query)) {
       $feature = array(
          'type' => 'Feature',
          'geometry' => json_decode($edge['geojson'], true),
@@ -250,19 +250,19 @@ $show_point = $_GET[show_point];
             'value' => number_format($edge['count'])
          )
       );
-      
+
       // Add feature array to feature collection array
       array_push($geojson['features'], $feature);
    }
    // Close database connection
-   
+
    // Return routing result
    // header('Content-type: application/json',true);
   echo json_encode($geojson);
 
 ?>
     </script>
-    
+
 
     <script type="text/javascript">
 
@@ -273,7 +273,7 @@ $show_point = $_GET[show_point];
     subdomains:['mt0','mt1','mt2','mt3']
 }).addTo(map);
 
-        
+
 
 <?php
     if ($prov_name == '') {
@@ -281,40 +281,40 @@ $show_point = $_GET[show_point];
         $lon = 100.069754;
         $zoom = 8;
 
-    
+
     }elseif ($prov_name != '' and $amphoe_name == '' ) {
            $sql = "SELECT  ST_Y( st_centroid(geom)) as lat ,ST_x( st_centroid(geom)) as lon
-        FROM province 
+        FROM province
         where pv_tn like '%$prov_name' ;";
          $result = pg_query($sql);
         $arr = pg_fetch_array($result);
-        $lat = $arr['lat'] ;  
+        $lat = $arr['lat'] ;
         $lon = $arr['lon'] ;
         $zoom = '9' ;
      }elseif ($prov_name != '' and $amphoe_name != '' and $tambon_name == '' ) {
          $sql = "SELECT  ST_Y( st_centroid(geom)) as lat ,ST_x( st_centroid(geom)) as lon
-        FROM amphoe 
-        where pv_tn like '%$prov_name' 
+        FROM amphoe
+        where pv_tn like '%$prov_name'
         and ap_tn  like '%$amphoe_name';";
          $result = pg_query($sql);
         $arr = pg_fetch_array($result);
-        $lat = $arr['lat'] ;  
+        $lat = $arr['lat'] ;
         $lon = $arr['lon'] ;
         $zoom = '10' ;
      }elseif ($prov_name != '' and $amphoe_name != '' and $tambon_name != '' ) {
          $sql = "SELECT  ST_Y( st_centroid(geom)) as lat ,ST_x( st_centroid(geom)) as lon
-        FROM tambon 
-        where pv_tn like '%$prov_name' 
+        FROM tambon
+        where pv_tn like '%$prov_name'
         and ap_tn  like '%$amphoe_name'
         and  tb_tn like '%$tambon_name';";
          $result = pg_query($sql);
         $arr = pg_fetch_array($result);
-        $lat = $arr['lat'] ;  
+        $lat = $arr['lat'] ;
         $lon = $arr['lon'] ;
         $zoom = '11' ;
      }
 
-   
+
 ?>
 
 
@@ -322,8 +322,8 @@ $show_point = $_GET[show_point];
 
     OpenStreetMap_BlackAndWhite.addTo(map);
     map.setView([<?php echo $lat ?>, <?php echo $lon ?>],<?php echo $zoom ?>);
-    
-    
+
+
 
 
 
@@ -339,7 +339,7 @@ $show_point = $_GET[show_point];
     if ($date_end !=  '') {
               $result5 = pg_query($db,"
                 SELECT  * from fire_archive a
-                where a.pv_tn like '%$prov_name' 
+                where a.pv_tn like '%$prov_name'
                 and a.ap_tn  like '%$amphoe_name'
                 and  a.tb_tn like '%$tambon_name'
                 and acq_date between '$date_start' and '$date_end'
@@ -347,7 +347,7 @@ $show_point = $_GET[show_point];
         }else{
                 $result5 = pg_query($db,"
                 SELECT  * from fire_archive a
-                where a.pv_tn like '%$prov_name' 
+                where a.pv_tn like '%$prov_name'
                 and a.ap_tn  like '%$amphoe_name'
                 and  a.tb_tn like '%$tambon_name'
                 and acq_date = '2016/04/03'
@@ -384,7 +384,7 @@ $show_point = $_GET[show_point];
             return this._div;
         };
 
-        
+
         info.update = function (props) {
             this._div.innerHTML = '<h5>แผนที่แสดงข้อมูล</h5>' +  (props ?
                 '<b><center>' + props.prov_nam_t + '</b><br />' + props.value + ' จุด'
@@ -491,8 +491,8 @@ $show_point = $_GET[show_point];
         legend.addTo(map);
 
 
-        
+
     </script>
-    
+
 
 </html>
